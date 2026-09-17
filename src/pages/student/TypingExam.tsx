@@ -78,8 +78,12 @@ export function TypingExam() {
             className={`flex flex-col rounded-xl border border-slate-200 ${exam.tone} p-3.5 text-left shadow-card transition-colors duration-150 hover:border-primary`}>
             
               <div className="flex gap-3">
-                <span className="grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-full bg-slate-100">
-                  <LandmarkIcon className="h-6 w-6 text-slate-500" aria-hidden="true" />
+                <span className="h-14 w-14 shrink-0 overflow-hidden rounded-full">
+                  <img 
+                    src={exam.image} 
+                    alt={exam.name}
+                    className="h-full w-full object-cover"
+                  />
                 </span>
                 <span className="min-w-0">
                   <span className="block font-display text-[13.5px] font-semibold leading-snug text-navy-800">

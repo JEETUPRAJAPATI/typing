@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   CheckIcon,
@@ -16,9 +16,39 @@ import {
   PenLineIcon,
   MonitorIcon,
   HeadphonesIcon,
-  BarChart2Icon } from
+  BarChart2Icon,
+  ChevronLeftIcon,
+  ChevronRightIcon } from
 'lucide-react';
 import { StudentLayout } from '../../components/student/StudentLayout';
+
+// Hero slider images
+const heroSlides = [
+  {
+    id: 1,
+    title: "Master Typing & Stenography",
+    subtitle: "India's Most Trusted Platform",
+    description: "Practice with real exam patterns and compete with thousands of aspirants",
+    bgImage: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=1920&q=80",
+    bgOverlay: "from-blue-900/95 via-blue-800/90 to-indigo-900/95"
+  },
+  {
+    id: 2,
+    title: "Live Tests & Rankings",
+    subtitle: "Compete at All India Level",
+    description: "Take live tests and see your real-time ranking among all participants",
+    bgImage: "https://images.unsplash.com/photo-1560439514-e960a3ef5019?w=1920&q=80",
+    bgOverlay: "from-purple-900/95 via-purple-800/90 to-pink-900/95"
+  },
+  {
+    id: 3,
+    title: "SSC, Court & Police Exams",
+    subtitle: "Exam-Oriented Practice",
+    description: "Prepare for SSC Steno, Court Steno, Delhi Police and State exams",
+    bgImage: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1920&q=80",
+    bgOverlay: "from-green-900/95 via-teal-800/90 to-cyan-900/95"
+  }
+];
 
 const heroFeatures = [
 { icon: TargetIcon, label: 'Real Exam Based Tests', bg: '#0D6EFD' },
@@ -111,56 +141,149 @@ const stats = [
 
 
 export function Home() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto advance slider
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
   return (
     <StudentLayout showDownloadApp>
-      {/* Hero */}
-      <section className="mb-4 overflow-hidden rounded-xl bg-navy-900 p-6">
-        <div className="flex flex-col gap-6 lg:flex-row">
-          <div className="min-w-0 flex-1">
-            <p className="font-display text-[19px] font-semibold text-[#38BDF8]">
-              India&apos;s Trusted Platform for
-            </p>
-            <h2 className="font-display text-[46px] font-extrabold leading-none tracking-tight text-white">
-              TYPING &amp; STENO
-            </h2>
-            <p className="mt-3 inline-block rounded bg-warn px-4 py-1.5 font-display text-[14px] font-bold text-navy-900">
-              Practice | Improve | Succeed
-            </p>
-            <ul className="mt-5 space-y-2.5">
-              {heroFeatures.map((f) =>
-              <li key={f.label} className="flex items-center gap-2.5">
-                  <span
-                  className="grid h-7 w-7 place-items-center rounded-md text-white"
-                  style={{ backgroundColor: f.bg }}>
-                  
-                    <f.icon className="h-4 w-4" aria-hidden="true" />
-                  </span>
-                  <span className="border-b border-white/15 pb-1.5 pr-8 text-[13.5px] text-white/90">
-                    {f.label}
-                  </span>
-                </li>
-              )}
-            </ul>
-          </div>
+      {/* Hero Slider */}
+      <section className="mb-4 relative overflow-hidden rounded-xl">
+        {/* Slider Container */}
+        <div className="relative h-[420px] lg:h-[480px]">
+          {heroSlides.map((slide, index) => (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
+            >
+              {/* Background Image */}
+              <div className="absolute inset-0">
+                <img 
+                  src={slide.bgImage} 
+                  alt={slide.title}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                {/* Gradient Overlay */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${slide.bgOverlay}`}></div>
+              </div>
 
-          <div className="hidden w-[300px] shrink-0 items-center justify-center rounded-lg bg-white/5 lg:flex">
-            <KeyboardIcon className="h-28 w-28 text-white/25" aria-hidden="true" />
-          </div>
+              {/* Content */}
+              <div className="relative z-10 h-full flex items-center">
+                <div className="container mx-auto px-6">
+                  <div className="flex flex-col gap-6 lg:flex-row lg:items-center">
+                    {/* Left Content */}
+                    <div className="flex-1 text-white">
+                      <p className="font-display text-[16px] md:text-[19px] font-semibold text-yellow-300 mb-2 animate-fade-in">
+                        {slide.subtitle}
+                      </p>
+                      <h2 className="font-display text-[40px] md:text-[52px] lg:text-[60px] font-extrabold leading-none tracking-tight mb-4 animate-slide-up">
+                        {slide.title}
+                      </h2>
+                      <p className="text-[15px] md:text-[17px] text-white/90 mb-6 max-w-2xl animate-fade-in-delay">
+                        {slide.description}
+                      </p>
+                      <div className="inline-block rounded-lg bg-yellow-400 px-5 py-2.5 font-display text-[14px] font-bold text-gray-900 shadow-lg hover:bg-yellow-300 transition-all animate-bounce-subtle">
+                        Practice | Improve | Succeed
+                      </div>
+                      
+                      {/* Features List */}
+                      <ul className="mt-6 space-y-2.5 max-w-md">
+                        {heroFeatures.map((f, idx) => (
+                          <li 
+                            key={f.label} 
+                            className="flex items-center gap-2.5 animate-slide-in"
+                            style={{ animationDelay: `${idx * 100}ms` }}
+                          >
+                            <span
+                              className="grid h-7 w-7 place-items-center rounded-md text-white shadow-lg"
+                              style={{ backgroundColor: f.bg }}
+                            >
+                              <f.icon className="h-4 w-4" aria-hidden="true" />
+                            </span>
+                            <span className="text-[13.5px] text-white/95 font-medium">
+                              {f.label}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-          <div className="w-full shrink-0 rounded-xl bg-navy-700/60 p-5 lg:w-[290px]">
-            <p className="font-display text-[15px] font-bold text-warn">Prepare For</p>
-            <ul className="mt-3 space-y-2.5">
-              {prepareFor.map((item) =>
-              <li key={item} className="flex items-center gap-2 text-[13.5px] text-white">
-                  <CheckIcon className="h-4 w-4 text-[#22C55E]" aria-hidden="true" />
-                  {item}
-                </li>
-              )}
-            </ul>
-            <div className="mt-4 flex justify-center">
-              <TrophyIcon className="h-20 w-20 text-warn" aria-hidden="true" />
+                    {/* Right Side - Prepare For Box */}
+                    <div className="w-full lg:w-[320px] shrink-0">
+                      <div className="rounded-xl bg-white/10 backdrop-blur-md border border-white/20 p-6 shadow-2xl">
+                        <p className="font-display text-[17px] font-bold text-yellow-300 mb-4">Prepare For</p>
+                        <ul className="space-y-3">
+                          {prepareFor.map((item) => (
+                            <li key={item} className="flex items-center gap-2.5 text-[14px] text-white font-medium">
+                              <CheckIcon className="h-5 w-5 text-green-400 shrink-0" aria-hidden="true" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-5 flex justify-center">
+                          <TrophyIcon className="h-20 w-20 text-yellow-400 drop-shadow-lg" aria-hidden="true" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          ))}
+        </div>
+
+        {/* Navigation Arrows */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-full p-2.5 transition-all duration-200 hover:scale-110"
+          aria-label="Previous slide"
+        >
+          <ChevronLeftIcon className="h-6 w-6" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-full p-2.5 transition-all duration-200 hover:scale-110"
+          aria-label="Next slide"
+        >
+          <ChevronRightIcon className="h-6 w-6" />
+        </button>
+
+        {/* Dots Navigation */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`h-2.5 rounded-full transition-all duration-300 ${
+                index === currentSlide 
+                  ? 'w-8 bg-yellow-400' 
+                  : 'w-2.5 bg-white/40 hover:bg-white/60'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
         </div>
       </section>
 
