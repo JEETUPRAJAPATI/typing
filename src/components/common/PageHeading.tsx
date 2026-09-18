@@ -57,7 +57,7 @@ export function PageHeading({
           </span>
         }
         <div>
-          <h2 className="font-display text-[26px] font-bold leading-tight text-navy-800">{title}</h2>
+          <h2 className="font-display text-[20px] font-bold leading-tight text-navy-800">{title}</h2>
           {subtitle && <p className="text-[12.5px] text-slate-500">{subtitle}</p>}
           {crumbs && !crumbsRight &&
           <div className="mt-1">

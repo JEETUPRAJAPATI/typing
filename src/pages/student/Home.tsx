@@ -169,7 +169,7 @@ export function Home() {
       {/* Hero Slider */}
       <section className="mb-4 relative overflow-hidden rounded-xl">
         {/* Slider Container */}
-        <div className="relative h-[420px] lg:h-[480px]">
+        <div className="relative h-[320px] lg:h-[360px]">
           {heroSlides.map((slide, index) => (
             <div
               key={slide.id}
@@ -195,34 +195,34 @@ export function Home() {
                   <div className="flex flex-col gap-6 lg:flex-row lg:items-center">
                     {/* Left Content */}
                     <div className="flex-1 text-white">
-                      <p className="font-display text-[16px] md:text-[19px] font-semibold text-yellow-300 mb-2 animate-fade-in">
+                      <p className="font-display text-[14px] md:text-[15px] font-semibold text-yellow-300 mb-1.5 animate-fade-in">
                         {slide.subtitle}
                       </p>
-                      <h2 className="font-display text-[40px] md:text-[52px] lg:text-[60px] font-extrabold leading-none tracking-tight mb-4 animate-slide-up">
+                      <h2 className="font-display text-[32px] md:text-[38px] lg:text-[42px] font-extrabold leading-tight tracking-tight mb-3 animate-slide-up">
                         {slide.title}
                       </h2>
-                      <p className="text-[15px] md:text-[17px] text-white/90 mb-6 max-w-2xl animate-fade-in-delay">
+                      <p className="text-[13px] md:text-[14px] text-white/90 mb-4 max-w-xl animate-fade-in-delay">
                         {slide.description}
                       </p>
-                      <div className="inline-block rounded-lg bg-yellow-400 px-5 py-2.5 font-display text-[14px] font-bold text-gray-900 shadow-lg hover:bg-yellow-300 transition-all animate-bounce-subtle">
+                      <div className="inline-block rounded-lg bg-yellow-400 px-4 py-2 font-display text-[12px] font-bold text-gray-900 shadow-lg hover:bg-yellow-300 transition-all animate-bounce-subtle">
                         Practice | Improve | Succeed
                       </div>
                       
                       {/* Features List */}
-                      <ul className="mt-6 space-y-2.5 max-w-md">
+                      <ul className="mt-5 grid grid-cols-2 gap-2 max-w-lg">
                         {heroFeatures.map((f, idx) => (
                           <li 
                             key={f.label} 
-                            className="flex items-center gap-2.5 animate-slide-in"
+                            className="flex items-center gap-2 animate-slide-in"
                             style={{ animationDelay: `${idx * 100}ms` }}
                           >
                             <span
-                              className="grid h-7 w-7 place-items-center rounded-md text-white shadow-lg"
+                              className="grid h-6 w-6 place-items-center rounded-md text-white shadow-md shrink-0"
                               style={{ backgroundColor: f.bg }}
                             >
-                              <f.icon className="h-4 w-4" aria-hidden="true" />
+                              <f.icon className="h-3.5 w-3.5" aria-hidden="true" />
                             </span>
-                            <span className="text-[13.5px] text-white/95 font-medium">
+                            <span className="text-[12px] text-white/95 font-medium leading-tight">
                               {f.label}
                             </span>
                           </li>
@@ -231,19 +231,22 @@ export function Home() {
                     </div>
 
                     {/* Right Side - Prepare For Box */}
-                    <div className="w-full lg:w-[320px] shrink-0">
-                      <div className="rounded-xl bg-white/10 backdrop-blur-md border border-white/20 p-6 shadow-2xl">
-                        <p className="font-display text-[17px] font-bold text-yellow-300 mb-4">Prepare For</p>
-                        <ul className="space-y-3">
+                    <div className="w-full lg:w-[280px] shrink-0">
+                      <div className="rounded-xl bg-white/10 backdrop-blur-md border border-white/20 p-5 shadow-2xl">
+                        <p className="font-display text-[15px] font-bold text-yellow-300 mb-3 flex items-center gap-2">
+                          <TrophyIcon className="h-5 w-5" />
+                          Prepare For
+                        </p>
+                        <ul className="space-y-2.5">
                           {prepareFor.map((item) => (
-                            <li key={item} className="flex items-center gap-2.5 text-[14px] text-white font-medium">
-                              <CheckIcon className="h-5 w-5 text-green-400 shrink-0" aria-hidden="true" />
+                            <li key={item} className="flex items-center gap-2 text-[13px] text-white font-medium">
+                              <CheckIcon className="h-4 w-4 text-green-400 shrink-0" aria-hidden="true" />
                               {item}
                             </li>
                           ))}
                         </ul>
-                        <div className="mt-5 flex justify-center">
-                          <TrophyIcon className="h-20 w-20 text-yellow-400 drop-shadow-lg" aria-hidden="true" />
+                        <div className="mt-4 flex justify-center">
+                          <TrophyIcon className="h-16 w-16 text-yellow-400 drop-shadow-lg" aria-hidden="true" />
                         </div>
                       </div>
                     </div>
