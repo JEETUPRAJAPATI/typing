@@ -51,14 +51,28 @@ const typeIcon: Record<string, React.ElementType> = {
   'Hindi Steno': PenLineIcon
 };
 
+const typeIconTone: Record<string, string> = {
+  'English Typing': 'text-primary',
+  'Hindi Typing': 'text-success',
+  'English Steno': 'text-violet-700',
+  'Hindi Steno': 'text-rose-600'
+};
+
+const typeIconBadge: Record<string, string> = {
+  'English Typing': 'border-primary-200 bg-primary-50',
+  'Hindi Typing': 'border-emerald-200 bg-emerald-50',
+  'English Steno': 'border-violet-200 bg-violet-50',
+  'Hindi Steno': 'border-rose-200 bg-rose-50'
+};
+
 const legendBlocks = [
 {
   title: 'Test Types',
   items: [
-  { label: 'English Typing', tone: 'text-primary' },
-  { label: 'Hindi Typing', tone: 'text-success' },
-  { label: 'English Steno', tone: 'text-violet-700' },
-  { label: 'Hindi Steno', tone: 'text-rose-600' }]
+  { label: 'English Typing', tone: 'text-primary', icon: KeyboardIcon },
+  { label: 'Hindi Typing', tone: 'text-success', icon: KeyboardIcon },
+  { label: 'English Steno', tone: 'text-violet-700', icon: PenLineIcon },
+  { label: 'Hindi Steno', tone: 'text-rose-600', icon: PenLineIcon }]
 
 },
 {
@@ -236,8 +250,10 @@ export function ManageTest() {
                     <td className="px-3 py-2.5 text-slate-600">{r.id}</td>
                     <td className="px-3 py-2.5 font-semibold text-primary">{r.title}</td>
                     <td className="px-3 py-2.5">
-                      <span className="flex items-center gap-1.5 text-slate-600">
-                        <Icon className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+                      <span className="flex items-center gap-1.5 font-medium text-slate-600">
+                        <span className={`grid h-6 w-6 shrink-0 place-items-center rounded-md border ${typeIconBadge[r.type]}`}>
+                          <Icon className={`h-3.5 w-3.5 ${typeIconTone[r.type]}`} aria-hidden="true" />
+                        </span>
                         {r.type}
                       </span>
                     </td>
@@ -363,6 +379,13 @@ export function ManageTest() {
                       </span>
                       <span className="text-slate-500">– {item.desc}</span>
                     </> :
+              'icon' in item && item.icon ?
+              <span className={`flex w-full items-center justify-between gap-1.5 font-medium ${item.tone}`}>
+                      {item.label}
+                      <span className={`grid h-5 w-5 shrink-0 place-items-center rounded border ${typeIconBadge[item.label]}`}>
+                        <item.icon className="h-3 w-3" aria-hidden="true" />
+                      </span>
+                    </span> :
 
               <span className={`flex items-center gap-1.5 font-medium ${item.tone}`}>
                       <StarIcon className="h-3 w-3" aria-hidden="true" /> {item.label}

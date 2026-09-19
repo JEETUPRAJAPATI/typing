@@ -23,7 +23,6 @@ import {
   TargetIcon } from
 'lucide-react';
 import { AdminLayout } from '../../components/admin/AdminLayout';
-import { Breadcrumbs } from '../../components/common/PageHeading';
 import { Panel } from '../../components/common/Pill';
 
 const candidate = [
@@ -128,14 +127,6 @@ export function TypingResult() {
       </div>
 
       <div className="mb-4 flex flex-wrap items-center gap-3">
-        <Breadcrumbs
-          crumbs={[
-          { label: 'Home', to: '/' },
-          { label: 'Test Analysis (Results)', to: '/test-analysis' },
-          { label: 'Typing', to: '/test-analysis/typing' },
-          { label: 'Result Details' }]
-          } />
-        
         <div className="ml-auto flex flex-wrap items-center gap-2">
           <button
             type="button"
@@ -221,31 +212,35 @@ export function TypingResult() {
           </div>
 
           <Panel title="Result Overview">
-            <ul className="grid gap-3 sm:grid-cols-3 xl:grid-cols-7">
+            <ul className="grid grid-cols-2 gap-2 sm:grid-cols-4 xl:grid-cols-7">
               {overview.map((o) =>
               <li
                 key={o.label}
-                className="rounded-lg border border-slate-200 p-2.5 text-center">
-                
+                className="flex items-center gap-2 rounded-lg border border-slate-200 p-2">
+
                   <o.icon
-                  className="mx-auto h-4 w-4"
+                  className="h-3.5 w-3.5 shrink-0"
                   style={{ color: o.color }}
                   aria-hidden="true" />
-                
-                  <p className="mt-1 text-[10.5px] leading-snug text-slate-500">{o.label}</p>
-                  <p className="font-display text-[18px] font-bold text-navy-800">{o.value}</p>
+
+                  <span className="min-w-0">
+                    <p className="text-[10px] leading-snug text-slate-500">{o.label}</p>
+                    <p className="font-display text-[15px] font-bold leading-tight text-navy-800">{o.value}</p>
+                  </span>
                 </li>
               )}
             </ul>
           </Panel>
 
           <Panel title="Detailed Result Summary">
-            <ul className="grid gap-3 sm:grid-cols-3 xl:grid-cols-6">
+            <ul className="grid grid-cols-3 gap-2 sm:grid-cols-6">
               {summary.map((s) =>
-              <li key={s.label} className="rounded-lg border border-slate-200 p-2.5">
-                  <s.icon className="h-4 w-4" style={{ color: s.color }} aria-hidden="true" />
-                  <p className="mt-1 text-[10.5px] leading-snug text-slate-500">{s.label}</p>
-                  <p className="font-display text-[14px] font-bold text-navy-800">{s.value}</p>
+              <li key={s.label} className="flex items-center gap-2 rounded-lg border border-slate-200 p-2">
+                  <s.icon className="h-3.5 w-3.5 shrink-0" style={{ color: s.color }} aria-hidden="true" />
+                  <span className="min-w-0">
+                    <p className="text-[10px] leading-snug text-slate-500">{s.label}</p>
+                    <p className="font-display text-[12.5px] font-bold leading-tight text-navy-800">{s.value}</p>
+                  </span>
                 </li>
               )}
             </ul>
@@ -278,7 +273,7 @@ export function TypingResult() {
             </div>
 
             <div className="grid gap-3 lg:grid-cols-[1fr_230px]">
-              <p className="text-[13px] leading-[2.1] text-navy-900">
+              <p className="min-h-[260px] rounded-lg border border-slate-100 bg-slate-50/40 p-3 text-[13px] leading-[2.3] text-navy-900">
                 Honourable Chairman, I rise to speak on the{' '}
                 <mark className="bg-amber-100 px-0.5">Interim Budget</mark> presented by the{' '}
                 <mark className="bg-rose-100 px-0.5 line-through">the</mark> Hon&apos;ble Minister of
@@ -391,10 +386,6 @@ export function TypingResult() {
               <li className="rounded border border-emerald-100 bg-emerald-50 px-2.5 py-2">
                 <span className="font-semibold text-emerald-700">Topper (Aman Kumar)</span>
                 <span className="float-right text-navy-800">72.80 WPM | 96.50% Accuracy</span>
-              </li>
-              <li className="rounded border border-rose-100 bg-rose-50 px-2.5 py-2">
-                <span className="font-semibold text-rose-700">Difference</span>
-                <span className="float-right text-navy-800">-14.80 WPM | -0.08% Accuracy</span>
               </li>
             </ul>
           </Panel>

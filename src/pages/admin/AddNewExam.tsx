@@ -176,16 +176,6 @@ export function AddNewExam() {
                   <option>Hindi</option>
                 </select>
               </label>
-              <label className="block">
-                <span className={labelCls}>Minimum Qualifying Speed <span className="text-danger">*</span></span>
-                <span className="flex gap-2">
-                  <input type="text" placeholder="Enter speed" className={inputCls} />
-                  <select className="w-[84px] rounded-md border border-slate-300 px-2 py-2 text-[12px] outline-none focus:border-primary">
-                    <option>WPM</option>
-                    <option>KDPH</option>
-                  </select>
-                </span>
-              </label>
             </div>
           </section>
         </div>

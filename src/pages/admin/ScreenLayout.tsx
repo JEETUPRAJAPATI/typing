@@ -19,7 +19,7 @@ const inputCls =
 'w-full rounded-md border border-slate-300 px-3 py-2 text-[12px] outline-none focus:border-primary';
 
 const headerContent = ['Exam Name', 'Exam Title', 'Instruction', 'Logo', 'Show / Hide Text Option'];
-const buttonSettings = ['Full Screen', 'Change Interface', 'Start Button', 'Submit Button', 'Keyboard Sound'];
+const buttonSettings = ['Font Size Button', 'Full Screen', 'Change Interface', 'Start Button', 'Submit Button', 'Keyboard Sound'];
 const layoutPositions = ['Left Top', 'Center Top', 'Right Top', 'Left Bottom', 'Center Bottom', 'Right Bottom'];
 
 const colors = [
@@ -40,6 +40,7 @@ export function ScreenLayout() {
   const [position, setPosition] = useState('Center Top');
   const [passageHeight, setPassageHeight] = useState(180);
   const [typingHeight, setTypingHeight] = useState(140);
+  const [headerHeight, setHeaderHeight] = useState(70);
 
   return (
     <AdminLayout
@@ -51,7 +52,7 @@ export function ScreenLayout() {
       { label: 'Total Exams', value: '28' },
       { label: 'Tests Assigned', value: '542' }]
       }>
-      
+
       <div className="mb-4 flex items-start gap-3">
         <MonitorIcon className="h-7 w-7 text-primary" aria-hidden="true" />
         <div>
@@ -80,7 +81,7 @@ export function ScreenLayout() {
         )}
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[230px_230px_1fr]">
+      <div className="grid gap-4 xl:grid-cols-[1fr_1fr_2.2fr]">
         {/* Column 1 */}
         <div className="space-y-4">
           <section className={card}>
@@ -152,7 +153,7 @@ export function ScreenLayout() {
                   {buttonSettings.map((b) =>
                   <li key={b}>
                       <label className="flex items-center gap-2 text-[11px] text-navy-800">
-                        <input type="checkbox" defaultChecked className="h-3.5 w-3.5 accent-primary" />
+                        <input type="checkbox" defaultChecked className="h-3.5 w-3.5 shrink-0 accent-primary" />
                         {b}
                       </label>
                     </li>
@@ -163,8 +164,9 @@ export function ScreenLayout() {
                 <label className="block">
                   <span className={labelCls}>Button Position</span>
                   <select className="w-full rounded-md border border-slate-300 px-2 py-1.5 text-[11px] outline-none focus:border-primary">
-                    <option>Right Top</option>
-                    <option>Left Top</option>
+                    {layoutPositions.map((p) =>
+                    <option key={p}>{p}</option>
+                    )}
                   </select>
                 </label>
                 <label className="block">
@@ -184,7 +186,7 @@ export function ScreenLayout() {
                 <button
                   type="button"
                   className="flex w-full items-center justify-center gap-1.5 rounded-md border border-slate-300 py-1.5 text-[11px] font-medium text-slate-600 transition-colors duration-150 hover:bg-slate-50">
-                  
+
                   <Volume2Icon className="h-3.5 w-3.5" aria-hidden="true" /> Preview
                 </button>
               </div>
@@ -212,25 +214,15 @@ export function ScreenLayout() {
             <label className="mb-2 flex items-center gap-2 text-[11px] text-navy-800">
               <input type="checkbox" defaultChecked className="h-3.5 w-3.5 accent-primary" /> Show Timer
             </label>
-            <label className="mb-2 block">
+            <label className="mb-3 block">
               <span className={labelCls}>Timer Position</span>
               <select className="w-full rounded-md border border-slate-300 px-2 py-1.5 text-[11px] outline-none focus:border-primary">
                 <option>Center Top</option>
                 <option>Right Top</option>
               </select>
             </label>
-            <label className="mb-3 block">
-              <span className={labelCls}>Time Format</span>
-              <select className="w-full rounded-md border border-slate-300 px-2 py-1.5 text-[11px] outline-none focus:border-primary">
-                <option>MM:SS</option>
-                <option>HH:MM:SS</option>
-              </select>
-            </label>
 
             <p className="mb-1.5 text-[11.5px] font-semibold text-navy-800">3. Setting Panel</p>
-            <label className="mb-2 flex items-center gap-2 text-[11px] text-navy-800">
-              <input type="checkbox" defaultChecked className="h-3.5 w-3.5 accent-primary" /> Show Setting Panel
-            </label>
             <label className="mb-2 block">
               <span className={labelCls}>Font Size</span>
               <select className="w-full rounded-md border border-slate-300 px-2 py-1.5 text-[11px] outline-none focus:border-primary">
@@ -250,7 +242,24 @@ export function ScreenLayout() {
           <section className={card}>
             <h3 className="mb-2.5 text-[12px] font-bold text-navy-800">TYPING BOX SETTINGS</h3>
             <label className="mb-3 block">
-              <span className={labelCls}>1. Passage Height</span>
+              <span className={labelCls}>1. Header Height</span>
+              <span className="flex items-center gap-2">
+                <input
+                  type="range"
+                  min={40}
+                  max={140}
+                  value={headerHeight}
+                  onChange={(e) => setHeaderHeight(Number(e.target.value))}
+                  className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-slate-200 accent-primary" />
+
+                <span className="w-[46px] rounded border border-slate-300 py-1 text-center text-[11px]">
+                  {headerHeight}
+                </span>
+                <span className="text-[11px] text-slate-500">px</span>
+              </span>
+            </label>
+            <label className="mb-3 block">
+              <span className={labelCls}>2. Passage Height</span>
               <span className="flex items-center gap-2">
                 <input
                   type="range"
@@ -267,7 +276,7 @@ export function ScreenLayout() {
               </span>
             </label>
             <label className="mb-3 block">
-              <span className={labelCls}>2. Typing Box Height</span>
+              <span className={labelCls}>3. Typing Box Height</span>
               <span className="flex items-center gap-2">
                 <input
                   type="range"
@@ -293,24 +302,6 @@ export function ScreenLayout() {
             </div>
           </section>
 
-          <section className={card}>
-            <h3 className="mb-2.5 text-[12px] font-bold text-navy-800">COLORS SETTINGS</h3>
-            <ul className="grid grid-cols-2 gap-2.5">
-              {colors.map((c) =>
-              <li key={c.label}>
-                  <p className="mb-1 text-[10.5px] font-medium text-slate-600">{c.label}</p>
-                  <p className="flex items-center gap-1.5 rounded border border-slate-300 px-1.5 py-1">
-                    <span
-                    className="h-3.5 w-3.5 rounded-sm border border-slate-200"
-                    style={{ backgroundColor: c.value }}
-                    aria-hidden="true" />
-                  
-                    <span className="text-[10.5px] text-navy-800">{c.value}</span>
-                  </p>
-                </li>
-              )}
-            </ul>
-          </section>
         </div>
 
         {/* Live preview column */}
@@ -324,16 +315,16 @@ export function ScreenLayout() {
             </h3>
 
             <div className="overflow-hidden rounded-lg border border-slate-200">
-              <div className="flex items-center gap-3 bg-navy-800 px-4 py-3">
+              <div className="flex items-center gap-3 bg-navy-800 px-4" style={{ minHeight: headerHeight }}>
                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/15 text-[9px] font-bold text-white">
                   LOGO
                 </span>
-                <div className="min-w-0">
-                  <p className="font-display text-[13px] font-bold text-white">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate font-display text-[13px] font-bold text-white">
                     Balaji Typing &amp; Steno College
                   </p>
-                  <p className="text-[11.5px] font-semibold text-white/90">SSC Typing Examination</p>
-                  <p className="text-[10.5px] text-white/70">
+                  <p className="truncate text-[11.5px] font-semibold text-white/90">SSC Typing Examination</p>
+                  <p className="truncate text-[10.5px] text-white/70">
                     Complete the passage as accurately and as fast as you can.
                   </p>
                 </div>
@@ -435,34 +426,56 @@ export function ScreenLayout() {
             </div>
           </section>
 
-          <section className={card}>
-            <h3 className="mb-2.5 text-[12px] font-bold text-navy-800">SAVE LAYOUT</h3>
-            <label className="block">
-              <span className={labelCls}>Layout Name</span>
-              <input type="text" defaultValue="Default Layout 2026" className={inputCls} />
-            </label>
-            <div className="mt-3 flex flex-wrap gap-2">
-              <button
-                type="button"
-                className="flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-[12px] font-semibold text-white transition-colors duration-150 hover:bg-primary-700">
-                
-                <SaveIcon className="h-3.5 w-3.5" aria-hidden="true" /> Save Layout
-              </button>
-              <button
-                type="button"
-                className="flex items-center gap-1.5 rounded-md bg-success px-4 py-2 text-[12px] font-semibold text-white transition-colors duration-150 hover:bg-[#146c43]">
-                
-                <EyeIcon className="h-3.5 w-3.5" aria-hidden="true" /> Save &amp; Preview
-              </button>
-              <button
-                type="button"
-                className="flex items-center gap-1.5 rounded-md border border-rose-300 px-4 py-2 text-[12px] font-medium text-rose-600 transition-colors duration-150 hover:bg-rose-50">
-                
-                <RotateCcwIcon className="h-3.5 w-3.5" aria-hidden="true" /> Reset Layout
-              </button>
-            </div>
-          </section>
         </div>
+      </div>
+
+      <div className="mt-4 grid gap-4 xl:grid-cols-[1fr_320px]">
+        <section className={card}>
+          <h3 className="mb-2.5 text-[12px] font-bold text-navy-800">COLORS SETTINGS</h3>
+          <ul className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
+            {colors.map((c) =>
+            <li key={c.label}>
+                <p className="mb-1 text-[10.5px] font-medium text-slate-600">{c.label}</p>
+                <p className="flex items-center gap-1.5 rounded border border-slate-300 px-1.5 py-1">
+                  <span
+                  className="h-3.5 w-3.5 rounded-sm border border-slate-200"
+                  style={{ backgroundColor: c.value }}
+                  aria-hidden="true" />
+
+                  <span className="text-[10.5px] text-navy-800">{c.value}</span>
+                </p>
+              </li>
+            )}
+          </ul>
+        </section>
+
+        <section className={card}>
+          <h3 className="mb-2.5 text-[12px] font-bold text-navy-800">SAVE LAYOUT</h3>
+          <label className="block">
+            <span className={labelCls}>Layout Name</span>
+            <input type="text" defaultValue="Default Layout 2026" className={inputCls} />
+          </label>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              type="button"
+              className="flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-[12px] font-semibold text-white transition-colors duration-150 hover:bg-primary-700">
+
+              <SaveIcon className="h-3.5 w-3.5" aria-hidden="true" /> Save Layout
+            </button>
+            <button
+              type="button"
+              className="flex items-center gap-1.5 rounded-md bg-success px-4 py-2 text-[12px] font-semibold text-white transition-colors duration-150 hover:bg-[#146c43]">
+
+              <EyeIcon className="h-3.5 w-3.5" aria-hidden="true" /> Save &amp; Preview
+            </button>
+            <button
+              type="button"
+              className="flex items-center gap-1.5 rounded-md border border-rose-300 px-4 py-2 text-[12px] font-medium text-rose-600 transition-colors duration-150 hover:bg-rose-50">
+
+              <RotateCcwIcon className="h-3.5 w-3.5" aria-hidden="true" /> Reset Layout
+            </button>
+          </div>
+        </section>
       </div>
 
       <p className="mt-4 flex items-center gap-2 rounded-md border border-primary-100 bg-primary-50 px-3 py-2 text-[11.5px] text-primary-700">

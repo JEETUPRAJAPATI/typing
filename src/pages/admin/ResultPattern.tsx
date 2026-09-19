@@ -92,7 +92,8 @@ export function ResultPattern() {
         </div>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-3">
+      <div className="grid gap-4 xl:grid-cols-2">
+        <div className="space-y-4">
         {/* Result name */}
         <section className={card}>
           <h3 className="mb-3 flex items-center gap-2 text-[12.5px] font-bold text-navy-800">
@@ -157,23 +158,6 @@ export function ResultPattern() {
             </select>
           </label>
 
-          <fieldset className="mt-3">
-            <legend className={labelCls}>Qualify On</legend>
-            <div className="flex gap-5">
-              {['Minimum Speed', 'Minimum Accuracy'].map((v) =>
-              <label key={v} className="flex items-center gap-2 text-[11.5px] text-slate-600">
-                  <input
-                  type="radio"
-                  name="qualifyOn"
-                  defaultChecked={v === 'Minimum Speed'}
-                  className="h-3.5 w-3.5 accent-primary" />
-                
-                  {v}
-                </label>
-              )}
-            </div>
-          </fieldset>
-
           <label className="mt-3 block">
             <span className={labelCls}>Minimum Qualifying Speed (WPM) <span className="text-danger">*</span></span>
             <input type="text" defaultValue="35" className={inputCls} />
@@ -183,6 +167,7 @@ export function ResultPattern() {
             <input type="text" defaultValue="90" className={inputCls} />
           </label>
         </section>
+        </div>
 
         {/* Penalty & calculation */}
         <section className={card}>
@@ -251,12 +236,17 @@ export function ResultPattern() {
                 <div className="grid gap-2">
                   {g.fields.map((f) =>
                 <label key={f.label} className="block">
-                      <span className="mb-1 block text-[10.5px] text-slate-600">{f.label}</span>
+                      <span className="mb-1 flex items-center gap-1.5 text-[10.5px] text-slate-600">
+                        {g.group === 'Mistake Penalty' &&
+                    <input type="checkbox" defaultChecked className="h-3 w-3 accent-primary" aria-label={`Enable ${f.label}`} />
+                    }
+                        {f.label}
+                      </span>
                       <input
                     type="text"
                     defaultValue={f.value}
                     className="w-full rounded border border-slate-300 px-2 py-1 text-[11px] outline-none focus:border-primary" />
-                  
+
                     </label>
                 )}
                 </div>
@@ -267,14 +257,14 @@ export function ResultPattern() {
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
             <fieldset className="rounded-md border border-slate-200 p-2.5">
               <legend className="px-1 text-[10.5px] font-semibold text-slate-500">Accuracy ON</legend>
-              {['Typed Words', 'Total Words'].map((v) =>
+              {['Typed Words', 'Total Words', 'Typed Keystrokes', 'Total Keystrokes'].map((v) =>
               <label key={v} className="mb-1 flex items-center gap-2 text-[11px] text-slate-600">
                   <input
                   type="radio"
                   name="accuracyOn"
                   defaultChecked={v === 'Typed Words'}
                   className="h-3.5 w-3.5 accent-primary" />
-                
+
                   {v}
                 </label>
               )}

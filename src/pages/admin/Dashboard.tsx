@@ -255,7 +255,10 @@ export function AdminDashboard() {
               <tr>
                 <th scope="col" className="pb-2 font-semibold">Test Title</th>
                 <th scope="col" className="pb-2 font-semibold">Type</th>
+                <th scope="col" className="pb-2 font-semibold">Category</th>
+                <th scope="col" className="pb-2 font-semibold">Duration</th>
                 <th scope="col" className="pb-2 font-semibold">Status</th>
+                <th scope="col" className="pb-2 font-semibold">Created On</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -267,11 +270,14 @@ export function AdminDashboard() {
                       {t.type}
                     </span>
                   </td>
+                  <td className="py-2 text-navy-800">{t.category}</td>
+                  <td className="py-2 text-navy-800">{t.duration}</td>
                   <td className="py-2">
                     <span className={`rounded px-1.5 py-[1px] text-[10.5px] font-medium ${statusTone[t.status]}`}>
                       {t.status}
                     </span>
                   </td>
+                  <td className="py-2 text-slate-500">{t.created}</td>
                 </tr>
               )}
             </tbody>
@@ -288,6 +294,7 @@ export function AdminDashboard() {
                 <th scope="col" className="pb-2 font-semibold">Exam Name</th>
                 <th scope="col" className="pb-2 font-semibold">Status</th>
                 <th scope="col" className="pb-2 font-semibold">Students</th>
+                <th scope="col" className="pb-2 font-semibold">Created On</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -300,6 +307,7 @@ export function AdminDashboard() {
                     </span>
                   </td>
                   <td className="py-2 text-navy-800">{e.students}</td>
+                  <td className="py-2 text-slate-500">{e.created}</td>
                 </tr>
               )}
             </tbody>

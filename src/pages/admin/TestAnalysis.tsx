@@ -251,16 +251,18 @@ export function AdminTestAnalysis() {
 
       <ul className="mb-4 grid gap-4 sm:grid-cols-3 xl:grid-cols-6">
         {stats.map((s) =>
-        <li key={s.label} className="rounded-xl border border-slate-200 bg-white p-3.5 shadow-card">
+        <li key={s.label} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3.5 shadow-card">
             <span
-            className="grid h-9 w-9 place-items-center rounded-lg text-white"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-white"
             style={{ backgroundColor: s.color }}>
-            
+
               <s.icon className="h-4 w-4" aria-hidden="true" />
             </span>
-            <p className="mt-2 text-[11px] text-slate-500">{s.label}</p>
-            <p className="font-display text-[20px] font-bold text-navy-800">{s.value}</p>
-            <p className={`text-[11px] font-medium ${s.subColor}`}>{s.sub}</p>
+            <div className="min-w-0">
+              <p className="text-[11px] text-slate-500">{s.label}</p>
+              <p className="font-display text-[20px] font-bold leading-tight text-navy-800">{s.value}</p>
+              <p className={`text-[11px] font-medium ${s.subColor}`}>{s.sub}</p>
+            </div>
           </li>
         )}
       </ul>
