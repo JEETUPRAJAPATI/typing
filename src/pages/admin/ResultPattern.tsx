@@ -167,6 +167,51 @@ export function ResultPattern() {
             <input type="text" defaultValue="90" className={inputCls} />
           </label>
         </section>
+
+        <section className={card}>
+          <h3 className="mb-3 flex items-center gap-2 text-[12.5px] font-bold text-navy-800">
+            <SettingsIcon className="h-4 w-4 text-primary" aria-hidden="true" /> Other Settings
+          </h3>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {[
+            { title: 'Live Test Settings', badge: 'LIVE', badgeTone: 'bg-success' },
+            { title: 'Pre-Load Test Settings', badge: 'PRELOAD', badgeTone: 'bg-[#F59E0B]' }].
+            map((s) =>
+            <div key={s.title} className="rounded-lg border border-slate-200 p-4">
+                <p className="mb-3 flex items-center gap-1.5 text-[11.5px] font-semibold text-navy-800">
+                  {s.title}
+                  <span className={`rounded px-1.5 py-[1px] text-[9px] font-bold text-white ${s.badgeTone}`}>
+                    {s.badge}
+                  </span>
+                </p>
+                <p className="mb-1.5 text-[10.5px] font-medium text-slate-600">Show Result to Students</p>
+                <label className="mb-1.5 flex items-center gap-2 text-[11px] text-slate-600">
+                  <input type="radio" name={`${s.title}-result`} defaultChecked className="h-3.5 w-3.5 accent-primary" />
+                  Immediately
+                </label>
+                <label className="mb-3 flex items-center gap-2 text-[11px] text-slate-600">
+                  <input type="radio" name={`${s.title}-result`} className="h-3.5 w-3.5 accent-primary" />
+                  Set a Time
+                  <input
+                  type="text"
+                  defaultValue="09:00 PM"
+                  aria-label={`${s.title} result time`}
+                  className="w-[72px] rounded border border-slate-300 px-1.5 py-1 text-[10.5px] outline-none focus:border-primary" />
+
+                </label>
+                <p className="mb-1.5 text-[10.5px] font-medium text-slate-600">Show Rank</p>
+                <label className="mb-1.5 flex items-center gap-2 text-[11px] text-slate-600">
+                  <input type="radio" name={`${s.title}-rank`} className="h-3.5 w-3.5 accent-primary" />
+                  Immediately
+                </label>
+                <label className="flex items-center gap-2 text-[11px] text-slate-600">
+                  <input type="radio" name={`${s.title}-rank`} defaultChecked className="h-3.5 w-3.5 accent-primary" />
+                  After {s.badge === 'LIVE' ? 'Live Test Session End' : 'Test is Completed'}
+                </label>
+              </div>
+            )}
+          </div>
+        </section>
         </div>
 
         {/* Penalty & calculation */}
@@ -312,7 +357,7 @@ export function ResultPattern() {
         </section>
       </div>
 
-      <div className="mt-4 grid gap-4 xl:grid-cols-[1fr_330px]">
+      <div className="mt-4">
         <section className="rounded-xl border border-slate-200 bg-white shadow-card">
           <h3 className="p-3.5 text-[12.5px] font-bold text-navy-800">Saved Result Patterns</h3>
           <div className="overflow-x-auto">
@@ -369,51 +414,6 @@ export function ResultPattern() {
             Note: Default pattern will be applied when creating a new exam.
             <span className="float-right">Showing 1 to 3 of 3 patterns</span>
           </p>
-        </section>
-
-        <section className={card}>
-          <h3 className="mb-3 flex items-center gap-2 text-[12.5px] font-bold text-navy-800">
-            <SettingsIcon className="h-4 w-4 text-primary" aria-hidden="true" /> Other Settings
-          </h3>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {[
-            { title: 'Live Test Settings', badge: 'LIVE', badgeTone: 'bg-success' },
-            { title: 'Pre-Load Test Settings', badge: 'PRELOAD', badgeTone: 'bg-[#F59E0B]' }].
-            map((s) =>
-            <div key={s.title} className="rounded-lg border border-slate-200 p-2.5">
-                <p className="mb-2 flex items-center gap-1.5 text-[11.5px] font-semibold text-navy-800">
-                  {s.title}
-                  <span className={`rounded px-1.5 py-[1px] text-[9px] font-bold text-white ${s.badgeTone}`}>
-                    {s.badge}
-                  </span>
-                </p>
-                <p className="mb-1 text-[10.5px] font-medium text-slate-600">Show Result to Students</p>
-                <label className="mb-1 flex items-center gap-2 text-[11px] text-slate-600">
-                  <input type="radio" name={`${s.title}-result`} defaultChecked className="h-3.5 w-3.5 accent-primary" />
-                  Immediately
-                </label>
-                <label className="mb-2 flex items-center gap-2 text-[11px] text-slate-600">
-                  <input type="radio" name={`${s.title}-result`} className="h-3.5 w-3.5 accent-primary" />
-                  Set a Time
-                  <input
-                  type="text"
-                  defaultValue="09:00 PM"
-                  aria-label={`${s.title} result time`}
-                  className="w-[72px] rounded border border-slate-300 px-1.5 py-[2px] text-[10.5px] outline-none focus:border-primary" />
-                
-                </label>
-                <p className="mb-1 text-[10.5px] font-medium text-slate-600">Show Rank</p>
-                <label className="mb-1 flex items-center gap-2 text-[11px] text-slate-600">
-                  <input type="radio" name={`${s.title}-rank`} className="h-3.5 w-3.5 accent-primary" />
-                  Immediately
-                </label>
-                <label className="flex items-center gap-2 text-[11px] text-slate-600">
-                  <input type="radio" name={`${s.title}-rank`} defaultChecked className="h-3.5 w-3.5 accent-primary" />
-                  After {s.badge === 'LIVE' ? 'Live Test Session End' : 'Test is Completed'}
-                </label>
-              </div>
-            )}
-          </div>
         </section>
       </div>
 

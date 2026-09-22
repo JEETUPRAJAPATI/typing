@@ -1,26 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   TrophyIcon,
   DownloadIcon,
   PrinterIcon,
   RotateCcwIcon,
   UserIcon,
-  FileTextIcon,
-  SettingsIcon,
   SparklesIcon,
   ArrowLeftIcon,
   SearchCheckIcon,
   GitCompareIcon,
   Share2Icon,
-  CheckSquareIcon,
-  XSquareIcon,
-  PlusSquareIcon,
-  MinusSquareIcon,
-  SpaceIcon,
-  HelpCircleIcon,
-  CheckCircle2Icon,
-  GaugeIcon,
-  TargetIcon } from
+  CheckCircle2Icon } from
 'lucide-react';
 import { AdminLayout } from '../../components/admin/AdminLayout';
 import { Panel } from '../../components/common/Pill';
@@ -45,29 +35,28 @@ const testInfo = [
 const testSettings = [
 { label: 'Font Group', value: 'English - Medium' },
 { label: 'Backspace Mode', value: 'Current Word Backspace' },
-{ label: 'Result Pattern', value: 'Standard Result Pattern' },
 { label: 'Speed Source', value: 'Typed Words (WPM)' },
 { label: 'Time Duration', value: '10 Minutes' },
 { label: 'Total Words', value: '410' }];
 
 
 const overview = [
-{ icon: FileTextIcon, label: 'Original Words', value: '410', color: '#0D6EFD' },
-{ icon: UserIcon, label: 'Typed Words', value: '406', color: '#6F42C1' },
-{ icon: XSquareIcon, label: 'Full Mistakes', value: '4', color: '#DC3545' },
-{ icon: MinusSquareIcon, label: 'Half Mistakes', value: '3', color: '#F59E0B' },
-{ icon: HelpCircleIcon, label: 'Punctuation Mistakes', value: '2', color: '#0EA5E9' },
-{ icon: TargetIcon, label: 'Accuracy', value: '96.58%', color: '#198754' },
-{ icon: GaugeIcon, label: 'Gross Speed (Typed Words)', value: '58 WPM', color: '#6F42C1' }];
+{ label: 'Original Words', value: '410', color: '#0D6EFD' },
+{ label: 'Typed Words', value: '406', color: '#6F42C1' },
+{ label: 'Full Mistakes', value: '4', color: '#DC3545' },
+{ label: 'Half Mistakes', value: '3', color: '#F59E0B' },
+{ label: 'Punctuation Mistakes', value: '2', color: '#0EA5E9' },
+{ label: 'Accuracy', value: '96.58%', color: '#198754' },
+{ label: 'Gross Speed (Typed Words)', value: '58 WPM', color: '#6F42C1' }];
 
 
 const summary = [
-{ icon: CheckSquareIcon, label: 'Correct Words', value: '384 (94.15%)', color: '#198754' },
-{ icon: XSquareIcon, label: 'Incorrect Words', value: '7 (1.71%)', color: '#DC3545' },
-{ icon: PlusSquareIcon, label: 'Extra Words', value: '2 (0.49%)', color: '#0D6EFD' },
-{ icon: MinusSquareIcon, label: 'Missing Words', value: '4 (0.98%)', color: '#F59E0B' },
-{ icon: SpaceIcon, label: 'Extra Spaces', value: '2 (0.49%)', color: '#0EA5E9' },
-{ icon: HelpCircleIcon, label: 'Punctuation Mistakes', value: '2 (0.49%)', color: '#6F42C1' }];
+{ label: 'Correct Words', value: '384 (94.15%)', color: '#198754' },
+{ label: 'Incorrect Words', value: '7 (1.71%)', color: '#DC3545' },
+{ label: 'Extra Words', value: '2 (0.49%)', color: '#0D6EFD' },
+{ label: 'Missing Words', value: '4 (0.98%)', color: '#F59E0B' },
+{ label: 'Extra Spaces', value: '2 (0.49%)', color: '#0EA5E9' },
+{ label: 'Punctuation Mistakes', value: '2 (0.49%)', color: '#6F42C1' }];
 
 
 const legend = [
@@ -112,9 +101,11 @@ const actions = [
 
 
 export function TypingResult() {
+  const [highlighted, setHighlighted] = useState(true);
+
   return (
     <AdminLayout searchPlaceholder="Search test name, exam name..." showActionButtons={false}>
-      <div className="mb-4 flex flex-wrap items-start gap-4">
+      <div className="mb-4 flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-start gap-3">
           <TrophyIcon className="h-8 w-8 text-primary" aria-hidden="true" />
           <div>
@@ -124,26 +115,24 @@ export function TypingResult() {
             <p className="text-[12.5px] text-slate-500">View your detailed performance and analysis</p>
           </div>
         </div>
-      </div>
 
-      <div className="mb-4 flex flex-wrap items-center gap-3">
-        <div className="ml-auto flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
             className="flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-2 text-[12px] font-medium text-navy-800 transition-colors duration-150 hover:bg-slate-50">
-            
+
             <DownloadIcon className="h-3.5 w-3.5" aria-hidden="true" /> Download Result (PDF)
           </button>
           <button
             type="button"
             className="flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-2 text-[12px] font-medium text-navy-800 transition-colors duration-150 hover:bg-slate-50">
-            
+
             <PrinterIcon className="h-3.5 w-3.5" aria-hidden="true" /> Print Result
           </button>
           <button
             type="button"
             className="flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-2 text-[12px] font-medium text-navy-800 transition-colors duration-150 hover:bg-slate-50">
-            
+
             <RotateCcwIcon className="h-3.5 w-3.5" aria-hidden="true" /> Re-Attempt Test
           </button>
         </div>
@@ -216,17 +205,11 @@ export function TypingResult() {
               {overview.map((o) =>
               <li
                 key={o.label}
-                className="flex items-center gap-2 rounded-lg border border-slate-200 p-2">
+                className="rounded-lg border p-2"
+                style={{ backgroundColor: `${o.color}14`, borderColor: `${o.color}33` }}>
 
-                  <o.icon
-                  className="h-3.5 w-3.5 shrink-0"
-                  style={{ color: o.color }}
-                  aria-hidden="true" />
-
-                  <span className="min-w-0">
-                    <p className="text-[10px] leading-snug text-slate-500">{o.label}</p>
-                    <p className="font-display text-[15px] font-bold leading-tight text-navy-800">{o.value}</p>
-                  </span>
+                  <p className="text-[10px] leading-snug" style={{ color: o.color }}>{o.label}</p>
+                  <p className="font-display text-[15px] font-bold leading-tight text-navy-800">{o.value}</p>
                 </li>
               )}
             </ul>
@@ -235,12 +218,13 @@ export function TypingResult() {
           <Panel title="Detailed Result Summary">
             <ul className="grid grid-cols-3 gap-2 sm:grid-cols-6">
               {summary.map((s) =>
-              <li key={s.label} className="flex items-center gap-2 rounded-lg border border-slate-200 p-2">
-                  <s.icon className="h-3.5 w-3.5 shrink-0" style={{ color: s.color }} aria-hidden="true" />
-                  <span className="min-w-0">
-                    <p className="text-[10px] leading-snug text-slate-500">{s.label}</p>
-                    <p className="font-display text-[12.5px] font-bold leading-tight text-navy-800">{s.value}</p>
-                  </span>
+              <li
+                key={s.label}
+                className="rounded-lg border p-2"
+                style={{ backgroundColor: `${s.color}14`, borderColor: `${s.color}33` }}>
+
+                  <p className="text-[10px] leading-snug" style={{ color: s.color }}>{s.label}</p>
+                  <p className="font-display text-[12.5px] font-bold leading-tight text-navy-800">{s.value}</p>
                 </li>
               )}
             </ul>
@@ -263,61 +247,41 @@ export function TypingResult() {
               )}
               <span className="ml-auto flex items-center gap-2 text-[11px] text-slate-500">
                 View Mode:
-                <span className="rounded bg-primary px-2.5 py-1 text-[11px] font-semibold text-white">
+                <button
+                  type="button"
+                  onClick={() => setHighlighted(true)}
+                  className={`rounded px-2.5 py-1 text-[11px] font-semibold transition-colors duration-150 ${
+                  highlighted ? 'bg-primary text-white' : 'border border-slate-300 text-slate-600 hover:bg-slate-50'}`
+                  }>
+
                   Highlighted
-                </span>
-                <span className="rounded border border-slate-300 px-2.5 py-1 text-[11px] font-medium text-slate-600">
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setHighlighted(false)}
+                  className={`rounded px-2.5 py-1 text-[11px] font-medium transition-colors duration-150 ${
+                  !highlighted ? 'bg-primary text-white' : 'border border-slate-300 text-slate-600 hover:bg-slate-50'}`
+                  }>
+
                   Plain Text
-                </span>
+                </button>
               </span>
             </div>
 
-            <div className="grid gap-3 lg:grid-cols-[1fr_230px]">
-              <p className="min-h-[260px] rounded-lg border border-slate-100 bg-slate-50/40 p-3 text-[13px] leading-[2.3] text-navy-900">
-                Honourable Chairman, I rise to speak on the{' '}
-                <mark className="bg-amber-100 px-0.5">Interim Budget</mark> presented by the{' '}
-                <mark className="bg-rose-100 px-0.5 line-through">the</mark> Hon&apos;ble Minister of
-                Finance. Budget comes at a crucial time when our economy is showing signs of{' '}
-                <mark className="bg-emerald-100 px-0.5">recovery</mark>,{' '}
-                <mark className="bg-primary-100 px-0.5">but</mark> challenges remain. The Government
-                has taken several bold steps to ensure fiscal discipline, promote growth, and{' '}
-                <mark className="bg-amber-100 px-0.5">support</mark> the{' '}
-                <mark className="bg-rose-100 px-0.5">common</mark> man. I appreciate the focus on{' '}
-                <mark className="bg-amber-100 px-0.5">infrastructure</mark>, digital India,{' '}
-                <mark className="bg-emerald-100 px-0.5">and</mark> employment generation. However,{' '}
-                <mark className="bg-rose-100 px-0.5">more</mark> needs to be done for{' '}
-                <mark className="bg-amber-100 px-0.5">education</mark>,{' '}
-                <mark className="bg-amber-100 px-0.5">healthcare</mark>, and rural development. I hope
-                the final Budget will address these concerns. Thank you.
-              </p>
-
-              <div className="rounded-lg border border-slate-200 p-2.5">
-                <div className="flex items-center gap-1.5 border-b border-slate-100 pb-1.5 text-[10.5px] font-semibold text-navy-800">
-                  <SparklesIcon className="h-3 w-3 text-violet-600" aria-hidden="true" /> AI Coach
-                  <span className="ml-auto text-slate-500">Count</span>
-                  <span className="w-[62px] text-right text-slate-500">Penalty (WPM)</span>
-                </div>
-                <ul className="divide-y divide-slate-100">
-                  {coachRows.map((r) =>
-                  <li key={r.key} className="flex items-center gap-1.5 py-1 text-[10.5px]">
-                      <span className="text-slate-400">{r.key}</span>
-                      <span className="min-w-0 truncate text-rose-600">{r.label}</span>
-                      <span className="ml-auto w-5 text-right font-medium text-navy-800">
-                        {r.count}
-                      </span>
-                      <span className="w-[62px] text-right font-medium text-navy-800">
-                        {r.penalty}
-                      </span>
-                    </li>
-                  )}
-                </ul>
-                <p className="mt-1.5 flex items-center gap-1.5 border-t border-slate-200 pt-1.5 text-[10.5px] font-bold text-danger">
-                  i. Total Errors
-                  <span className="ml-auto w-5 text-right">9</span>
-                  <span className="w-[62px] text-right">2.40 WPM</span>
-                </p>
-              </div>
-            </div>
+            <p className="min-h-[420px] rounded-lg border border-slate-100 bg-slate-50/40 p-3 text-[16px] leading-[2.3] text-slate-700">
+              Honourable Chairman, I rise to speak on the{' '}
+              <mark className="px-0.5" style={{ backgroundColor: highlighted ? '#DC354533' : 'transparent' }}>Interim Budget</mark> presented{' '}
+              <mark className="px-0.5 line-through" style={{ backgroundColor: highlighted ? '#0D6EFD33' : 'transparent' }}>the</mark> the Hon&apos;ble Minister of
+              Finance. Budget comes at a crucial time when our economy is showing signs of{' '}
+              <mark className="px-0.5" style={{ backgroundColor: highlighted ? '#6F42C133' : 'transparent' }}>recovery,</mark>{' '}
+              <mark className="px-0.5" style={{ backgroundColor: highlighted ? '#19875433' : 'transparent' }}>but</mark> challenges remain. The Government
+              has taken several bold steps to ensure fiscal discipline, promote growth, and{' '}
+              <mark className="px-0.5" style={{ backgroundColor: highlighted ? '#F9731633' : 'transparent' }}>support</mark> the common man. I appreciate the focus on{' '}
+              <mark className="px-0.5" style={{ backgroundColor: highlighted ? '#DC354533' : 'transparent' }}>infrastructure,</mark> digital India, and employment generation. However,{' '}
+              <mark className="px-0.5" style={{ backgroundColor: highlighted ? '#19875433' : 'transparent' }}>more</mark> needs to be done for{' '}
+              <mark className="px-0.5" style={{ backgroundColor: highlighted ? '#6F42C133' : 'transparent' }}>education, healthcare,</mark> and rural development. I hope
+              the final Budget will address these concerns. Thank you.
+            </p>
           </Panel>
 
           <Panel title="Action Panel">
@@ -351,50 +315,64 @@ export function TypingResult() {
           </div>
 
           <Panel>
-            <p className="flex items-center gap-2 font-display text-[13.5px] font-semibold text-navy-800">
-              <SparklesIcon className="h-4 w-4 text-violet-600" aria-hidden="true" /> AI Coach - Deep
+            <p className="flex items-center gap-1.5 font-display text-[12px] font-semibold text-navy-800">
+              <SparklesIcon className="h-3.5 w-3.5 text-violet-600" aria-hidden="true" /> AI Coach - Deep
               Analysis
-              <span className="rounded bg-violet-600 px-1.5 py-[1px] text-[9px] font-bold text-white">
+              <span className="rounded bg-violet-600 px-1.5 py-[1px] text-[8px] font-bold text-white">
                 NEW
               </span>
             </p>
-            <p className="mt-1.5 text-[11.5px] text-slate-500">
+            <p className="mt-1 text-[10.5px] text-slate-500">
               Get AI-powered insights to improve your performance.
             </p>
-            <ul className="mt-3 space-y-1.5">
+            <ul className="mt-2 space-y-1">
               {aiBullets.map((b) =>
-              <li key={b} className="flex items-center gap-2 text-[12px] text-slate-600">
-                  <CheckCircle2Icon className="h-3.5 w-3.5 text-emerald-500" aria-hidden="true" />
+              <li key={b} className="flex items-center gap-1.5 text-[11px] text-slate-600">
+                  <CheckCircle2Icon className="h-3 w-3 text-emerald-500" aria-hidden="true" />
                   {b}
                 </li>
               )}
             </ul>
             <button
               type="button"
-              className="mt-3 flex w-full items-center justify-center gap-2 rounded-md border border-violet-300 py-2.5 text-[12.5px] font-semibold text-violet-700 transition-colors duration-150 hover:bg-violet-50">
-              
-              <SparklesIcon className="h-4 w-4" aria-hidden="true" /> Start AI Deep Analysis
+              className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-md border border-violet-300 py-1.5 text-[11px] font-semibold text-violet-700 transition-colors duration-150 hover:bg-violet-50">
+
+              <SparklesIcon className="h-3.5 w-3.5" aria-hidden="true" /> Start AI Deep Analysis
             </button>
           </Panel>
 
           <Panel title="Compare Your Performance">
-            <ul className="space-y-2 text-[11.5px]">
-              <li className="rounded border border-primary-100 bg-primary-50 px-2.5 py-2">
-                <span className="font-semibold text-primary-700">Your Performance</span>
-                <span className="float-right text-navy-800">58 WPM | 96.58% Accuracy</span>
+            <ul className="space-y-2 text-[12px]">
+              <li className="rounded-lg border border-primary-100 bg-primary-50 px-3 py-2">
+                <p className="font-semibold text-primary-700">Your Performance</p>
+                <p className="text-primary-700">58 WPM | 96.58% Accuracy</p>
               </li>
-              <li className="rounded border border-emerald-100 bg-emerald-50 px-2.5 py-2">
-                <span className="font-semibold text-emerald-700">Topper (Aman Kumar)</span>
-                <span className="float-right text-navy-800">72.80 WPM | 96.50% Accuracy</span>
+              <li className="rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2">
+                <p className="font-semibold text-emerald-700">Topper (Aman Kumar)</p>
+                <p className="text-emerald-700">72.80 WPM | 96.50% Accuracy</p>
               </li>
             </ul>
           </Panel>
 
-          <Panel title="Test Settings">
-            <p className="flex items-center gap-2 text-[11.5px] text-slate-500">
-              <SettingsIcon className="h-3.5 w-3.5" aria-hidden="true" />
-              Standard Result Pattern applied
-            </p>
+          <Panel title="Mistake Penalty Breakdown">
+            <table className="w-full text-left text-[12px]">
+              <thead>
+                <tr className="text-slate-500">
+                  <th scope="col" className="pb-2 font-normal">Mistake</th>
+                  <th scope="col" className="pb-2 text-right font-normal">Count</th>
+                  <th scope="col" className="pb-2 text-right font-normal">Penalty</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {coachRows.map((r) =>
+                <tr key={r.key}>
+                    <td className="py-2 text-navy-800">{r.label}</td>
+                    <td className="py-2 text-right text-primary">{r.count}</td>
+                    <td className="py-2 text-right font-semibold text-navy-800">{r.penalty}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </Panel>
         </div>
       </div>
