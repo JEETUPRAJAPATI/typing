@@ -17,7 +17,8 @@ import {
   TypeIcon,
   DatabaseIcon,
   WalletIcon,
-  SettingsIcon } from
+  SettingsIcon,
+  GraduationCapIcon } from
 'lucide-react';
 
 const map = {
@@ -38,7 +39,8 @@ const map = {
   type: TypeIcon,
   database: DatabaseIcon,
   wallet: WalletIcon,
-  settings: SettingsIcon
+  settings: SettingsIcon,
+  graduationCap: GraduationCapIcon
 } as const;
 
 interface NavIconProps {

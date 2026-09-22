@@ -19,7 +19,18 @@ export const studentNav: NavItem[] = [
 { label: 'Live Test (Typing)', icon: 'play', to: '/live-test/typing', badge: 'live' },
 { label: 'Live Test (Steno)', icon: 'play', to: '/live-test/steno', badge: 'live' },
 { label: 'Leaderboard', icon: 'trophy', to: '/leaderboard' },
+{ label: 'Top Ranks', icon: 'trophy', to: '/top-ranks' },
 { label: 'Test Analysis (Results)', icon: 'barChart', to: '/test-analysis' },
+{
+  label: 'Self Assessment',
+  icon: 'graduationCap',
+  children: [
+  { label: 'Eng. Typing', to: '/self-assessment/eng-typing' },
+  { label: 'Hindi Typing', to: '/self-assessment/hindi-typing' },
+  { label: 'Eng. Steno', to: '/self-assessment/eng-steno' },
+  { label: 'Hindi Steno', to: '/self-assessment/hindi-steno' }]
+
+},
 {
   label: 'Test Analysis',
   icon: 'gauge',

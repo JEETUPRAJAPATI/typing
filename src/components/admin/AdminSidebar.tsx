@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDownIcon, ChevronUpIcon, HeadphonesIcon, ExternalLinkIcon } from 'lucide-react';
+import { ChevronDownIcon, ChevronUpIcon, HeadphonesIcon, ExternalLinkIcon, XIcon } from 'lucide-react';
 import { adminNav } from '../../data/navigation';
 import { NavIcon } from '../common/NavIcon';
 import { LOGO_URL } from '../../data/brand';
@@ -8,9 +8,11 @@ import { LOGO_URL } from '../../data/brand';
 interface AdminSidebarProps {
   summary?: {label: string;value: string;}[];
   showVisitWebsite?: boolean;
+  mobileOpen?: boolean;
+  onClose?: () => void;
 }
 
-export function AdminSidebar({ summary, showVisitWebsite = false }: AdminSidebarProps) {
+export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = false, onClose }: AdminSidebarProps) {
   const { pathname } = useLocation();
   const [open, setOpen] = useState<string[]>(['Test Management']);
 
@@ -18,17 +20,37 @@ export function AdminSidebar({ summary, showVisitWebsite = false }: AdminSidebar
   setOpen((prev) => prev.includes(label) ? prev.filter((l) => l !== label) : [...prev, label]);
 
   return (
-    <aside className="flex h-full w-[262px] shrink-0 flex-col bg-navy-900 text-white">
+    <>
+      {mobileOpen &&
+      <button
+        type="button"
+        aria-label="Close navigation overlay"
+        onClick={onClose}
+        className="fixed inset-0 z-40 bg-black/50 lg:hidden" />
+      }
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex h-full w-[262px] shrink-0 flex-col bg-navy-900 text-white transition-transform duration-200 lg:static lg:translate-x-0 ${
+        mobileOpen ? 'translate-x-0' : '-translate-x-full'}`
+        }>
+
       <div className="flex items-center gap-2.5 px-4 py-4">
         <img
           src={LOGO_URL}
           alt=""
           className="h-9 w-9 rounded-full bg-white object-contain p-[2px]" />
-        
-        <div className="leading-tight">
+
+        <div className="min-w-0 flex-1 leading-tight">
           <p className="text-[12.5px] font-semibold">Balaji Typing &amp; Steno College</p>
           <p className="text-[10.5px] text-white/60">Admin Panel</p>
         </div>
+        <button
+          type="button"
+          aria-label="Close navigation"
+          onClick={onClose}
+          className="rounded p-1 text-white/70 hover:bg-white/10 lg:hidden">
+
+          <XIcon className="h-5 w-5" />
+        </button>
       </div>
 
       <p className="px-4 pb-1.5 text-[10px] font-semibold tracking-wide text-white/40">
@@ -65,12 +87,13 @@ export function AdminSidebar({ summary, showVisitWebsite = false }: AdminSidebar
                     <li key={child.to}>
                           <Link
                         to={child.to}
+                        onClick={onClose}
                         className={`block py-2 pl-11 pr-4 text-[12.5px] transition-colors duration-150 ${
                         pathname === child.to ?
                         'bg-primary-700 font-medium text-white' :
                         'text-white/70 hover:bg-white/10'}`
                         }>
-                        
+
                             — {child.label}
                           </Link>
                         </li>
@@ -84,6 +107,7 @@ export function AdminSidebar({ summary, showVisitWebsite = false }: AdminSidebar
               <li key={item.label}>
                 <Link
                   to={item.to ?? '/admin'}
+                  onClick={onClose}
                   className={`flex items-center gap-2.5 px-4 py-2.5 text-[13px] transition-colors duration-150 ${
                   pathname === item.to ?
                   'bg-primary font-medium text-white' :
@@ -142,6 +166,7 @@ export function AdminSidebar({ summary, showVisitWebsite = false }: AdminSidebar
           <p className="text-[10.5px] text-white/50">All rights reserved.</p>
         </div>
       }
-    </aside>);
+      </aside>
+    </>);
 
 }

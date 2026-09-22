@@ -136,7 +136,7 @@ const analysisRows = [
 const stats = [
 { icon: UsersRoundIcon, value: '1,50,000+', label: 'Registered Users', color: '#0D6EFD' },
 { icon: FileTextIcon, value: '5,00,000+', label: 'Tests Attempted', color: '#198754' },
-{ icon: TrophyIcon, value: 'Top Ranks', label: 'All India Level', color: '#FFC107' },
+{ icon: TrophyIcon, value: 'Top Ranks', label: 'All India Level', color: '#FFC107', to: '/leaderboard', blink: true },
 { icon: ShieldCheckIcon, value: '100% Secure', label: 'Safe & Reliable', color: '#6F42C1' }];
 
 
@@ -373,18 +373,37 @@ export function Home() {
 
       {/* Stats strip */}
       <div className="mb-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {stats.map((s) =>
-        <div
-          key={s.label}
-          className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-card">
-          
-            <s.icon className="h-7 w-7 shrink-0" style={{ color: s.color }} aria-hidden="true" />
-            <div>
-              <p className="font-display text-[17px] font-bold text-navy-800">{s.value}</p>
-              <p className="text-[12px] text-slate-500">{s.label}</p>
-            </div>
-          </div>
-        )}
+        {stats.map((s) => {
+          const content = (
+            <>
+              <s.icon
+                className={`h-7 w-7 shrink-0 ${s.blink ? 'animate-blink' : ''}`}
+                style={{ color: s.color }}
+                aria-hidden="true" />
+
+              <div>
+                <p className="font-display text-[17px] font-bold text-navy-800">{s.value}</p>
+                <p className="text-[12px] text-slate-500">{s.label}</p>
+              </div>
+            </>);
+
+          return s.to ?
+          <Link
+            key={s.label}
+            to={s.to}
+            className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-card transition-colors duration-150 hover:border-primary">
+
+              {content}
+            </Link> :
+
+          <div
+            key={s.label}
+            className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-card">
+
+              {content}
+            </div>;
+
+        })}
       </div>
 
       {/* Channel banners */}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   TrophyIcon,
   DownloadIcon,
@@ -333,12 +334,12 @@ export function TypingResult() {
                 </li>
               )}
             </ul>
-            <button
-              type="button"
+            <Link
+              to="/result/typing/ai-analysis"
               className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-md border border-violet-300 py-1.5 text-[11px] font-semibold text-violet-700 transition-colors duration-150 hover:bg-violet-50">
 
               <SparklesIcon className="h-3.5 w-3.5" aria-hidden="true" /> Start AI Deep Analysis
-            </button>
+            </Link>
           </Panel>
 
           <Panel title="Compare Your Performance">

@@ -25,6 +25,11 @@ import { Subscription } from './pages/admin/Subscription';
 import { FontGroups } from './pages/admin/FontGroups';
 import { AddFontGroup } from './pages/admin/AddFontGroup';
 import { ResultPattern } from './pages/admin/ResultPattern';
+import { SelfAssessment } from './pages/student/SelfAssessment';
+import { TopRanks } from './pages/student/TopRanks';
+import { AIDeepAnalysis } from './pages/student/AIDeepAnalysis';
+import { DetailedAnalysisReport } from './pages/student/DetailedAnalysisReport';
+import { PracticeWords } from './pages/student/PracticeWords';
 
 export function App() {
   return (
@@ -46,7 +51,12 @@ export function App() {
         <Route path="/test-analysis/typing" element={<TypingResult />} />
         <Route path="/test-analysis/eng-steno" element={<StenoResult />} />
         <Route path="/test-analysis/hindi-steno" element={<StenoResult />} />
+        <Route path="/result/typing/ai-analysis" element={<AIDeepAnalysis />} />
+        <Route path="/result/typing/detailed-report" element={<DetailedAnalysisReport />} />
+        <Route path="/result/typing/practice" element={<PracticeWords />} />
+        <Route path="/self-assessment/:mode" element={<SelfAssessment />} />
         <Route path="/leaderboard" element={<AdminLeaderboard />} />
+        <Route path="/top-ranks" element={<TopRanks />} />
         <Route path="/login" element={<Signup />} />
         <Route path="/signup" element={<Signup />} />
 

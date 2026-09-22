@@ -1,17 +1,19 @@
 export interface ExamPattern {
   id: string;
   label: string;
+  icon?: string;
+  color?: string;
 }
 
 export const examPatterns: ExamPattern[] = [
 { id: 'all', label: 'All Exam' },
-{ id: 'delhi', label: 'Delhi' },
-{ id: 'up', label: 'UP' },
-{ id: 'mp', label: 'MP' },
-{ id: 'rajasthan', label: 'Rajasthan' },
-{ id: 'haryana', label: 'Haryana' },
-{ id: 'bihar', label: 'Bihar' },
-{ id: 'other', label: 'Other State' }];
+{ id: 'delhi', label: 'Delhi', icon: 'gate', color: '#DC2626' },
+{ id: 'up', label: 'UP', icon: 'taj', color: '#EA580C' },
+{ id: 'mp', label: 'MP', icon: 'toran', color: '#7C3AED' },
+{ id: 'rajasthan', label: 'Rajasthan', icon: 'palace', color: '#D97706' },
+{ id: 'haryana', label: 'Haryana', icon: 'gopuram', color: '#16A34A' },
+{ id: 'bihar', label: 'Bihar', icon: 'stupa', color: '#92400E' },
+{ id: 'other', label: 'Other State', icon: 'map', color: '#2563EB' }];
 
 
 export interface TypingExam {
@@ -23,6 +25,9 @@ export interface TypingExam {
   arrowText: string;
   state: string;
   image: string;
+  initials: string;
+  testsCount: number;
+  premium: boolean;
 }
 
 export const typingExams: TypingExam[] = [
@@ -34,7 +39,10 @@ export const typingExams: TypingExam[] = [
   arrowBg: 'bg-rose-100',
   arrowText: 'text-rose-600',
   state: 'all',
-  image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&q=80'
+  image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&q=80',
+  initials: 'SSC',
+  testsCount: 375,
+  premium: true
 },
 {
   id: 'ssc-chsl',
@@ -44,7 +52,10 @@ export const typingExams: TypingExam[] = [
   arrowBg: 'bg-emerald-100',
   arrowText: 'text-emerald-600',
   state: 'all',
-  image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&q=80'
+  image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&q=80',
+  initials: 'CHSL',
+  testsCount: 280,
+  premium: true
 },
 {
   id: 'delhi-police-hc',
@@ -54,7 +65,10 @@ export const typingExams: TypingExam[] = [
   arrowBg: 'bg-primary-100',
   arrowText: 'text-primary-700',
   state: 'delhi',
-  image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&q=80'
+  image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&q=80',
+  initials: 'DP',
+  testsCount: 210,
+  premium: true
 },
 {
   id: 'up-police',
@@ -64,7 +78,10 @@ export const typingExams: TypingExam[] = [
   arrowBg: 'bg-amber-100',
   arrowText: 'text-amber-600',
   state: 'up',
-  image: 'https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=80'
+  image: 'https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=80',
+  initials: 'UPP',
+  testsCount: 190,
+  premium: true
 },
 {
   id: 'railway-ntpc',
@@ -74,7 +91,10 @@ export const typingExams: TypingExam[] = [
   arrowBg: 'bg-primary-100',
   arrowText: 'text-primary-700',
   state: 'all',
-  image: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=400&q=80'
+  image: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=400&q=80',
+  initials: 'RRB',
+  testsCount: 240,
+  premium: true
 },
 {
   id: 'ssc-mts',
@@ -84,7 +104,10 @@ export const typingExams: TypingExam[] = [
   arrowBg: 'bg-rose-100',
   arrowText: 'text-rose-600',
   state: 'all',
-  image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=80'
+  image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=80',
+  initials: 'MTS',
+  testsCount: 160,
+  premium: false
 },
 {
   id: 'rajasthan-cet',
@@ -94,7 +117,10 @@ export const typingExams: TypingExam[] = [
   arrowBg: 'bg-amber-100',
   arrowText: 'text-amber-600',
   state: 'rajasthan',
-  image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&q=80'
+  image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&q=80',
+  initials: 'RCET',
+  testsCount: 120,
+  premium: true
 },
 {
   id: 'haryana-cet',
@@ -104,7 +130,10 @@ export const typingExams: TypingExam[] = [
   arrowBg: 'bg-emerald-100',
   arrowText: 'text-emerald-600',
   state: 'haryana',
-  image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=400&q=80'
+  image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=400&q=80',
+  initials: 'HCET',
+  testsCount: 110,
+  premium: true
 },
 {
   id: 'mp-vyapam',
@@ -114,7 +143,10 @@ export const typingExams: TypingExam[] = [
   arrowBg: 'bg-amber-100',
   arrowText: 'text-amber-600',
   state: 'mp',
-  image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&q=80'
+  image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&q=80',
+  initials: 'ESB',
+  testsCount: 140,
+  premium: true
 },
 {
   id: 'bihar-ssc',
@@ -124,7 +156,10 @@ export const typingExams: TypingExam[] = [
   arrowBg: 'bg-primary-100',
   arrowText: 'text-primary-700',
   state: 'bihar',
-  image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=80'
+  image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=80',
+  initials: 'BSSC',
+  testsCount: 95,
+  premium: true
 },
 {
   id: 'jharkhand-ssc',
@@ -134,7 +169,10 @@ export const typingExams: TypingExam[] = [
   arrowBg: 'bg-emerald-100',
   arrowText: 'text-emerald-600',
   state: 'other',
-  image: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=400&q=80'
+  image: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=400&q=80',
+  initials: 'JSSC',
+  testsCount: 88,
+  premium: true
 },
 {
   id: 'odisha-ossc',
@@ -144,7 +182,23 @@ export const typingExams: TypingExam[] = [
   arrowBg: 'bg-rose-100',
   arrowText: 'text-rose-600',
   state: 'other',
-  image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&q=80'
+  image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&q=80',
+  initials: 'OSSC',
+  testsCount: 76,
+  premium: true
+},
+{
+  id: 'ahc-ro-aro',
+  name: 'AHC RO ARO Typing Test',
+  lines: ['Allahabad High Court'],
+  tone: 'bg-white',
+  arrowBg: 'bg-primary-100',
+  arrowText: 'text-primary-700',
+  state: 'other',
+  image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=80',
+  initials: 'AHC',
+  testsCount: 375,
+  premium: true
 },
 {
   id: 'other-state',
@@ -154,7 +208,10 @@ export const typingExams: TypingExam[] = [
   arrowBg: 'bg-primary-100',
   arrowText: 'text-primary-700',
   state: 'other',
-  image: 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=400&q=80'
+  image: 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=400&q=80',
+  initials: 'IN',
+  testsCount: 150,
+  premium: false
 }];
 
 

@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDownIcon, ChevronUpIcon, SendIcon, YoutubeIcon } from 'lucide-react';
+import { ChevronDownIcon, ChevronUpIcon, SendIcon, YoutubeIcon, XIcon } from 'lucide-react';
 import { studentNav, NavItem } from '../../data/navigation';
 import { NavIcon } from '../common/NavIcon';
 import { LOGO_URL } from '../../data/brand';
+
+interface StudentSidebarProps {
+  mobileOpen?: boolean;
+  onClose?: () => void;
+}
 
 function Badge({ kind }: {kind: NonNullable<NavItem['badge']>;}) {
   if (kind === 'live') {
@@ -27,7 +32,7 @@ function Badge({ kind }: {kind: NonNullable<NavItem['badge']>;}) {
 
 }
 
-export function StudentSidebar() {
+export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarProps) {
   const { pathname } = useLocation();
   const [open, setOpen] = useState<string[]>(['Test Analysis']);
 
@@ -35,17 +40,37 @@ export function StudentSidebar() {
   setOpen((prev) => prev.includes(label) ? prev.filter((l) => l !== label) : [...prev, label]);
 
   return (
-    <aside className="flex h-full w-[248px] shrink-0 flex-col bg-navy-800 text-white">
+    <>
+      {mobileOpen &&
+      <button
+        type="button"
+        aria-label="Close navigation overlay"
+        onClick={onClose}
+        className="fixed inset-0 z-40 bg-black/50 lg:hidden" />
+      }
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex h-full w-[248px] shrink-0 flex-col bg-navy-800 text-white transition-transform duration-200 lg:static lg:translate-x-0 ${
+        mobileOpen ? 'translate-x-0' : '-translate-x-full'}`
+        }>
+
       <div className="flex items-center gap-3 border-b border-white/10 px-4 py-4">
         <img
           src={LOGO_URL}
           alt="Balaji Typing College"
           className="h-11 w-11 rounded-full bg-white object-contain p-[2px]" />
-        
-        <div className="leading-tight">
+
+        <div className="min-w-0 flex-1 leading-tight">
           <p className="font-display text-[13px] font-semibold">Balaji Typing &amp;</p>
           <p className="font-display text-[13px] font-semibold">Steno College</p>
         </div>
+        <button
+          type="button"
+          aria-label="Close navigation"
+          onClick={onClose}
+          className="rounded p-1 text-white/70 hover:bg-white/10 lg:hidden">
+
+          <XIcon className="h-5 w-5" />
+        </button>
       </div>
 
       <nav className="scroll-thin flex-1 overflow-y-auto px-3 py-3" aria-label="Student navigation">
@@ -76,12 +101,13 @@ export function StudentSidebar() {
                     <li key={child.to}>
                           <Link
                         to={child.to}
+                        onClick={onClose}
                         className={`flex items-center gap-2 rounded-md px-2.5 py-1.5 text-[12.5px] transition-colors duration-150 ${
                         pathname === child.to ?
                         'bg-primary text-white' :
                         'text-white/75 hover:bg-white/10'}`
                         }>
-                        
+
                             <NavIcon name="barChart" className="h-3.5 w-3.5" />
                             {child.label}
                           </Link>
@@ -96,6 +122,7 @@ export function StudentSidebar() {
               <li key={item.label}>
                 <Link
                   to={item.to ?? '/'}
+                  onClick={onClose}
                   className={`flex items-center gap-2.5 rounded-md px-3 py-2 text-[13px] transition-colors duration-150 ${
                   active ? 'bg-primary font-medium text-white' : 'text-white/85 hover:bg-white/10'}`
                   }>
@@ -136,6 +163,7 @@ export function StudentSidebar() {
           </span>
         </a>
       </div>
-    </aside>);
+      </aside>
+    </>);
 
 }
