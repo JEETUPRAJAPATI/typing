@@ -136,6 +136,11 @@ export function TopRanks() {
         </p>
       </div>
 
+      <p className="mb-5 rounded-xl border border-slate-200 bg-white p-4 text-center font-display text-[15px] font-semibold leading-relaxed text-navy-800">
+        पूरे भारत देश में आज का English और Hindi टाइपिंग में अच्छा प्रदर्शन करने वाले Balaji Typing के छात्र
+        का नाम
+      </p>
+
       <div className="grid gap-5 xl:grid-cols-2">
         <RankTable
           title="Hindi Typing"

@@ -4,6 +4,8 @@ import {
   UsersIcon,
   ClockIcon,
   CalendarClockIcon,
+  MonitorIcon,
+  MonitorSmartphoneIcon,
   EyeIcon,
   RotateCcwIcon,
   SaveIcon,
@@ -21,6 +23,7 @@ const sectionTitle = (n: number, title: string) =>
 
 export function AddStudent() {
   const [loginWindow, setLoginWindow] = useState<'anytime' | 'fixed'>('anytime');
+  const [loginType, setLoginType] = useState<'single' | 'multiple'>('multiple');
   const [status, setStatus] = useState<'active' | 'inactive'>('active');
 
   return (
@@ -158,7 +161,7 @@ export function AddStudent() {
         {/* 2. Course & access */}
         <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-card">
           {sectionTitle(2, 'Course & Access Information')}
-          <div className="grid gap-4 lg:grid-cols-[220px_1fr]">
+          <div className="grid gap-4 lg:grid-cols-[220px_1fr_1fr]">
             <label className="block">
               <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">
                 Course / Type <span className="text-danger">*</span>
@@ -176,7 +179,7 @@ export function AddStudent() {
               <p className="mb-1.5 text-[12px] font-semibold text-navy-800">
                 Login Window <span className="text-danger">*</span>
               </p>
-              <div className="grid max-w-[420px] grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3">
                 {[
                 { id: 'anytime' as const, icon: ClockIcon, label: 'Anytime', desc: 'Student can login any time' },
                 { id: 'fixed' as const, icon: CalendarClockIcon, label: 'Fixed Time', desc: 'Student can login only in selected time slot' }].
@@ -191,11 +194,49 @@ export function AddStudent() {
                       className={`relative flex flex-col items-center gap-1.5 rounded-lg border px-3 py-3 text-center transition-colors duration-150 ${
                       active ? 'border-primary bg-primary-50' : 'border-slate-200 hover:border-primary'}`
                       }>
-                      
+
                       <opt.icon
                         className={`h-5 w-5 ${active ? 'text-primary' : 'text-slate-500'}`}
                         aria-hidden="true" />
-                      
+
+                      <span className="text-[12px] font-semibold text-navy-800">{opt.label}</span>
+                      <span className="text-[10.5px] leading-snug text-slate-500">{opt.desc}</span>
+                      {active &&
+                      <CheckCircle2Icon
+                        className="absolute right-1.5 top-1.5 h-4 w-4 fill-primary text-white"
+                        aria-hidden="true" />
+
+                      }
+                    </button>);
+
+                })}
+              </div>
+            </div>
+
+            <div>
+              <p className="mb-1.5 text-[12px] font-semibold text-navy-800">
+                Login Type <span className="text-danger">*</span>
+              </p>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                { id: 'single' as const, icon: MonitorIcon, label: 'Single Device', desc: 'Student can login on one device only' },
+                { id: 'multiple' as const, icon: MonitorSmartphoneIcon, label: 'Multiple Device', desc: 'Student can login on multiple devices' }].
+                map((opt) => {
+                  const active = loginType === opt.id;
+                  return (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => setLoginType(opt.id)}
+                      aria-pressed={active}
+                      className={`relative flex flex-col items-center gap-1.5 rounded-lg border px-3 py-3 text-center transition-colors duration-150 ${
+                      active ? 'border-primary bg-primary-50' : 'border-slate-200 hover:border-primary'}`
+                      }>
+
+                      <opt.icon
+                        className={`h-5 w-5 ${active ? 'text-primary' : 'text-slate-500'}`}
+                        aria-hidden="true" />
+
                       <span className="text-[12px] font-semibold text-navy-800">{opt.label}</span>
                       <span className="text-[10.5px] leading-snug text-slate-500">{opt.desc}</span>
                       {active &&

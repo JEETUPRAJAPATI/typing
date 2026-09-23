@@ -135,9 +135,9 @@ function TestCard({ test, upcoming }: {test: LiveTest;upcoming?: boolean;}) {
               <CheckIcon className="h-4 w-4" aria-hidden="true" /> Attempted
             </p>
             <Link
-            to="/leaderboard"
+            to={`/live-test/typing/${test.id}/rank`}
             className="flex w-full items-center justify-center gap-2 rounded-md bg-[#F59E0B] py-2.5 text-[12.5px] font-semibold text-white transition-colors duration-150 hover:bg-[#d98806]">
-            
+
               <TrophyIcon className="h-4 w-4" aria-hidden="true" /> View Rank
             </Link>
           </> :

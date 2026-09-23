@@ -13,7 +13,9 @@ import {
   ZapIcon,
   SparklesIcon,
   RocketIcon,
-  TrophyIcon } from
+  TrophyIcon,
+  EyeIcon,
+  XIcon } from
 'lucide-react';
 import { AdminLayout } from '../../components/admin/AdminLayout';
 import { Panel } from '../../components/common/Pill';
@@ -156,6 +158,52 @@ function Donut({ data, centerLabel, centerValue }: {
 
 }
 
+type MistakeRow = (typeof mistakesList)[number];
+
+function MistakeDetailModal({ mistake, onClose }: {mistake: MistakeRow;onClose: () => void;}) {
+  const status = mistake.type.toLowerCase().includes('half') ? 'HalfMistake' : 'FullMistake';
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/50 p-4 backdrop-blur-sm">
+      <div className="w-full max-w-3xl rounded-xl bg-white p-7 shadow-2xl">
+        <div className="mb-4 flex items-start justify-between gap-3">
+          <h3 className="font-display text-[19px] font-bold text-navy-800">Mistake Detail</h3>
+          <button
+            type="button"
+            onClick={onClose}
+            className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-slate-400 transition-colors duration-150 hover:bg-slate-100 hover:text-slate-600"
+            aria-label="Close">
+
+            <XIcon className="h-4 w-4" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="overflow-hidden rounded-md border border-slate-300">
+          <table className="w-full text-left text-[14px]">
+            <thead className="border-b border-slate-300 bg-slate-100 text-slate-600">
+              <tr>
+                <th scope="col" className="border-r border-slate-300 px-4 py-2.5 font-semibold">#</th>
+                <th scope="col" className="border-r border-slate-300 px-4 py-2.5 font-semibold">Original</th>
+                <th scope="col" className="border-r border-slate-300 px-4 py-2.5 font-semibold">Typed</th>
+                <th scope="col" className="border-r border-slate-300 px-4 py-2.5 font-semibold">Mistake</th>
+                <th scope="col" className="px-4 py-2.5 font-semibold">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="bg-white">
+                <td className="border-r border-slate-200 px-4 py-2.5 text-slate-600">{mistake.n}</td>
+                <td className="border-r border-slate-200 px-4 py-2.5 text-slate-700">{mistake.original}</td>
+                <td className="border-r border-slate-200 px-4 py-2.5 text-slate-700">{mistake.input}</td>
+                <td className="border-r border-slate-200 px-4 py-2.5 text-slate-700">{mistake.type}</td>
+                <td className="px-4 py-2.5 font-medium text-danger">{status}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>);
+
+}
+
 function TrendChart() {
   const width = 480;
   const height = 140;
@@ -179,7 +227,7 @@ function TrendChart() {
 }
 
 export function DetailedAnalysisReport() {
-  const [showAllMistakes, setShowAllMistakes] = useState(false);
+  const [viewMistake, setViewMistake] = useState<MistakeRow | null>(null);
 
   return (
     <AdminLayout searchPlaceholder="Search test name, exam name..." showActionButtons={false}>
@@ -277,33 +325,9 @@ export function DetailedAnalysisReport() {
             <Panel title="Detailed Mistakes List">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] text-slate-500">7 mistakes found</span>
-                <div className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setShowAllMistakes((v) => !v)}
-                    aria-expanded={showAllMistakes}
-                    className="rounded-md border border-slate-300 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-600 transition-colors duration-150 hover:bg-slate-50">
-
-                    View all
-                  </button>
-                  {showAllMistakes &&
-                  <ul className="absolute right-0 top-full z-10 mt-1 w-24 rounded-md border border-slate-200 bg-white py-1 shadow-panel">
-                      {mistakesList.map((m) =>
-                    <li key={m.n}>
-                          <button
-                        type="button"
-                        className="block w-full px-3 py-1.5 text-left text-[11px] text-slate-600 transition-colors duration-150 hover:bg-slate-50">
-
-                            View
-                          </button>
-                        </li>
-                    )}
-                    </ul>
-                  }
-                </div>
               </div>
               <div className="mt-2 overflow-x-auto">
-                <table className="w-full min-w-[460px] text-left text-[11px]">
+                <table className="w-full min-w-[520px] text-left text-[11px]">
                   <thead className="text-slate-500">
                     <tr>
                       <th scope="col" className="pb-1.5 font-medium">#</th>
@@ -311,6 +335,7 @@ export function DetailedAnalysisReport() {
                       <th scope="col" className="pb-1.5 font-medium">Original Word / Text</th>
                       <th scope="col" className="pb-1.5 font-medium">Your Input</th>
                       <th scope="col" className="pb-1.5 text-right font-medium">Count</th>
+                      <th scope="col" className="pb-1.5 text-right font-medium">View</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
@@ -321,6 +346,15 @@ export function DetailedAnalysisReport() {
                         <td className="py-1.5 text-slate-500">{m.original}</td>
                         <td className="py-1.5 text-slate-500">{m.input}</td>
                         <td className="py-1.5 text-right font-semibold text-navy-800">{m.count}</td>
+                        <td className="py-1.5 text-right">
+                          <button
+                          type="button"
+                          onClick={() => setViewMistake(m)}
+                          className="inline-flex items-center gap-1 rounded-md border border-slate-300 bg-white px-2 py-1 text-[10.5px] font-medium text-slate-600 transition-colors duration-150 hover:bg-slate-50">
+
+                            <EyeIcon className="h-3 w-3" aria-hidden="true" /> View
+                          </button>
+                        </td>
                       </tr>
                     )}
                   </tbody>
@@ -436,6 +470,8 @@ export function DetailedAnalysisReport() {
           </Link>
         </div>
       </div>
+
+      {viewMistake && <MistakeDetailModal mistake={viewMistake} onClose={() => setViewMistake(null)} />}
     </AdminLayout>);
 
 }

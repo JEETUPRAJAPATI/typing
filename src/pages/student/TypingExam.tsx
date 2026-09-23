@@ -61,7 +61,6 @@ function GopuramGateIcon({ style, ...props }: MonumentIconProps) {
       <rect x="17" y="10" width="2" height="11" />
       <path d="M9.5 21V15C9.5 13.3 10.6 12 12 12C13.4 12 14.5 13.3 14.5 15V21H9.5Z" />
     </svg>);
-
 }
 
 function StupaIcon({ style, ...props }: MonumentIconProps) {

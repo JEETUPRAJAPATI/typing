@@ -25,11 +25,12 @@ import { Subscription } from './pages/admin/Subscription';
 import { FontGroups } from './pages/admin/FontGroups';
 import { AddFontGroup } from './pages/admin/AddFontGroup';
 import { ResultPattern } from './pages/admin/ResultPattern';
-import { SelfAssessment } from './pages/student/SelfAssessment';
+import { PracticeSetup } from './pages/student/PracticeSetup';
 import { TopRanks } from './pages/student/TopRanks';
 import { AIDeepAnalysis } from './pages/student/AIDeepAnalysis';
 import { DetailedAnalysisReport } from './pages/student/DetailedAnalysisReport';
 import { PracticeWords } from './pages/student/PracticeWords';
+import { TestRankList } from './pages/student/TestRankList';
 
 export function App() {
   return (
@@ -45,6 +46,7 @@ export function App() {
         <Route path="/steno/:dictationId/practice" element={<StenoPractice />} />
         <Route path="/live-test/typing" element={<LiveTestTyping />} />
         <Route path="/live-test/steno" element={<LiveTestTyping />} />
+        <Route path="/live-test/typing/:testId/rank" element={<TestRankList />} />
         <Route path="/result/typing" element={<TypingResult />} />
         <Route path="/result/steno" element={<StenoResult />} />
         <Route path="/test-analysis" element={<AdminTestAnalysis />} />
@@ -54,7 +56,7 @@ export function App() {
         <Route path="/result/typing/ai-analysis" element={<AIDeepAnalysis />} />
         <Route path="/result/typing/detailed-report" element={<DetailedAnalysisReport />} />
         <Route path="/result/typing/practice" element={<PracticeWords />} />
-        <Route path="/self-assessment/:mode" element={<SelfAssessment />} />
+        <Route path="/self-assessment/:mode" element={<PracticeSetup />} />
         <Route path="/leaderboard" element={<AdminLeaderboard />} />
         <Route path="/top-ranks" element={<TopRanks />} />
         <Route path="/login" element={<Signup />} />

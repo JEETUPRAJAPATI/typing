@@ -49,9 +49,6 @@ const passagePreview =
 const waveform = [6, 12, 18, 10, 22, 14, 26, 16, 20, 8, 24, 12, 18, 10, 22, 16, 28, 14, 20, 10, 24, 16, 12, 20, 8, 18, 24, 14, 10, 22];
 
 const toggles = [
-{ id: 'wordCount', label: 'Show Word Count to Student', on: true },
-{ id: 'backspaceCount', label: 'Show Backspace Count', on: true },
-{ id: 'autoScroll', label: 'Allow Auto-Scroll', on: true },
 { id: 'shuffle', label: 'Shuffle Content', on: false },
 { id: 'review', label: 'Allow Review (Preload Only)', on: false }];
 
@@ -266,12 +263,15 @@ export function AddNewTest() {
               </label>
             </div>
           </section>
+        </div>
 
-          {/* 3. Difficulty */}
-          <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-card">
+        <div className="grid gap-4 xl:grid-cols-[1fr_2fr]">
+        <div className="space-y-4">
+        {/* 3. Difficulty */}
+        <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-card">
             {sectionTitle(3, 'Difficulty Level')}
             <p className="mb-2.5 text-[12px] text-slate-500">Select the difficulty level of this test.</p>
-            <div className="grid gap-3 sm:grid-cols-3">
+            <div className="grid gap-3">
               {difficulties.map((d) => {
                 const active = d.id === difficulty;
                 return (
@@ -280,16 +280,18 @@ export function AddNewTest() {
                     type="button"
                     onClick={() => setDifficulty(d.id)}
                     aria-pressed={active}
-                    className={`relative flex flex-col items-center gap-1.5 rounded-lg border px-3 py-5 transition-colors duration-150 ${
+                    className={`relative flex items-center gap-3 rounded-lg border px-4 py-3 text-left transition-colors duration-150 ${
                     active ? d.tone : 'border-slate-200 text-slate-500 hover:border-primary'}`
                     }>
-                    
-                    <StarIcon className="h-5 w-5" aria-hidden="true" />
-                    <span className="font-display text-[14px] font-bold">{d.label}</span>
-                    <span className="text-[11px]">{d.desc}</span>
+
+                    <StarIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
+                    <span>
+                      <span className="block font-display text-[14px] font-bold">{d.label}</span>
+                      <span className="block text-[11px]">{d.desc}</span>
+                    </span>
                     {active &&
                     <CheckCircle2Icon
-                      className="absolute right-1.5 top-1.5 h-4 w-4 fill-amber-500 text-white"
+                      className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 fill-amber-500 text-white"
                       aria-hidden="true" />
 
                     }
@@ -301,10 +303,109 @@ export function AddNewTest() {
               <InfoIcon className="mt-[1px] h-3.5 w-3.5 shrink-0" aria-hidden="true" />
               Note: Difficulty level will help in filtering and recommending tests to students.
             </p>
-          </section>
+        </section>
 
-          {/* 4. Content */}
-          <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-card">
+        {/* 5. Advanced */}
+        <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-card">
+          {sectionTitle(5, 'Advanced Options')}
+          <div className="space-y-4">
+            <ul className="space-y-2.5">
+              {toggles.map((t) =>
+              <li key={t.id}>
+                  <button
+                  type="button"
+                  role="switch"
+                  aria-checked={switches[t.id]}
+                  onClick={() => setSwitches((s) => ({ ...s, [t.id]: !s[t.id] }))}
+                  className="flex w-full items-center gap-2.5 text-left">
+
+                    <span
+                    className={`relative h-4 w-8 shrink-0 rounded-full transition-colors duration-150 ${
+                    switches[t.id] ? 'bg-primary' : 'bg-slate-300'}`
+                    }>
+
+                      <span
+                      className={`absolute top-[2px] h-3 w-3 rounded-full bg-white transition-transform duration-150 ${
+                      switches[t.id] ? 'translate-x-[18px]' : 'translate-x-[2px]'}`
+                      } />
+
+                    </span>
+                    <span className="text-[12px] text-navy-800">{t.label}</span>
+                  </button>
+                </li>
+              )}
+            </ul>
+
+            <div className="space-y-3.5">
+              <div className="grid gap-3.5">
+              <label className="block">
+                <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">
+                  Start Date &amp; Time
+                </span>
+                <span className="flex gap-2">
+                  <span className="relative flex-1">
+                    <input
+                      type="text"
+                      placeholder="dd-mm-yyyy"
+                      className="w-full rounded-md border border-slate-300 px-3 py-2 pr-8 text-[12.5px] outline-none focus:border-primary" />
+
+                    <CalendarIcon
+                      className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400"
+                      aria-hidden="true" />
+
+                  </span>
+                  <span className="relative w-[96px]">
+                    <input
+                      type="text"
+                      placeholder="--:-- --"
+                      className="w-full rounded-md border border-slate-300 px-3 py-2 pr-8 text-[12.5px] outline-none focus:border-primary" />
+
+                    <ClockIcon
+                      className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400"
+                      aria-hidden="true" />
+
+                  </span>
+                </span>
+              </label>
+
+              <label className="block">
+                <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">
+                  End Date &amp; Time (Optional)
+                </span>
+                <span className="flex gap-2">
+                  <span className="relative flex-1">
+                    <input
+                      type="text"
+                      placeholder="dd-mm-yyyy"
+                      className="w-full rounded-md border border-slate-300 px-3 py-2 pr-8 text-[12.5px] outline-none focus:border-primary" />
+
+                    <CalendarIcon
+                      className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400"
+                      aria-hidden="true" />
+
+                  </span>
+                  <span className="relative w-[96px]">
+                    <input
+                      type="text"
+                      placeholder="--:-- --"
+                      className="w-full rounded-md border border-slate-300 px-3 py-2 pr-8 text-[12.5px] outline-none focus:border-primary" />
+
+                    <ClockIcon
+                      className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400"
+                      aria-hidden="true" />
+
+                  </span>
+                </span>
+                <span className="mt-1 block text-[11px] text-slate-500">Leave blank for no expiry</span>
+              </label>
+              </div>
+            </div>
+          </div>
+        </section>
+        </div>
+
+        {/* 4. Content */}
+        <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-card">
             {sectionTitle(4, 'Test Content')}
             <label className="mb-3.5 block max-w-[220px]">
               <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">
@@ -320,7 +421,7 @@ export function AddNewTest() {
               </span>
             </label>
 
-            <div className="grid gap-3.5 xl:grid-cols-[1.7fr_1fr_220px]">
+            <div className="space-y-4">
               <div>
                 <p className="mb-1.5 flex items-center gap-1.5 text-[12px] font-semibold text-navy-800">
                   <FileTextIcon className="h-4 w-4 text-primary" aria-hidden="true" /> Uploaded Text File{' '}
@@ -344,7 +445,7 @@ export function AddNewTest() {
                       <span className="block text-[10.5px] text-slate-500">(24 KB)</span>
                     </span>
                   </div>
-                  <div className="mt-2.5 max-h-[150px] overflow-y-auto rounded-md bg-slate-50 p-2.5 text-[11.5px] leading-relaxed text-slate-600">
+                  <div className="mt-2.5 h-[260px] overflow-y-auto rounded-md bg-slate-50 p-3 text-[14px] leading-relaxed text-slate-600">
                     {passagePreview}
                   </div>
                   <div className="mt-2.5 flex gap-2">
@@ -426,16 +527,16 @@ export function AddNewTest() {
                 </div>
               </div>
 
-              <div className="rounded-md border border-slate-200 p-2.5">
-                <p className="mb-1.5 text-[11.5px] font-semibold text-navy-800">Content Summary</p>
-                <ul className="space-y-1 text-[11px] text-slate-500">
+              <div className="rounded-md border border-slate-200 p-3">
+                <p className="mb-2 text-[11.5px] font-semibold text-navy-800">Content Summary</p>
+                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-5">
                   {contentSummary.map((c) =>
-                  <li key={c} className="flex justify-between gap-2">
-                      <span>{c}</span>
-                      <span>: --</span>
-                    </li>
+                  <div key={c} className="rounded-md bg-slate-50 px-2.5 py-2 text-[11px] text-slate-500">
+                      <p>{c}</p>
+                      <p className="font-semibold text-navy-800">--</p>
+                    </div>
                   )}
-                </ul>
+                </div>
               </div>
             </div>
 
@@ -453,119 +554,8 @@ export function AddNewTest() {
                 <SearchIcon className="h-3.5 w-3.5" aria-hidden="true" /> Preview Content
               </button>
             </div>
-          </section>
-        </div>
-
-        {/* 5. Advanced */}
-        <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-card">
-          {sectionTitle(5, 'Advanced Options')}
-          <div className="grid gap-5 lg:grid-cols-[260px_1fr]">
-            <ul className="space-y-2.5">
-              {toggles.map((t) =>
-              <li key={t.id}>
-                  <button
-                  type="button"
-                  role="switch"
-                  aria-checked={switches[t.id]}
-                  onClick={() => setSwitches((s) => ({ ...s, [t.id]: !s[t.id] }))}
-                  className="flex w-full items-center gap-2.5 text-left">
-                  
-                    <span
-                    className={`relative h-4 w-8 shrink-0 rounded-full transition-colors duration-150 ${
-                    switches[t.id] ? 'bg-primary' : 'bg-slate-300'}`
-                    }>
-                    
-                      <span
-                      className={`absolute top-[2px] h-3 w-3 rounded-full bg-white transition-transform duration-150 ${
-                      switches[t.id] ? 'translate-x-[18px]' : 'translate-x-[2px]'}`
-                      } />
-                    
-                    </span>
-                    <span className="text-[12px] text-navy-800">{t.label}</span>
-                  </button>
-                </li>
-              )}
-            </ul>
-
-            <div className="grid gap-3.5 sm:grid-cols-3">
-              <label className="block sm:col-span-3">
-                <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">
-                  Backspace Option <span className="text-danger">*</span>
-                </span>
-                <select className="w-full max-w-[400px] rounded-md border border-slate-300 px-3 py-2 text-[12.5px] text-slate-600 outline-none focus:border-primary">
-                  <option>-- Select Backspace Option --</option>
-                  <option>Current Word Backspace</option>
-                  <option>Full Backspace</option>
-                  <option>No Backspace</option>
-                </select>
-                <span className="mt-1 block text-[11px] text-slate-500">
-                  Choose backspace behavior for students
-                </span>
-              </label>
-
-              <label className="block">
-                <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">
-                  Start Date &amp; Time
-                </span>
-                <span className="flex gap-2">
-                  <span className="relative flex-1">
-                    <input
-                      type="text"
-                      placeholder="dd-mm-yyyy"
-                      className="w-full rounded-md border border-slate-300 px-3 py-2 pr-8 text-[12.5px] outline-none focus:border-primary" />
-                    
-                    <CalendarIcon
-                      className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400"
-                      aria-hidden="true" />
-                    
-                  </span>
-                  <span className="relative w-[96px]">
-                    <input
-                      type="text"
-                      placeholder="--:-- --"
-                      className="w-full rounded-md border border-slate-300 px-3 py-2 pr-8 text-[12.5px] outline-none focus:border-primary" />
-                    
-                    <ClockIcon
-                      className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400"
-                      aria-hidden="true" />
-                    
-                  </span>
-                </span>
-              </label>
-
-              <label className="block">
-                <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">
-                  End Date &amp; Time (Optional)
-                </span>
-                <span className="flex gap-2">
-                  <span className="relative flex-1">
-                    <input
-                      type="text"
-                      placeholder="dd-mm-yyyy"
-                      className="w-full rounded-md border border-slate-300 px-3 py-2 pr-8 text-[12.5px] outline-none focus:border-primary" />
-                    
-                    <CalendarIcon
-                      className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400"
-                      aria-hidden="true" />
-                    
-                  </span>
-                  <span className="relative w-[96px]">
-                    <input
-                      type="text"
-                      placeholder="--:-- --"
-                      className="w-full rounded-md border border-slate-300 px-3 py-2 pr-8 text-[12.5px] outline-none focus:border-primary" />
-                    
-                    <ClockIcon
-                      className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400"
-                      aria-hidden="true" />
-                    
-                  </span>
-                </span>
-                <span className="mt-1 block text-[11px] text-slate-500">Leave blank for no expiry</span>
-              </label>
-            </div>
-          </div>
         </section>
+        </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
           <button
