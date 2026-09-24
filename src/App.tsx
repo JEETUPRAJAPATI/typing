@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/student/Home';
+import { TypingGames } from './pages/student/TypingGames';
 import { TypingExam } from './pages/student/TypingExam';
 import { ExamDetail } from './pages/student/ExamDetail';
 import { EnglishSteno } from './pages/student/EnglishSteno';
@@ -38,6 +39,7 @@ export function App() {
       <Routes>
         {/* Student */}
         <Route path="/" element={<Home />} />
+        <Route path="/typing-games" element={<TypingGames />} />
         <Route path="/typing-exam" element={<TypingExam />} />
         <Route path="/typing-exam/:examId" element={<ExamDetail />} />
         <Route path="/english-steno" element={<EnglishSteno />} />

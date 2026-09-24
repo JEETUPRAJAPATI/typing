@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   ClipboardListIcon,
   ClockIcon,
   FileTextIcon,
   UploadCloudIcon,
+  RotateCcwIcon,
+  EyeIcon,
   PlayIcon,
   XIcon,
   ChevronRightIcon,
+  ChevronLeftIcon,
   LightbulbIcon,
+  UserIcon,
+  LockIcon,
+  UserCircle2Icon,
   KeyboardIcon,
   ScaleIcon,
   MicIcon,
@@ -18,7 +24,11 @@ import {
   BookOpenIcon,
   AwardIcon,
   TrainFrontIcon,
-  GavelIcon } from
+  GavelIcon,
+  SettingsIcon,
+  MaximizeIcon,
+  MinusIcon,
+  PlusIcon } from
 'lucide-react';
 import { StudentLayout } from '../../components/student/StudentLayout';
 import { PageHeading } from '../../components/common/PageHeading';
@@ -31,6 +41,9 @@ const modeTitle: Record<string, string> = {
 };
 
 const durations = ['2 Min', '5 Min', '10 Min', '15 Min', '20 Min', '30 Min', '40 Min', '60 Min'];
+
+const passagePreview =
+'The Government of India is committed to providing better services to the citizens through Digital India. This initiative aims to transform India into a digitally empowered society and knowledge economy. It will help in improving governance, enhancing transparency and creating new opportunities for all.';
 
 const lastPractices = [
 { date: '10 Aug 2026', wpm: 52, accuracy: 94.2 },
@@ -155,8 +168,503 @@ function ExamPatternModal({
 
 }
 
+function ExamLoginCover({ onStartTest }: {onStartTest: () => void;}) {
+  return (
+    <div className="fixed inset-0 z-[100] flex flex-col bg-white">
+      <div className="h-10 shrink-0 bg-[#1D6FC4]" />
+
+      <div className="flex flex-wrap items-start justify-between gap-4 bg-[#3A3A3A] px-5 py-3 text-white">
+        <div>
+          <p className="text-[13px]">System Name :</p>
+          <p className="font-display text-[22px] font-extrabold text-[#FFE100]">C001</p>
+          <p className="mt-2 max-w-xl text-[11px] text-white/80">
+            Kindly contact the invigilator if there are any discrepancies in the Name and Photograph
+            displayed on the screen or if the photograph is not yours
+          </p>
+        </div>
+        <div className="flex items-start gap-3">
+          <div className="text-right">
+            <p className="font-display text-[20px] font-extrabold text-[#FFE100]">
+              Candidate Name : VIKAS
+            </p>
+            <p className="text-[12px] font-semibold text-[#FFE100]">AIIMS CRE LDC UDC DEO Typing</p>
+          </div>
+          <span className="grid h-16 w-16 shrink-0 place-items-center rounded-md border border-slate-300 bg-white">
+            <UserCircle2Icon className="h-12 w-12 text-slate-400" aria-hidden="true" />
+          </span>
+        </div>
+      </div>
+
+      <div className="flex flex-1 items-center justify-center bg-slate-100">
+        <div className="w-full max-w-[340px] overflow-hidden rounded-md border border-slate-300 bg-white shadow-lg">
+          <p className="border-b border-slate-300 bg-slate-200 px-4 py-2 text-[13px] font-bold text-navy-800">
+            Login
+          </p>
+          <div className="space-y-4 p-5">
+            <div className="flex items-center gap-2">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded bg-slate-200 text-slate-700">
+                <UserIcon className="h-4 w-4" aria-hidden="true" />
+              </span>
+              <input
+                type="text"
+                defaultValue="11111"
+                className="w-full rounded border border-slate-300 px-2.5 py-2 text-[13px] outline-none focus:border-primary" />
+
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded bg-slate-200 text-slate-700">
+                <KeyboardIcon className="h-4 w-4" aria-hidden="true" />
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded bg-slate-200 text-slate-700">
+                <LockIcon className="h-4 w-4" aria-hidden="true" />
+              </span>
+              <input
+                type="password"
+                defaultValue="12345"
+                className="w-full rounded border border-slate-300 px-2.5 py-2 text-[13px] outline-none focus:border-primary" />
+
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded bg-slate-200 text-slate-700">
+                <KeyboardIcon className="h-4 w-4" aria-hidden="true" />
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={onStartTest}
+              className="w-full rounded bg-gradient-to-b from-[#5BC0EB] to-[#1D8FD8] py-2.5 text-[13px] font-semibold text-white shadow transition-opacity duration-150 hover:opacity-90">
+
+              Start Test
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <p className="shrink-0 bg-[#3A3A3A] py-1.5 text-center text-[10.5px] text-white/70">
+        Version Typingmitra.in
+      </p>
+    </div>);
+
+}
+
+const demoPassage =
+'The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.';
+
+const instructionRows = [
+{ n: 1, type: 'Practice Typing test (English) 1', words: 5000, timing: 2 },
+{ n: 2, type: 'Practice Typing test (English) 2', words: 5000, timing: 2 },
+{ n: 3, type: 'Actual Typing test (English)', words: 5000, timing: 10 }];
+
+
+const instructionPoints = [
+'Read the given instructions carefully to avoid disqualification, error, and time loss. After reading the instructions carefully, click on the check box to proceed.',
+'First Practice Test: After the candidate logs in to the system, practice test will commence and will be completed in 2 mins where in candidate will check keyboard and keys operations. There after 10 mins time will be provided to candidates to get the keyboard replaced, if required.',
+'Second Practice Test: Second practice test will automatically start for 2 min after 10 min break time as mentioned in Point No. 2. The purpose of the second practice test will be to ensure proper functioning of the keyboard replaced. This will be the last opportunity to resolve keyboard/other related issues.',
+'Before the commencement of the actual typing test a Typing Test Declaration form will be signed by the candidate.'];
+
+
+function ExamInstructionsScreen({
+  designation,
+  onPrevious,
+  onReady
+
+
+
+
+}: {designation: string;onPrevious: () => void;onReady: () => void;}) {
+  const [agreed, setAgreed] = useState(false);
+
+  return (
+    <div className="fixed inset-0 z-[100] flex flex-col bg-white">
+      <div className="h-10 shrink-0 bg-[#1D6FC4]" />
+
+      <div className="flex justify-center bg-white py-3">
+        <span className="rounded-md bg-[#3E4E88] px-6 py-2.5 font-display text-[15px] font-bold text-white">
+          Designation: {designation}
+        </span>
+      </div>
+
+      <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-1 flex-col overflow-hidden">
+          <p className="border-b border-slate-200 bg-[#DCEEFB] px-4 py-2 text-[12.5px] font-bold text-navy-800">
+            Important Instructions
+          </p>
+          <div className="flex-1 overflow-y-auto px-6 py-4">
+            <p className="mb-3 text-[12.5px] font-semibold text-navy-800">
+              Instructions to candidates for Typing Exam in English on desktop computer.
+            </p>
+
+            <table className="mb-4 w-full max-w-[520px] border-collapse text-left text-[11.5px]">
+              <thead>
+                <tr className="bg-slate-50">
+                  <th className="border border-slate-300 px-2.5 py-1.5 font-semibold">Sr No</th>
+                  <th className="border border-slate-300 px-2.5 py-1.5 font-semibold">Passage Type</th>
+                  <th className="border border-slate-300 px-2.5 py-1.5 font-semibold">Word Count</th>
+                  <th className="border border-slate-300 px-2.5 py-1.5 font-semibold">Timing</th>
+                </tr>
+              </thead>
+              <tbody>
+                {instructionRows.map((r) =>
+                <tr key={r.n}>
+                    <td className="border border-slate-300 px-2.5 py-1.5 text-center">{r.n}</td>
+                    <td className="border border-slate-300 px-2.5 py-1.5">{r.type}</td>
+                    <td className="border border-slate-300 px-2.5 py-1.5 text-center">{r.words}</td>
+                    <td className="border border-slate-300 px-2.5 py-1.5 text-center">{r.timing}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+
+            <p className="mb-2 text-[12.5px] font-semibold text-navy-800">Dear Candidates,</p>
+            <ol className="list-decimal space-y-2.5 pl-5 text-[12px] leading-relaxed text-slate-700">
+              {instructionPoints.map((p, i) => {
+                const [bold, ...rest] = p.split(': ');
+                const hasBold = rest.length > 0;
+                return (
+                  <li key={i}>
+                    {hasBold ?
+                    <>
+                        <span className="font-bold text-navy-800">{bold}:</span> {rest.join(': ')}
+                      </> :
+
+                    p
+                    }
+                  </li>);
+
+              })}
+            </ol>
+
+            <label className="mt-4 flex items-start gap-2 text-[11px] leading-relaxed text-amber-700">
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-0.5 h-3.5 w-3.5 accent-primary" />
+
+              I have read and understood the instructions. All computer hardware allotted to me are in
+              proper working condition. I declare that I am not in possession of / not wearing / not
+              carrying any prohibited gadget like mobile phone, bluetooth devices etc. /any prohibited
+              material with me into the Examination Hall.I agree that in case of not adhering to the
+              instructions, I shall be liable to be debarred from this Test and/or to disciplinary action,
+              which may include ban from future Tests / Examinations.
+            </label>
+          </div>
+
+          <div className="flex items-center justify-between border-t border-slate-200 px-6 py-3">
+            <button
+              type="button"
+              onClick={onPrevious}
+              className="flex items-center gap-1.5 rounded-md border border-slate-300 px-4 py-2 text-[12.5px] font-medium text-slate-600 transition-colors duration-150 hover:bg-slate-50">
+
+              <ChevronLeftIcon className="h-3.5 w-3.5" aria-hidden="true" /> Previous
+            </button>
+            <button
+              type="button"
+              disabled={!agreed}
+              onClick={onReady}
+              className="rounded-md bg-primary px-6 py-2.5 text-[12.5px] font-semibold text-white transition-colors duration-150 hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-40">
+
+              I am ready to begin
+            </button>
+          </div>
+        </div>
+
+        <div className="flex w-[150px] shrink-0 flex-col items-center gap-2 border-l border-slate-200 py-6">
+          <span className="grid h-16 w-16 place-items-center rounded-md border border-slate-300 bg-white">
+            <UserCircle2Icon className="h-12 w-12 text-slate-400" aria-hidden="true" />
+          </span>
+          <p className="font-display text-[13px] font-bold text-primary">VIKAS</p>
+        </div>
+      </div>
+
+      <p className="shrink-0 bg-[#5B6B8C] py-1.5 text-center text-[10.5px] text-white/80">
+        Version : 17.07.00
+      </p>
+    </div>);
+
+}
+
+function FontStepper({
+  label,
+  value,
+  onChange
+
+
+
+
+}: {label: string;value: number;onChange: (v: number) => void;}) {
+  return (
+    <div className="mb-3.5 flex items-center justify-between">
+      <span className="text-[12.5px] text-navy-800">{label}:</span>
+      <div className="flex items-center gap-2.5">
+        <button
+          type="button"
+          onClick={() => onChange(Math.max(10, value - 1))}
+          className="grid h-7 w-7 place-items-center rounded-full bg-primary text-white hover:bg-primary-700"
+          aria-label={`Decrease ${label}`}>
+
+          <MinusIcon className="h-3.5 w-3.5" aria-hidden="true" />
+        </button>
+        <span className="w-[38px] text-center text-[12.5px] font-semibold text-navy-800">{value}px</span>
+        <button
+          type="button"
+          onClick={() => onChange(Math.min(32, value + 1))}
+          className="grid h-7 w-7 place-items-center rounded-full bg-primary text-white hover:bg-primary-700"
+          aria-label={`Increase ${label}`}>
+
+          <PlusIcon className="h-3.5 w-3.5" aria-hidden="true" />
+        </button>
+      </div>
+    </div>);
+
+}
+
+function SettingsModal({
+  onClose,
+  passageFontSize,
+  setPassageFontSize,
+  typingFontSize,
+  setTypingFontSize
+
+
+
+
+}: {onClose: () => void;passageFontSize: number;setPassageFontSize: (v: number) => void;typingFontSize: number;setTypingFontSize: (v: number) => void;}) {
+  const [mobileMode, setMobileMode] = useState(false);
+
+  return (
+    <div className="fixed inset-0 z-[110] flex items-center justify-center bg-navy-900/50 p-4">
+      <div className="w-full max-w-sm rounded-xl bg-white p-5 shadow-2xl">
+        <div className="mb-3 flex items-center justify-between">
+          <h3 className="font-display text-[16px] font-bold text-navy-800">Test Settings</h3>
+          <button
+            type="button"
+            onClick={onClose}
+            className="grid h-7 w-7 place-items-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+            aria-label="Close">
+
+            <XIcon className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+        </div>
+
+        <FontStepper label="Passage Font Size" value={passageFontSize} onChange={setPassageFontSize} />
+        <FontStepper label="Typing Font Size" value={typingFontSize} onChange={setTypingFontSize} />
+
+        <label className="mb-3.5 block">
+          <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">Font Family:</span>
+          <select className="w-full rounded-md border border-slate-300 px-3 py-2 text-[12.5px] text-slate-600 outline-none focus:border-primary">
+            <option>Arial</option>
+            <option>Times New Roman</option>
+            <option>Mangal</option>
+            <option>Courier New</option>
+          </select>
+        </label>
+
+        <label className="mb-3.5 block">
+          <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">Backspace Behavior:</span>
+          <select className="w-full rounded-md border border-slate-300 px-3 py-2 text-[12.5px] text-slate-600 outline-none focus:border-primary">
+            <option>Disabled</option>
+            <option>Current Word Only</option>
+            <option>Full Backspace</option>
+          </select>
+        </label>
+
+        <label className="mb-3.5 block">
+          <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">Screen Layout:</span>
+          <select className="w-full rounded-md border border-slate-300 px-3 py-2 text-[12.5px] text-slate-600 outline-none focus:border-primary">
+            <option>TCS Mode</option>
+            <option>Default</option>
+            <option>SSC Mode</option>
+            <option>Custom</option>
+          </select>
+        </label>
+
+        <div>
+          <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">Mobile Mode:</span>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={mobileMode}
+            onClick={() => setMobileMode((v) => !v)}
+            className="flex items-center gap-2.5 text-left">
+
+            <span
+              className={`relative h-4 w-8 shrink-0 rounded-full transition-colors duration-150 ${
+              mobileMode ? 'bg-primary' : 'bg-slate-300'}`
+              }>
+
+              <span
+                className={`absolute top-[2px] h-3 w-3 rounded-full bg-white transition-transform duration-150 ${
+                mobileMode ? 'translate-x-[18px]' : 'translate-x-[2px]'}`
+                } />
+
+            </span>
+            <span className="text-[12.5px] text-slate-600">{mobileMode ? 'Enabled' : 'Disabled'}</span>
+          </button>
+        </div>
+      </div>
+    </div>);
+
+}
+
+function ExamTestScreen({
+  title,
+  seconds,
+  onFinish,
+  onCancel
+
+
+
+
+}: {title: string;seconds: number;onFinish: () => void;onCancel: () => void;}) {
+  const [group, setGroup] = useState<'g1' | 'g2'>('g1');
+  const [typed, setTyped] = useState('');
+  const [remaining, setRemaining] = useState(seconds);
+  const [passageFontSize, setPassageFontSize] = useState(20);
+  const [typingFontSize, setTypingFontSize] = useState(23);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
+  useEffect(() => {
+    if (remaining <= 0) return;
+    const timer = setInterval(() => setRemaining((r) => Math.max(0, r - 1)), 1000);
+    return () => clearInterval(timer);
+  }, [remaining]);
+
+  const goNext = () => {
+    if (group === 'g1') {
+      setGroup('g2');
+      setTyped('');
+      setRemaining(seconds);
+    } else {
+      onFinish();
+    }
+  };
+
+  const mm = String(Math.floor(remaining / 60)).padStart(2, '0');
+  const ss = String(remaining % 60).padStart(2, '0');
+
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.().catch(() => {});
+    } else {
+      document.exitFullscreen?.().catch(() => {});
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[100] flex flex-col bg-white">
+      <div className="flex flex-wrap items-center justify-between gap-2 bg-[#2B2B2B] px-4 py-2">
+        <p className="text-[13px] text-white">{title}</p>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setSettingsOpen(true)}
+            className="flex items-center gap-1 rounded bg-success px-3 py-1.5 text-[11px] font-bold text-white hover:bg-emerald-700">
+
+            <SettingsIcon className="h-3 w-3" aria-hidden="true" /> Settings
+          </button>
+          <button
+            type="button"
+            onClick={toggleFullScreen}
+            className="flex items-center gap-1 rounded bg-success px-3 py-1.5 text-[11px] font-bold text-white hover:bg-emerald-700">
+
+            <MaximizeIcon className="h-3 w-3" aria-hidden="true" /> Full Screen
+          </button>
+        </div>
+      </div>
+
+      <div className="flex shrink-0 bg-[#1D6FC4]">
+        {[
+        { id: 'g1' as const, label: 'Group 1' },
+        { id: 'g2' as const, label: 'Group 2' }].
+        map((g) =>
+        <button
+          key={g.id}
+          type="button"
+          onClick={() => setGroup(g.id)}
+          className={`px-6 py-2.5 text-[13px] font-semibold transition-colors duration-150 ${
+          group === g.id ? 'bg-white text-[#1D6FC4]' : 'text-white hover:bg-white/10'}`
+          }>
+
+            {g.label}
+          </button>
+        )}
+      </div>
+
+      <div className="flex shrink-0 items-center bg-[#2B2B2B] px-4 py-2">
+        <p className="text-[12.5px] text-white">
+          Time Remaining (Demo Test):{' '}
+          <span className="font-extrabold text-[#FFE100]">
+            {mm}:{ss}
+          </span>
+        </p>
+      </div>
+
+      <div className="bg-[#1D6FC4] px-4 py-1.5 text-[11.5px] font-semibold text-white">
+        Keyboard Layout: QWERTY&nbsp;&nbsp;&nbsp;Language: English
+      </div>
+
+      <div className="flex flex-1 flex-col gap-3 overflow-hidden bg-slate-100 p-4">
+        <div className="flex gap-3">
+          <div
+            className="h-[130px] flex-1 overflow-y-auto rounded-md border border-slate-300 bg-white p-3 leading-relaxed"
+            style={{ fontSize: passageFontSize }}>
+
+            {demoPassage.split('').map((ch, i) =>
+            <span key={i} className={i < typed.length ? 'text-slate-400' : 'text-navy-800'}>
+                {ch}
+              </span>
+            )}
+          </div>
+          <div className="w-[64px] shrink-0 text-center">
+            <span className="mx-auto grid h-[52px] w-[52px] place-items-center rounded-md border border-slate-300 bg-white">
+              <UserCircle2Icon className="h-9 w-9 text-slate-400" aria-hidden="true" />
+            </span>
+            <p className="mt-1 text-[11px] font-bold text-primary">VIKAS</p>
+          </div>
+        </div>
+
+        <textarea
+          value={typed}
+          onChange={(e) => setTyped(e.target.value)}
+          placeholder="Start typing here to begin the test..."
+          autoFocus
+          style={{ fontSize: typingFontSize }}
+          className="flex-1 resize-none rounded-md border border-slate-300 p-3 leading-relaxed outline-none focus:border-primary" />
+
+
+        <div className="flex justify-between">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="rounded-md bg-danger px-6 py-2.5 text-[12.5px] font-semibold text-white transition-colors duration-150 hover:bg-red-700">
+
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={goNext}
+            className="rounded-md bg-slate-400 px-6 py-2.5 text-[12.5px] font-semibold text-white transition-colors duration-150 hover:bg-slate-500">
+
+            {group === 'g1' ? 'Next' : 'Submit'}
+          </button>
+        </div>
+      </div>
+
+      {settingsOpen &&
+      <SettingsModal
+        onClose={() => setSettingsOpen(false)}
+        passageFontSize={passageFontSize}
+        setPassageFontSize={setPassageFontSize}
+        typingFontSize={typingFontSize}
+        setTypingFontSize={setTypingFontSize} />
+
+      }
+    </div>);
+
+}
+
 export function PracticeSetup() {
   const { mode = 'eng-typing' } = useParams();
+  const navigate = useNavigate();
   const isSteno = mode.includes('steno');
   const title = modeTitle[mode] ?? 'Self Assessment';
 
@@ -164,7 +672,34 @@ export function PracticeSetup() {
   const [passageSource, setPassageSource] = useState<'random' | 'paste' | 'audio'>('random');
   const [pattern, setPattern] = useState('steno');
   const [patternModalOpen, setPatternModalOpen] = useState(false);
+  const [stage, setStage] = useState<'setup' | 'login' | 'instructions' | 'test'>('setup');
   const selectedPattern = patterns.find((p) => p.id === pattern);
+
+  if (stage === 'login') {
+    return <ExamLoginCover onStartTest={() => setStage('instructions')} />;
+  }
+
+  if (stage === 'instructions') {
+    return (
+      <ExamInstructionsScreen
+        designation={selectedPattern ? selectedPattern.title : 'Typing Exam'}
+        onPrevious={() => setStage('login')}
+        onReady={() => setStage('test')} />);
+
+
+  }
+
+  if (stage === 'test') {
+    const durationSeconds = parseInt(duration, 10) * 60;
+    return (
+      <ExamTestScreen
+        title={`${selectedPattern ? selectedPattern.title : title} Live Typing Test`}
+        seconds={durationSeconds}
+        onFinish={() => navigate('/test-analysis/typing')}
+        onCancel={() => setStage('setup')} />);
+
+
+  }
 
   return (
     <StudentLayout showDownloadApp>
@@ -247,6 +782,44 @@ export function PracticeSetup() {
             }
           </div>
 
+          {passageSource !== 'audio' &&
+          <div className="mb-4 rounded-lg border border-slate-200 p-3">
+            <div className="flex items-center gap-2.5">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-primary-50 text-primary">
+                <FileTextIcon className="h-[18px] w-[18px]" aria-hidden="true" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="flex items-center gap-1.5">
+                  <span className="truncate text-[12.5px] font-semibold text-navy-800">
+                    Typing_Passage_01.txt
+                  </span>
+                  <span className="rounded bg-primary-50 px-1.5 py-[1px] text-[9px] font-bold text-primary-700">
+                    TXT
+                  </span>
+                </span>
+                <span className="block text-[10.5px] text-slate-500">(24 KB)</span>
+              </span>
+            </div>
+            <div className="mt-2.5 h-[150px] overflow-y-auto rounded-md bg-slate-50 p-3 text-[13px] leading-relaxed text-slate-600">
+              {passagePreview}
+            </div>
+            <div className="mt-2.5 flex gap-2">
+              <button
+                type="button"
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-md border border-slate-300 py-1.5 text-[11px] font-medium text-slate-600 transition-colors duration-150 hover:bg-slate-50">
+
+                <RotateCcwIcon className="h-3.5 w-3.5" aria-hidden="true" /> Replace
+              </button>
+              <button
+                type="button"
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-md border border-slate-300 py-1.5 text-[11px] font-medium text-slate-600 transition-colors duration-150 hover:bg-slate-50">
+
+                <EyeIcon className="h-3.5 w-3.5" aria-hidden="true" /> View
+              </button>
+            </div>
+          </div>
+          }
+
           <div className="grid gap-3.5 sm:grid-cols-3">
             <label className="block">
               <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">Font Group</span>
@@ -282,6 +855,7 @@ export function PracticeSetup() {
 
           <button
             type="button"
+            onClick={() => setStage('login')}
             className="mt-4 flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-[13px] font-semibold text-white transition-colors duration-150 hover:bg-primary-700">
 
             <PlayIcon className="h-4 w-4 fill-current" aria-hidden="true" /> Start Practice

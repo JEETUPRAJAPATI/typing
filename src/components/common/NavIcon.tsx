@@ -18,7 +18,8 @@ import {
   DatabaseIcon,
   WalletIcon,
   SettingsIcon,
-  GraduationCapIcon } from
+  GraduationCapIcon,
+  Gamepad2Icon } from
 'lucide-react';
 
 const map = {
@@ -40,7 +41,8 @@ const map = {
   database: DatabaseIcon,
   wallet: WalletIcon,
   settings: SettingsIcon,
-  graduationCap: GraduationCapIcon
+  graduationCap: GraduationCapIcon,
+  gamepad: Gamepad2Icon
 } as const;
 
 interface NavIconProps {

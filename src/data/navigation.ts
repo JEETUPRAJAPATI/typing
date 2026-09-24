@@ -49,7 +49,8 @@ export const studentNav: NavItem[] = [
 
 },
 { label: 'Plan & Pricing', icon: 'crown', to: '/plan-pricing', badge: 'premium' },
-{ label: 'How to use?', icon: 'help', to: '/how-to-use' }];
+{ label: 'How to use?', icon: 'help', to: '/how-to-use' },
+{ label: 'Typing Games', icon: 'gamepad', to: '/typing-games', badge: 'new' }];
 
 
 export const adminNav: NavItem[] = [

@@ -74,7 +74,6 @@ export function PracticeWords() {
           <ArrowLeftIcon className="h-3.5 w-3.5" aria-hidden="true" /> Back to AI Deep Analysis
         </Link>
       </div>
-
       <Panel title="Words to Practice">
         <ul className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 xl:grid-cols-7">
           {practiceWords.map((w, i) => {
