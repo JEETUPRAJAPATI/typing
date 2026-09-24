@@ -28,7 +28,10 @@ import {
   SettingsIcon,
   MaximizeIcon,
   MinusIcon,
-  PlusIcon } from
+  PlusIcon,
+  Volume2Icon,
+  VolumeXIcon,
+  InfoIcon } from
 'lucide-react';
 import { StudentLayout } from '../../components/student/StudentLayout';
 import { PageHeading } from '../../components/common/PageHeading';
@@ -274,47 +277,45 @@ function ExamInstructionsScreen({
 
   return (
     <div className="fixed inset-0 z-[100] flex flex-col bg-white">
-      <div className="h-10 shrink-0 bg-[#1D6FC4]" />
-
-      <div className="flex justify-center bg-white py-3">
-        <span className="rounded-md bg-[#3E4E88] px-6 py-2.5 font-display text-[15px] font-bold text-white">
+      <div className="flex shrink-0 justify-center bg-[#3E5C96] py-2">
+        <span className="rounded-t-sm bg-[#28345E] px-8 py-2 font-display text-[15px] font-bold text-white">
           Designation: {designation}
         </span>
       </div>
 
-      <div className="flex flex-1 overflow-hidden">
-        <div className="flex flex-1 flex-col overflow-hidden">
-          <p className="border-b border-slate-200 bg-[#DCEEFB] px-4 py-2 text-[12.5px] font-bold text-navy-800">
+      <div className="grid flex-1 overflow-hidden lg:grid-cols-[3fr_1fr]">
+        <div className="flex min-w-0 flex-col overflow-hidden">
+          <p className="border-b border-slate-200 bg-[#DCEEFB] px-4 py-2.5 text-[14px] font-bold text-navy-800">
             Important Instructions
           </p>
-          <div className="flex-1 overflow-y-auto px-6 py-4">
-            <p className="mb-3 text-[12.5px] font-semibold text-navy-800">
+          <div className="flex-1 overflow-y-auto px-8 py-6">
+            <p className="mb-4 text-[15px] font-semibold text-navy-800">
               Instructions to candidates for Typing Exam in English on desktop computer.
             </p>
 
-            <table className="mb-4 w-full max-w-[520px] border-collapse text-left text-[11.5px]">
+            <table className="mb-5 w-full max-w-[700px] border-collapse text-left text-[13.5px]">
               <thead>
                 <tr className="bg-slate-50">
-                  <th className="border border-slate-300 px-2.5 py-1.5 font-semibold">Sr No</th>
-                  <th className="border border-slate-300 px-2.5 py-1.5 font-semibold">Passage Type</th>
-                  <th className="border border-slate-300 px-2.5 py-1.5 font-semibold">Word Count</th>
-                  <th className="border border-slate-300 px-2.5 py-1.5 font-semibold">Timing</th>
+                  <th className="border border-slate-300 px-3.5 py-2.5 font-semibold">Sr No</th>
+                  <th className="border border-slate-300 px-3.5 py-2.5 font-semibold">Passage Type</th>
+                  <th className="border border-slate-300 px-3.5 py-2.5 font-semibold">Word Count</th>
+                  <th className="border border-slate-300 px-3.5 py-2.5 font-semibold">Timing</th>
                 </tr>
               </thead>
               <tbody>
                 {instructionRows.map((r) =>
                 <tr key={r.n}>
-                    <td className="border border-slate-300 px-2.5 py-1.5 text-center">{r.n}</td>
-                    <td className="border border-slate-300 px-2.5 py-1.5">{r.type}</td>
-                    <td className="border border-slate-300 px-2.5 py-1.5 text-center">{r.words}</td>
-                    <td className="border border-slate-300 px-2.5 py-1.5 text-center">{r.timing}</td>
+                    <td className="border border-slate-300 px-3.5 py-2.5 text-center">{r.n}</td>
+                    <td className="border border-slate-300 px-3.5 py-2.5">{r.type}</td>
+                    <td className="border border-slate-300 px-3.5 py-2.5 text-center">{r.words}</td>
+                    <td className="border border-slate-300 px-3.5 py-2.5 text-center">{r.timing}</td>
                   </tr>
                 )}
               </tbody>
             </table>
 
-            <p className="mb-2 text-[12.5px] font-semibold text-navy-800">Dear Candidates,</p>
-            <ol className="list-decimal space-y-2.5 pl-5 text-[12px] leading-relaxed text-slate-700">
+            <p className="mb-2.5 text-[15px] font-semibold text-navy-800">Dear Candidates,</p>
+            <ol className="list-decimal space-y-3.5 pl-5 text-[14px] leading-relaxed text-slate-700">
               {instructionPoints.map((p, i) => {
                 const [bold, ...rest] = p.split(': ');
                 const hasBold = rest.length > 0;
@@ -332,12 +333,12 @@ function ExamInstructionsScreen({
               })}
             </ol>
 
-            <label className="mt-4 flex items-start gap-2 text-[11px] leading-relaxed text-amber-700">
+            <label className="mt-5 flex items-start gap-2.5 text-[13px] leading-relaxed text-amber-700">
               <input
                 type="checkbox"
                 checked={agreed}
                 onChange={(e) => setAgreed(e.target.checked)}
-                className="mt-0.5 h-3.5 w-3.5 accent-primary" />
+                className="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
 
               I have read and understood the instructions. All computer hardware allotted to me are in
               proper working condition. I declare that I am not in possession of / not wearing / not
@@ -348,7 +349,7 @@ function ExamInstructionsScreen({
             </label>
           </div>
 
-          <div className="flex items-center justify-between border-t border-slate-200 px-6 py-3">
+          <div className="flex shrink-0 items-center justify-between border-t border-slate-200 px-6 py-3">
             <button
               type="button"
               onClick={onPrevious}
@@ -367,11 +368,11 @@ function ExamInstructionsScreen({
           </div>
         </div>
 
-        <div className="flex w-[150px] shrink-0 flex-col items-center gap-2 border-l border-slate-200 py-6">
-          <span className="grid h-16 w-16 place-items-center rounded-md border border-slate-300 bg-white">
-            <UserCircle2Icon className="h-12 w-12 text-slate-400" aria-hidden="true" />
+        <div className="flex flex-col items-center gap-3 border-l border-slate-200 bg-slate-100 py-8">
+          <span className="grid h-28 w-28 place-items-center rounded-md border border-slate-300 bg-white">
+            <UserCircle2Icon className="h-20 w-20 text-slate-400" aria-hidden="true" />
           </span>
-          <p className="font-display text-[13px] font-bold text-primary">VIKAS</p>
+          <p className="font-display text-[16px] font-bold text-primary">VIKAS</p>
         </div>
       </div>
 
@@ -509,34 +510,31 @@ function ExamTestScreen({
   title,
   seconds,
   onFinish,
-  onCancel
+  onCancel,
+  onShowInstructions
 
 
 
 
-}: {title: string;seconds: number;onFinish: () => void;onCancel: () => void;}) {
-  const [group, setGroup] = useState<'g1' | 'g2'>('g1');
+}: {title: string;seconds: number;onFinish: () => void;onCancel: () => void;onShowInstructions: () => void;}) {
+  const [tab, setTab] = useState<'mock' | 'actual'>('actual');
   const [typed, setTyped] = useState('');
   const [remaining, setRemaining] = useState(seconds);
   const [passageFontSize, setPassageFontSize] = useState(20);
   const [typingFontSize, setTypingFontSize] = useState(23);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [soundOn, setSoundOn] = useState(false);
+
+  useEffect(() => {
+    setRemaining(tab === 'mock' ? 120 : seconds);
+    setTyped('');
+  }, [tab, seconds]);
 
   useEffect(() => {
     if (remaining <= 0) return;
     const timer = setInterval(() => setRemaining((r) => Math.max(0, r - 1)), 1000);
     return () => clearInterval(timer);
   }, [remaining]);
-
-  const goNext = () => {
-    if (group === 'g1') {
-      setGroup('g2');
-      setTyped('');
-      setRemaining(seconds);
-    } else {
-      onFinish();
-    }
-  };
 
   const mm = String(Math.floor(remaining / 60)).padStart(2, '0');
   const ss = String(remaining % 60).padStart(2, '0');
@@ -551,101 +549,155 @@ function ExamTestScreen({
 
   return (
     <div className="fixed inset-0 z-[100] flex flex-col bg-white">
-      <div className="flex flex-wrap items-center justify-between gap-2 bg-[#2B2B2B] px-4 py-2">
-        <p className="text-[13px] text-white">{title}</p>
-        <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-[#2B2B2B] px-5 py-3">
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="flex items-center gap-1.5 rounded bg-white/15 px-3.5 py-2 text-[13.5px] font-semibold text-white hover:bg-white/25">
+
+            <ChevronLeftIcon className="h-4 w-4" aria-hidden="true" /> Back
+          </button>
+          <p className="text-[17px] font-semibold text-white">{title}</p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setTypingFontSize((f) => Math.max(11, f - 1))}
+            className="rounded bg-white/15 px-3.5 py-2 text-[13.5px] font-bold text-white hover:bg-white/25">
+
+            A-
+          </button>
+          <button
+            type="button"
+            onClick={() => setTypingFontSize((f) => Math.min(32, f + 1))}
+            className="rounded bg-white/15 px-3.5 py-2 text-[13.5px] font-bold text-white hover:bg-white/25">
+
+            A+
+          </button>
+          <button
+            type="button"
+            onClick={() => setSoundOn((s) => !s)}
+            className={`flex items-center gap-1.5 rounded px-4 py-2 text-[13.5px] font-bold text-white ${
+            soundOn ? 'bg-success' : 'bg-danger'}`
+            }>
+
+            {soundOn ?
+            <Volume2Icon className="h-4 w-4" aria-hidden="true" /> :
+
+            <VolumeXIcon className="h-4 w-4" aria-hidden="true" />
+            }
+            Sound: {soundOn ? 'ON' : 'OFF'}
+          </button>
           <button
             type="button"
             onClick={() => setSettingsOpen(true)}
-            className="flex items-center gap-1 rounded bg-success px-3 py-1.5 text-[11px] font-bold text-white hover:bg-emerald-700">
+            className="flex items-center gap-1.5 rounded bg-teal-600 px-4 py-2 text-[13.5px] font-bold text-white hover:bg-teal-700">
 
-            <SettingsIcon className="h-3 w-3" aria-hidden="true" /> Settings
+            <SettingsIcon className="h-4 w-4" aria-hidden="true" /> Settings
           </button>
           <button
             type="button"
             onClick={toggleFullScreen}
-            className="flex items-center gap-1 rounded bg-success px-3 py-1.5 text-[11px] font-bold text-white hover:bg-emerald-700">
+            className="flex items-center gap-1.5 rounded bg-teal-600 px-4 py-2 text-[13.5px] font-bold text-white hover:bg-teal-700">
 
-            <MaximizeIcon className="h-3 w-3" aria-hidden="true" /> Full Screen
+            <MaximizeIcon className="h-4 w-4" aria-hidden="true" /> Full Screen
+          </button>
+          <button
+            type="button"
+            onClick={onShowInstructions}
+            className="flex items-center gap-1.5 rounded bg-slate-700 px-4 py-2 text-[13.5px] font-bold text-white hover:bg-slate-800">
+
+            <InfoIcon className="h-4 w-4" aria-hidden="true" /> Instructions
           </button>
         </div>
       </div>
 
-      <div className="flex shrink-0 bg-[#1D6FC4]">
-        {[
-        { id: 'g1' as const, label: 'Group 1' },
-        { id: 'g2' as const, label: 'Group 2' }].
-        map((g) =>
-        <button
-          key={g.id}
-          type="button"
-          onClick={() => setGroup(g.id)}
-          className={`px-6 py-2.5 text-[13px] font-semibold transition-colors duration-150 ${
-          group === g.id ? 'bg-white text-[#1D6FC4]' : 'text-white hover:bg-white/10'}`
-          }>
+      <div className="bg-[#1D6FC4] px-5 py-2 text-[15px] font-bold text-white">Group A</div>
 
-            {g.label}
-          </button>
-        )}
-      </div>
+      <div className="grid bg-white lg:grid-cols-[3fr_1fr]">
+        <div className="flex items-center justify-between gap-2 px-5 py-2.5 lg:border-r lg:border-slate-200">
+          <div className="flex gap-2.5">
+            {[
+            { id: 'mock' as const, label: 'Mock Typing' },
+            { id: 'actual' as const, label: 'Actual Typing' }].
+            map((t) =>
+            <button
+              key={t.id}
+              type="button"
+              onClick={() => setTab(t.id)}
+              className={`rounded px-5 py-2 text-[14px] font-semibold transition-colors duration-150 ${
+              tab === t.id ? 'bg-primary text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`
+              }>
 
-      <div className="flex shrink-0 items-center bg-[#2B2B2B] px-4 py-2">
-        <p className="text-[12.5px] text-white">
-          Time Remaining (Demo Test):{' '}
-          <span className="font-extrabold text-[#FFE100]">
-            {mm}:{ss}
-          </span>
-        </p>
-      </div>
-
-      <div className="bg-[#1D6FC4] px-4 py-1.5 text-[11.5px] font-semibold text-white">
-        Keyboard Layout: QWERTY&nbsp;&nbsp;&nbsp;Language: English
-      </div>
-
-      <div className="flex flex-1 flex-col gap-3 overflow-hidden bg-slate-100 p-4">
-        <div className="flex gap-3">
-          <div
-            className="h-[130px] flex-1 overflow-y-auto rounded-md border border-slate-300 bg-white p-3 leading-relaxed"
-            style={{ fontSize: passageFontSize }}>
-
-            {demoPassage.split('').map((ch, i) =>
-            <span key={i} className={i < typed.length ? 'text-slate-400' : 'text-navy-800'}>
-                {ch}
-              </span>
+                {t.label}
+              </button>
             )}
           </div>
-          <div className="w-[64px] shrink-0 text-center">
-            <span className="mx-auto grid h-[52px] w-[52px] place-items-center rounded-md border border-slate-300 bg-white">
-              <UserCircle2Icon className="h-9 w-9 text-slate-400" aria-hidden="true" />
-            </span>
-            <p className="mt-1 text-[11px] font-bold text-primary">VIKAS</p>
-          </div>
+          <p className="text-[16px] font-semibold text-navy-800">
+            Time Left: <span className="font-extrabold text-danger">{mm}:{ss}</span>
+          </p>
         </div>
+        <div className="flex items-center gap-3.5 px-5 py-2.5">
+          <span className="grid h-11 w-11 place-items-center rounded-md border border-slate-300 bg-white">
+            <UserCircle2Icon className="h-7 w-7 text-slate-400" aria-hidden="true" />
+          </span>
+          <span className="text-[15px] font-semibold text-navy-800">Candidate</span>
+        </div>
+      </div>
 
-        <textarea
-          value={typed}
-          onChange={(e) => setTyped(e.target.value)}
-          placeholder="Start typing here to begin the test..."
-          autoFocus
-          style={{ fontSize: typingFontSize }}
-          className="flex-1 resize-none rounded-md border border-slate-300 p-3 leading-relaxed outline-none focus:border-primary" />
+      <div className="grid lg:grid-cols-[3fr_1fr]">
+        <div className="bg-[#1D6FC4] px-5 py-2 text-[14px] font-semibold text-white">
+          Keyboard Layout: QWERTY
+        </div>
+        <div className="bg-white" />
+      </div>
+
+      <div className="flex-1 overflow-y-auto bg-white py-4">
+        <div className="grid h-full gap-0 lg:grid-cols-[3fr_1fr]">
+          <div className="flex flex-col gap-3 px-5 lg:border-r lg:border-slate-200">
+            <div
+              className="h-[150px] overflow-y-auto rounded-md border border-slate-300 p-3 leading-relaxed"
+              style={{ fontSize: passageFontSize }}>
+
+              {demoPassage.split('').map((ch, i) =>
+              <span key={i} className={i < typed.length ? 'text-slate-400' : 'text-navy-800'}>
+                  {ch}
+                </span>
+              )}
+            </div>
+
+            <textarea
+              value={typed}
+              onChange={(e) => setTyped(e.target.value)}
+              placeholder="Start typing here..."
+              autoFocus
+              style={{ fontSize: typingFontSize }}
+              className="h-[220px] w-full resize-none rounded-md border border-slate-300 p-3 leading-relaxed outline-none focus:border-primary" />
 
 
-        <div className="flex justify-between">
-          <button
-            type="button"
-            onClick={onCancel}
-            className="rounded-md bg-danger px-6 py-2.5 text-[12.5px] font-semibold text-white transition-colors duration-150 hover:bg-red-700">
+            <div className="mt-auto flex justify-start border-t border-slate-200 pt-4">
+              <button
+                type="button"
+                onClick={onCancel}
+                className="rounded-md bg-danger px-6 py-2.5 text-[13px] font-semibold text-white transition-colors duration-150 hover:bg-red-700">
 
-            Cancel
-          </button>
-          <button
-            type="button"
-            onClick={goNext}
-            className="rounded-md bg-slate-400 px-6 py-2.5 text-[12.5px] font-semibold text-white transition-colors duration-150 hover:bg-slate-500">
+                Cancel
+              </button>
+            </div>
+          </div>
 
-            {group === 'g1' ? 'Next' : 'Submit'}
-          </button>
+          <div className="flex flex-col px-5">
+            <div className="mt-auto flex justify-end border-t border-slate-200 pt-4">
+              <button
+                type="button"
+                onClick={onFinish}
+                className="rounded-md bg-teal-600 px-6 py-2.5 text-[13px] font-semibold text-white transition-colors duration-150 hover:bg-teal-700">
+
+                Submit
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -696,7 +748,8 @@ export function PracticeSetup() {
         title={`${selectedPattern ? selectedPattern.title : title} Live Typing Test`}
         seconds={durationSeconds}
         onFinish={() => navigate('/test-analysis/typing')}
-        onCancel={() => setStage('setup')} />);
+        onCancel={() => setStage('setup')}
+        onShowInstructions={() => setStage('instructions')} />);
 
 
   }
