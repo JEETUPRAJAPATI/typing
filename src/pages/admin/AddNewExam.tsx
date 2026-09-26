@@ -12,7 +12,9 @@ import {
   CheckIcon,
   SquareIcon,
   LandmarkIcon,
-  ClipboardListIcon } from
+  ClipboardListIcon,
+  LanguagesIcon,
+  HourglassIcon } from
 'lucide-react';
 import { AdminLayout } from '../../components/admin/AdminLayout';
 
@@ -88,6 +90,8 @@ const notes = [
 
 export function AddNewExam() {
   const [checked, setChecked] = useState<string[]>(resultComponents);
+  const [langEnglish, setLangEnglish] = useState(true);
+  const [langHindi, setLangHindi] = useState(true);
 
   const toggle = (c: string) =>
   setChecked((prev) => prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]);
@@ -168,17 +172,78 @@ export function AddNewExam() {
                   <ClockIcon className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" aria-hidden="true" />
                 </span>
               </label>
-              <label className="block">
-                <span className={labelCls}>Language <span className="text-danger">*</span></span>
-                <select className={`${inputCls} text-slate-600`}>
-                  <option>Select Language</option>
-                  <option>English</option>
-                  <option>Hindi</option>
-                </select>
-              </label>
+              <p className="flex items-start gap-1.5 rounded-md bg-primary-50 px-2.5 py-2 text-[10.5px] text-primary-700">
+                <InfoIcon className="mt-[1px] h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                Language(s) and their passing criteria are configured in the Language section below.
+              </p>
             </div>
           </section>
         </div>
+
+        {/* Language */}
+        <section className={card}>
+          {cardTitle(<LanguagesIcon className="h-4 w-4 text-primary" aria-hidden="true" />, 'Language')}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {([
+            { key: 'English' as const, on: langEnglish, setOn: setLangEnglish },
+            { key: 'Hindi' as const, on: langHindi, setOn: setLangHindi }]).
+            map((lang) =>
+            <div key={lang.key} className="rounded-lg border border-slate-200 p-3.5">
+                <label className="mb-3 flex items-center gap-2">
+                  <HourglassIcon className="h-4 w-4 text-primary" aria-hidden="true" />
+                  <span className="text-[12.5px] font-bold text-navy-800">Passing Criteria</span>
+                  <span className="text-[12.5px] font-bold text-navy-800">{lang.key}</span>
+                  <input
+                  type="checkbox"
+                  checked={lang.on}
+                  onChange={(e) => lang.setOn(e.target.checked)}
+                  className="ml-auto h-4 w-4 accent-primary" />
+
+                </label>
+                <div className={`space-y-3 ${lang.on ? '' : 'pointer-events-none opacity-40'}`}>
+                  <label className="block">
+                    <span className={labelCls}>Result Mode <span className="text-danger">*</span></span>
+                    <select className={`${inputCls} text-slate-600`} disabled={!lang.on}>
+                      <option>Net WPM + Accuracy</option>
+                      <option>Gross WPM</option>
+                    </select>
+                  </label>
+                  <label className="block">
+                    <span className={labelCls}>Minimum Qualifying Speed (WPM) <span className="text-danger">*</span></span>
+                    <input type="text" defaultValue="35" className={inputCls} disabled={!lang.on} />
+                  </label>
+                  <label className="block">
+                    <span className={labelCls}>Minimum Accuracy (%)</span>
+                    <input type="text" defaultValue="90" className={inputCls} disabled={!lang.on} />
+                  </label>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            {([
+            { key: 'English' as const, on: langEnglish },
+            { key: 'Hindi' as const, on: langHindi }]).
+            map((lang) =>
+            <div
+              key={lang.key}
+              className={`grid gap-3.5 rounded-lg border border-slate-200 p-3.5 sm:grid-cols-2 ${
+              lang.on ? '' : 'pointer-events-none opacity-40'}`
+              }>
+
+                <label className="block">
+                  <span className={labelCls}>Minimum Words / Strokes <span className="text-danger">*</span></span>
+                  <input type="text" placeholder="Enter minimum words or strokes" className={inputCls} disabled={!lang.on} />
+                </label>
+                <label className="block">
+                  <span className={labelCls}>Maximum Words / Strokes <span className="text-danger">*</span></span>
+                  <input type="text" placeholder="Enter maximum words or strokes" className={inputCls} disabled={!lang.on} />
+                </label>
+              </div>
+            )}
+          </div>
+        </section>
 
         <div className="grid gap-4 xl:grid-cols-[1fr_290px_290px]">
           {/* 3. Exam rules */}
@@ -286,15 +351,7 @@ export function AddNewExam() {
               </fieldset>
             </div>
 
-            <div className="mt-3.5 grid gap-3.5 sm:grid-cols-3">
-              <label className="block">
-                <span className={labelCls}>Minimum Words / Strokes <span className="text-danger">*</span></span>
-                <input type="text" placeholder="Enter minimum words or strokes" className={inputCls} />
-              </label>
-              <label className="block">
-                <span className={labelCls}>Maximum Words / Strokes <span className="text-danger">*</span></span>
-                <input type="text" placeholder="Enter maximum words or strokes" className={inputCls} />
-              </label>
+            <div className="mt-3.5 max-w-[220px]">
               <fieldset>
                 <legend className={labelCls}>Auto Submit <span className="text-danger">*</span></legend>
                 <div className="flex gap-4">
