@@ -77,6 +77,7 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
         <ul className="space-y-[3px]">
           {studentNav.map((item) => {
             const active = item.to === pathname;
+            const color = item.color ?? '#38BDF8';
             if (item.children) {
               const expanded = open.includes(item.label);
               return (
@@ -85,9 +86,16 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
                     type="button"
                     onClick={() => toggle(item.label)}
                     aria-expanded={expanded}
-                    className="flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-[13px] text-white/85 transition-colors duration-150 hover:bg-white/10">
-                    
-                    <NavIcon name={item.icon} />
+                    className={`flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] transition-colors duration-150 ${
+                    expanded ? 'bg-white/10 text-white' : 'text-white/85 hover:bg-white/10'}`
+                    }>
+
+                    <span
+                      className="grid h-7 w-7 shrink-0 place-items-center rounded-lg"
+                      style={{ backgroundColor: `${color}26` }}>
+
+                      <NavIcon name={item.icon} className="h-4 w-4" style={{ color }} />
+                    </span>
                     <span className="truncate">{item.label}</span>
                     {expanded ?
                     <ChevronUpIcon className="ml-auto h-3.5 w-3.5" /> :
@@ -96,23 +104,27 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
                     }
                   </button>
                   {expanded &&
-                  <ul className="ml-4 mt-1 space-y-[2px] border-l border-white/15 pl-2">
-                      {item.children.map((child) =>
-                    <li key={child.to}>
-                          <Link
-                        to={child.to}
-                        onClick={onClose}
-                        className={`flex items-center gap-2 rounded-md px-2.5 py-1.5 text-[12.5px] transition-colors duration-150 ${
-                        pathname === child.to ?
-                        'bg-primary text-white' :
-                        'text-white/75 hover:bg-white/10'}`
-                        }>
+                  <ul className="ml-[15px] mt-1 space-y-[2px] border-l-2 pl-3" style={{ borderColor: `${color}40` }}>
+                      {item.children.map((child) => {
+                        const childActive = pathname === child.to;
+                        return (
+                          <li key={child.to}>
+                            <Link
+                            to={child.to}
+                            onClick={onClose}
+                            className="flex items-center gap-2 rounded-md px-2.5 py-1.5 text-[12.5px] font-medium transition-colors duration-150"
+                            style={
+                            childActive ?
+                            { backgroundColor: color, color: '#0B1220' } :
+                            { color: 'rgba(255,255,255,0.75)' }
+                            }>
 
-                            <NavIcon name="barChart" className="h-3.5 w-3.5" />
-                            {child.label}
-                          </Link>
-                        </li>
-                    )}
+                              <NavIcon name="barChart" className="h-3.5 w-3.5" style={{ color: childActive ? '#0B1220' : color }} />
+                              {child.label}
+                            </Link>
+                          </li>);
+
+                      })}
                     </ul>
                   }
                 </li>);
@@ -123,11 +135,17 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
                 <Link
                   to={item.to ?? '/'}
                   onClick={onClose}
-                  className={`flex items-center gap-2.5 rounded-md px-3 py-2 text-[13px] transition-colors duration-150 ${
-                  active ? 'bg-primary font-medium text-white' : 'text-white/85 hover:bg-white/10'}`
-                  }>
-                  
-                  <NavIcon name={item.icon} />
+                  className={`flex items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] transition-colors duration-150 ${
+                  active ? 'font-semibold text-white shadow-sm' : 'text-white/85 hover:bg-white/10'}`
+                  }
+                  style={active ? { backgroundColor: color } : undefined}>
+
+                  <span
+                    className="grid h-7 w-7 shrink-0 place-items-center rounded-lg"
+                    style={{ backgroundColor: active ? 'rgba(255,255,255,0.25)' : `${color}26` }}>
+
+                    <NavIcon name={item.icon} className="h-4 w-4" style={{ color: active ? '#fff' : color }} />
+                  </span>
                   <span className="truncate">{item.label}</span>
                   {item.badge && <Badge kind={item.badge} />}
                 </Link>

@@ -21,7 +21,7 @@ export const dictationCategories: DictationCategory[] = [
   { label: 'For Beginners', tone: 'text-primary-700' }],
 
   iconBg: '#0D6EFD',
-  cardBg: 'bg-[#F8FAFF]',
+  cardBg: 'bg-blue-50',
   accent: 'text-primary'
 },
 {
@@ -35,7 +35,7 @@ export const dictationCategories: DictationCategory[] = [
   { label: 'For Intermediate', tone: 'text-emerald-700' }],
 
   iconBg: '#198754',
-  cardBg: 'bg-[#F6FEF9]',
+  cardBg: 'bg-emerald-50',
   accent: 'text-success'
 },
 {
@@ -49,7 +49,7 @@ export const dictationCategories: DictationCategory[] = [
   { label: 'For Advanced', tone: 'text-amber-700' }],
 
   iconBg: '#F59E0B',
-  cardBg: 'bg-[#FFFBF3]',
+  cardBg: 'bg-amber-50',
   accent: 'text-[#B45309]'
 },
 {
@@ -63,7 +63,7 @@ export const dictationCategories: DictationCategory[] = [
   { label: 'For Experts', tone: 'text-violet-700' }],
 
   iconBg: '#6F42C1',
-  cardBg: 'bg-[#FAF8FF]',
+  cardBg: 'bg-violet-50',
   accent: 'text-violet-700'
 },
 {
@@ -77,7 +77,7 @@ export const dictationCategories: DictationCategory[] = [
   { label: 'Previous Year', tone: 'text-rose-700' }],
 
   iconBg: '#EF4444',
-  cardBg: 'bg-[#FFF7F7]',
+  cardBg: 'bg-rose-50',
   accent: 'text-rose-600'
 },
 {
@@ -86,13 +86,13 @@ export const dictationCategories: DictationCategory[] = [
   subtitle: 'English • Legal Dictations',
   meta: '',
   tags: [
-  { label: 'Court', tone: 'text-primary-700' },
-  { label: 'Legal Words', tone: 'text-primary-700' },
-  { label: 'Professionals', tone: 'text-primary-700' }],
+  { label: 'Court', tone: 'text-sky-700' },
+  { label: 'Legal Words', tone: 'text-sky-700' },
+  { label: 'Professionals', tone: 'text-sky-700' }],
 
   iconBg: '#0EA5E9',
-  cardBg: 'bg-[#F7FCFF]',
-  accent: 'text-primary'
+  cardBg: 'bg-sky-50',
+  accent: 'text-sky-600'
 },
 {
   id: 'parliament',
@@ -100,13 +100,13 @@ export const dictationCategories: DictationCategory[] = [
   subtitle: 'English • Parliamentary Speeches',
   meta: '',
   tags: [
-  { label: 'Parliament', tone: 'text-emerald-700' },
-  { label: 'Speeches', tone: 'text-emerald-700' },
-  { label: 'Real-time Practice', tone: 'text-emerald-700' }],
+  { label: 'Parliament', tone: 'text-green-700' },
+  { label: 'Speeches', tone: 'text-green-700' },
+  { label: 'Real-time Practice', tone: 'text-green-700' }],
 
   iconBg: '#10B981',
-  cardBg: 'bg-[#F6FEF9]',
-  accent: 'text-success'
+  cardBg: 'bg-green-50',
+  accent: 'text-green-700'
 },
 {
   id: 'competition',
@@ -119,8 +119,106 @@ export const dictationCategories: DictationCategory[] = [
   { label: 'Top Performers', tone: 'text-orange-700' }],
 
   iconBg: '#F97316',
-  cardBg: 'bg-[#FFFBF3]',
+  cardBg: 'bg-orange-50',
   accent: 'text-orange-600'
+},
+{
+  id: 'railway',
+  title: 'Railway Steno Dictations',
+  subtitle: 'English • RRB Pattern',
+  meta: '',
+  tags: [
+  { label: 'RRB', tone: 'text-cyan-700' },
+  { label: 'Exam Based', tone: 'text-cyan-700' },
+  { label: 'Previous Year', tone: 'text-cyan-700' }],
+
+  iconBg: '#06B6D4',
+  cardBg: 'bg-cyan-50',
+  accent: 'text-cyan-600'
+},
+{
+  id: 'banking',
+  title: 'Banking & Finance Dictations',
+  subtitle: 'English • Financial Terms',
+  meta: '',
+  tags: [
+  { label: 'Banking', tone: 'text-indigo-700' },
+  { label: 'Finance', tone: 'text-indigo-700' },
+  { label: 'Professionals', tone: 'text-indigo-700' }],
+
+  iconBg: '#4F46E5',
+  cardBg: 'bg-indigo-50',
+  accent: 'text-indigo-600'
+},
+{
+  id: 'medical',
+  title: 'Medical Terminology Dictations',
+  subtitle: 'English • Healthcare Vocabulary',
+  meta: '',
+  tags: [
+  { label: 'Medical', tone: 'text-red-700' },
+  { label: 'Terminology', tone: 'text-red-700' },
+  { label: 'For Experts', tone: 'text-red-700' }],
+
+  iconBg: '#DC2626',
+  cardBg: 'bg-red-50',
+  accent: 'text-red-600'
+},
+{
+  id: 'business',
+  title: 'Business & Commerce Dictations',
+  subtitle: 'English • Corporate Vocabulary',
+  meta: '',
+  tags: [
+  { label: 'Business', tone: 'text-teal-700' },
+  { label: 'Corporate', tone: 'text-teal-700' },
+  { label: 'Professionals', tone: 'text-teal-700' }],
+
+  iconBg: '#0D9488',
+  cardBg: 'bg-teal-50',
+  accent: 'text-teal-600'
+},
+{
+  id: 'daily-news',
+  title: 'Daily News Dictations',
+  subtitle: 'English • Current Affairs',
+  meta: '',
+  tags: [
+  { label: 'Current Affairs', tone: 'text-fuchsia-700' },
+  { label: 'Daily Practice', tone: 'text-fuchsia-700' },
+  { label: 'All Speeds', tone: 'text-fuchsia-700' }],
+
+  iconBg: '#C026D3',
+  cardBg: 'bg-fuchsia-50',
+  accent: 'text-fuchsia-600'
+},
+{
+  id: 'punctuation',
+  title: 'Punctuation Practice Dictations',
+  subtitle: 'English • Accuracy Focused',
+  meta: '',
+  tags: [
+  { label: 'Punctuation', tone: 'text-pink-700' },
+  { label: 'Accuracy', tone: 'text-pink-700' },
+  { label: 'For Intermediate', tone: 'text-pink-700' }],
+
+  iconBg: '#DB2777',
+  cardBg: 'bg-pink-50',
+  accent: 'text-pink-600'
+},
+{
+  id: 'mock-test',
+  title: 'Full Mock Test Dictations',
+  subtitle: 'English • Exam Simulation',
+  meta: '',
+  tags: [
+  { label: 'Mock Test', tone: 'text-lime-700' },
+  { label: 'Exam Simulation', tone: 'text-lime-700' },
+  { label: 'Top Performers', tone: 'text-lime-700' }],
+
+  iconBg: '#65A30D',
+  cardBg: 'bg-lime-50',
+  accent: 'text-lime-700'
 }];
 
 

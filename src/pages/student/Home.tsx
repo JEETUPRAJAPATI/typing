@@ -18,7 +18,9 @@ import {
   HeadphonesIcon,
   BarChart2Icon,
   ChevronLeftIcon,
-  ChevronRightIcon } from
+  ChevronRightIcon,
+  QuoteIcon,
+  StarIcon } from
 'lucide-react';
 import { StudentLayout } from '../../components/student/StudentLayout';
 
@@ -140,8 +142,157 @@ const stats = [
 { icon: ShieldCheckIcon, value: '100% Secure', label: 'Safe & Reliable', color: '#6F42C1' }];
 
 
+const quickLinks = [
+{ label: 'Terms & Conditions', href: '#terms' },
+{ label: 'Privacy Policy', href: '#privacy' },
+{ label: 'Refund & Cancellation Policy', href: '#refund' },
+{ label: 'Contact Us', href: '#contact' }];
+
+
+const testimonials = [
+{
+  name: 'Rakesh',
+  role: 'Stenographer, Delhi High Court',
+  avatarBg: '#FDE68A',
+  rating: 5,
+  text: 'This platform gave me the exact exam-like pressure I needed. My typing speed improved by 12 WPM in just two months of daily practice.'
+},
+{
+  name: 'Arpita',
+  role: 'Stenographer, Registrar General of India',
+  avatarBg: '#FBCFE8',
+  rating: 5,
+  text: 'SSC test simulator on this site is just like the actual exam. It made me comfortable with the pattern and improved my speed under pressure.'
+},
+{
+  name: 'Kundan',
+  role: 'Stenographer, Central Vigilance Commission',
+  avatarBg: '#BFDBFE',
+  rating: 4,
+  text: 'Sir, aapka platform best hai. Mujhe ab typing mistakes bahut kam hoti hai aur outline practice bhi easily ho jati hai.'
+},
+{
+  name: 'Gautam',
+  role: 'Stenographer, M.E.A.',
+  avatarBg: '#DDD6FE',
+  rating: 5,
+  text: "I was struggling with accuracy, but after using Stenoshala's instant result and detailed feedback, I improved a lot. Cleared my exam in second attempt."
+},
+{
+  name: 'Priyanka',
+  role: 'Stenographer, Rajasthan High Court',
+  avatarBg: '#BBF7D0',
+  rating: 5,
+  text: "The mistake pattern analysis helped me understand exactly where I was losing marks. It's the closest thing to having a personal typing coach."
+},
+{
+  name: 'Suresh',
+  role: 'Stenographer, UP Police',
+  avatarBg: '#FECACA',
+  rating: 4,
+  text: 'The live tests feel exactly like the real exam hall. Competing with other aspirants in real time pushed me to practice every single day.'
+},
+{
+  name: 'Neha',
+  role: 'Stenographer, Income Tax Department',
+  avatarBg: '#FDE68A',
+  rating: 5,
+  text: 'Hindi typing practice ke liye ye best platform hai. Font aur keyboard layout options ne mujhe bahut help ki.'
+},
+{
+  name: 'Vikas',
+  role: 'Stenographer, Railway Recruitment Board',
+  avatarBg: '#BFDBFE',
+  rating: 5,
+  text: "I could track my WPM growth week by week. Seeing the graph go up kept me motivated to keep practicing."
+},
+{
+  name: 'Sunita',
+  role: 'Stenographer, Punjab & Haryana High Court',
+  avatarBg: '#FBCFE8',
+  rating: 4,
+  text: 'The steno dictation library covers every difficulty level. I started with easy dictations and gradually moved to pro level before my exam.'
+},
+{
+  name: 'Manoj',
+  role: 'Stenographer, CBI',
+  avatarBg: '#DDD6FE',
+  rating: 5,
+  text: 'Customer support replied within minutes when I had a doubt about the result pattern. That kind of support is rare on other platforms.'
+},
+{
+  name: 'Deepika',
+  role: 'Stenographer, Supreme Court of India',
+  avatarBg: '#BBF7D0',
+  rating: 5,
+  text: 'The self assessment mode let me practice without pressure while the live tests gave me the real exam feel. Both together made a huge difference.'
+},
+{
+  name: 'Amit',
+  role: 'Stenographer, SSC CGL',
+  avatarBg: '#FECACA',
+  rating: 5,
+  text: 'Mera accuracy 85% se 96% tak pahunch gaya sirf 6 hafton mein. Yahan ke practice tests bahut realistic hain.'
+},
+{
+  name: 'Kavita',
+  role: 'Stenographer, Delhi Police HCM',
+  avatarBg: '#FDE68A',
+  rating: 4,
+  text: "Leaderboard ranking motivated me to practice daily. Watching my rank climb every week was the best feeling."
+},
+{
+  name: 'Rohit',
+  role: 'Stenographer, Rajya Sabha Secretariat',
+  avatarBg: '#BFDBFE',
+  rating: 5,
+  text: 'The detailed mistake analysis broke down exactly which words I kept getting wrong. Fixing those specific words fixed my whole score.'
+},
+{
+  name: 'Anjali',
+  role: 'Stenographer, State Bank of India',
+  avatarBg: '#FBCFE8',
+  rating: 5,
+  text: "I recommend this to every steno aspirant I know. It's the only platform that actually matches the real exam software."
+}];
+
+
 export function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const testimonialTrackRef = React.useRef<HTMLDivElement>(null);
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const testimonialCardWidth = 356;
+
+  const scrollTestimonialsTo = (index: number) => {
+    const el = testimonialTrackRef.current;
+    if (!el) return;
+    const clamped = (index + testimonials.length) % testimonials.length;
+    el.scrollTo({ left: clamped * testimonialCardWidth, behavior: 'smooth' });
+    setTestimonialIndex(clamped);
+  };
+
+  const scrollTestimonials = (dir: 'left' | 'right') => {
+    scrollTestimonialsTo(testimonialIndex + (dir === 'left' ? -1 : 1));
+  };
+
+  const handleTestimonialScroll = () => {
+    const el = testimonialTrackRef.current;
+    if (!el) return;
+    setTestimonialIndex(Math.round(el.scrollLeft / testimonialCardWidth));
+  };
+
+  // Auto advance testimonials
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTestimonialIndex((prev) => {
+        const next = (prev + 1) % testimonials.length;
+        testimonialTrackRef.current?.scrollTo({ left: next * testimonialCardWidth, behavior: 'smooth' });
+        return next;
+      });
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   // Auto advance slider
   useEffect(() => {
@@ -406,6 +557,103 @@ export function Home() {
         })}
       </div>
 
+      {/* Testimonials */}
+      <section className="relative mb-4 overflow-hidden rounded-xl border border-slate-200 bg-gradient-to-b from-primary-50/50 to-white p-6 shadow-card">
+        <h2 className="mb-5 text-center font-display text-[20px] font-bold text-navy-800">
+          What Our Users Say
+        </h2>
+
+        <button
+          type="button"
+          onClick={() => scrollTestimonials('left')}
+          aria-label="Previous testimonials"
+          className="absolute left-3 top-1/2 z-10 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full border border-slate-200 bg-white shadow-card transition-all duration-150 hover:scale-110 hover:bg-primary hover:text-white">
+
+          <ChevronLeftIcon className="h-4 w-4" aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          onClick={() => scrollTestimonials('right')}
+          aria-label="Next testimonials"
+          className="absolute right-3 top-1/2 z-10 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full border border-slate-200 bg-white shadow-card transition-all duration-150 hover:scale-110 hover:bg-primary hover:text-white">
+
+          <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
+        </button>
+
+        <div
+          ref={testimonialTrackRef}
+          onScroll={handleTestimonialScroll}
+          className="scroll-thin flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-2">
+
+          {testimonials.map((t) =>
+          <article
+            key={t.name}
+            className="w-[340px] shrink-0 snap-start rounded-xl border border-slate-200 bg-white p-5 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+
+              <div className="flex items-center justify-between">
+                <QuoteIcon className="h-6 w-6 text-rose-300" aria-hidden="true" />
+                <div className="flex items-center gap-[2px]">
+                  {Array.from({ length: 5 }, (_, i) =>
+                  <StarIcon
+                    key={i}
+                    className={`h-3.5 w-3.5 ${
+                    i < t.rating ? 'fill-amber-400 text-amber-400' : 'fill-slate-200 text-slate-200'}`
+                    }
+                    aria-hidden="true" />
+
+                  )}
+                </div>
+              </div>
+              <p className="mt-3 text-[13.5px] leading-relaxed text-slate-600">{t.text}</p>
+              <div className="mt-5 flex items-center gap-3">
+                <span
+                  className="grid h-11 w-11 shrink-0 place-items-center rounded-full font-display text-[15px] font-bold text-navy-800"
+                  style={{ backgroundColor: t.avatarBg }}>
+
+                  {t.name.charAt(0)}
+                </span>
+                <span className="min-w-0">
+                  <span className="block truncate text-[13.5px] font-bold text-navy-800">{t.name}</span>
+                  <span className="block truncate text-[11.5px] text-slate-500">{t.role}</span>
+                </span>
+              </div>
+            </article>
+          )}
+        </div>
+
+        <div className="mt-3 flex justify-center gap-1.5">
+          {testimonials.map((t, i) =>
+          <button
+            key={t.name}
+            type="button"
+            onClick={() => scrollTestimonialsTo(i)}
+            aria-label={`Go to testimonial ${i + 1}`}
+            className={`h-1.5 rounded-full transition-all duration-300 ${
+            i === testimonialIndex ? 'w-6 bg-primary' : 'w-1.5 bg-slate-200 hover:bg-slate-300'}`
+            } />
+
+          )}
+        </div>
+      </section>
+
+      {/* Quick Links */}
+      <section className="mb-4 rounded-xl border border-slate-200 bg-white p-5 shadow-card">
+        <h2 className="mb-3.5 flex items-center gap-2 font-display text-[15px] font-bold text-navy-800">
+          <span className="h-2.5 w-2.5 rounded-full bg-primary" aria-hidden="true" /> Quick Links
+        </h2>
+        <div className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
+          {quickLinks.map((l) =>
+          <a
+            key={l.label}
+            href={l.href}
+            className="flex items-center gap-2 rounded-lg bg-slate-50 px-4 py-3 text-[13px] font-medium text-navy-800 transition-colors duration-150 hover:bg-primary-50 hover:text-primary">
+
+              <ChevronRightIcon className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" /> {l.label}
+            </a>
+          )}
+        </div>
+      </section>
+
       {/* Channel banners */}
       <div className="grid gap-4 lg:grid-cols-2">
         <div className="flex items-center gap-3 rounded-xl bg-[#229ED9] p-4">
@@ -421,7 +669,7 @@ export function Home() {
           <a
             href="#telegram"
             className="ml-auto shrink-0 rounded-md bg-white px-4 py-2 text-[12.5px] font-semibold text-[#0b7cad] transition-colors duration-150 hover:bg-slate-100">
-            
+
             Join Now
           </a>
         </div>
@@ -438,7 +686,7 @@ export function Home() {
           <a
             href="#youtube"
             className="ml-auto shrink-0 rounded-md bg-white px-4 py-2 text-[12.5px] font-semibold text-[#c2160e] transition-colors duration-150 hover:bg-slate-100">
-            
+
             Subscribe Now
           </a>
         </div>

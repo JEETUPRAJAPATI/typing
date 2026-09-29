@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   HeartIcon,
   FolderIcon,
+  FolderPlusIcon,
   SearchIcon,
   LayersIcon,
   PlayIcon,
@@ -10,7 +11,9 @@ import {
   CrownIcon,
   CheckIcon,
   PenLineIcon,
-  BarChart2Icon } from
+  BarChart2Icon,
+  XIcon,
+  PlusIcon } from
 'lucide-react';
 import { StudentLayout } from '../../components/student/StudentLayout';
 import { Breadcrumbs } from '../../components/common/PageHeading';
@@ -24,9 +27,92 @@ const difficultyFilters = [
 'Pro Level Dictations'];
 
 
+function AddToFolderModal({
+  folders,
+  onCreate,
+  onClose
+
+
+
+
+}: {folders: string[];onCreate: (name: string) => void;onClose: () => void;}) {
+  const [name, setName] = useState('');
+
+  const create = () => {
+    const trimmed = name.trim();
+    if (!trimmed) return;
+    onCreate(trimmed);
+    setName('');
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/50 p-4">
+      <div className="w-full max-w-lg rounded-xl bg-white p-7 shadow-2xl">
+        <div className="mb-2.5 flex items-start justify-between gap-3">
+          <h3 className="flex items-center gap-2.5 font-display text-[19px] font-bold text-navy-800">
+            <FolderPlusIcon className="h-5 w-5 text-primary" aria-hidden="true" /> Add to a Folder
+          </h3>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-slate-400 transition-colors duration-150 hover:bg-slate-100 hover:text-slate-600">
+
+            <XIcon className="h-4 w-4" aria-hidden="true" />
+          </button>
+        </div>
+        <p className="mb-5 text-[13.5px] text-slate-500">
+          Organise this dictation into your own folders. Find them again under <b>My Dictations</b> in
+          the sidebar.
+        </p>
+
+        {folders.length === 0 ?
+        <div className="mb-5 flex flex-col items-center gap-2.5 py-8 text-center">
+            <FolderIcon className="h-12 w-12 text-slate-300" aria-hidden="true" />
+            <p className="text-[13.5px] text-slate-400">No folders yet — create your first one below.</p>
+          </div> :
+
+        <ul className="mb-5 max-h-48 space-y-2 overflow-y-auto">
+            {folders.map((f) =>
+          <li key={f}>
+                <button
+              type="button"
+              className="flex w-full items-center gap-2.5 rounded-md border border-slate-200 px-4 py-2.5 text-left text-[13.5px] text-navy-800 transition-colors duration-150 hover:border-primary hover:bg-primary-50/40">
+
+                  <FolderIcon className="h-4 w-4 text-primary" aria-hidden="true" /> {f}
+                </button>
+              </li>
+          )}
+          </ul>
+        }
+
+        <div className="flex gap-2.5">
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && create()}
+            placeholder="Create a new folder..."
+            className="w-full rounded-md border border-slate-300 px-3.5 py-2.5 text-[13.5px] outline-none focus:border-primary" />
+
+          <button
+            type="button"
+            onClick={create}
+            className="flex shrink-0 items-center gap-1.5 rounded-md bg-primary px-4 py-2.5 text-[13.5px] font-semibold text-white transition-colors duration-150 hover:bg-primary-700">
+
+            <PlusIcon className="h-4 w-4" aria-hidden="true" /> Create
+          </button>
+        </div>
+      </div>
+    </div>);
+
+}
+
 export function DictationList() {
   const [filter, setFilter] = useState('Hard Dictations');
   const [query, setQuery] = useState('');
+  const [folders, setFolders] = useState<string[]>([]);
+  const [folderModalFor, setFolderModalFor] = useState<number | null>(null);
 
   const rows = volumeOneDictations.filter((d) =>
   `${d.no} ${d.topic}`.toLowerCase().includes(query.trim().toLowerCase())
@@ -114,7 +200,14 @@ export function DictationList() {
                   Dictation No. {d.no}
                 </h4>
                 <div className="ml-auto flex items-center gap-2">
-                  <FolderIcon className="h-4 w-4 text-primary" aria-hidden="true" />
+                  <button
+                  type="button"
+                  onClick={() => setFolderModalFor(d.no)}
+                  aria-label="Add to a folder"
+                  className="text-primary transition-colors duration-150 hover:text-primary-700">
+
+                    <FolderIcon className="h-4 w-4" aria-hidden="true" />
+                  </button>
                   <button
                   type="button"
                   aria-label={d.favourite ? 'Remove from favourites' : 'Add to favourites'}
@@ -205,6 +298,14 @@ export function DictationList() {
           )}
         </ul>
       </section>
+
+      {folderModalFor !== null &&
+      <AddToFolderModal
+        folders={folders}
+        onCreate={(name) => setFolders((prev) => [...prev, name])}
+        onClose={() => setFolderModalFor(null)} />
+
+      }
     </StudentLayout>);
 
 }

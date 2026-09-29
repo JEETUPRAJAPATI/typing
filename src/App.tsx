@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/student/Home';
+import { MyAccount } from './pages/student/MyAccount';
 import { TypingGames } from './pages/student/TypingGames';
 import { TypingExam } from './pages/student/TypingExam';
 import { ExamDetail } from './pages/student/ExamDetail';
@@ -32,6 +33,12 @@ import { AIDeepAnalysis } from './pages/student/AIDeepAnalysis';
 import { DetailedAnalysisReport } from './pages/student/DetailedAnalysisReport';
 import { PracticeWords } from './pages/student/PracticeWords';
 import { TestRankList } from './pages/student/TestRankList';
+import { KCMagazines } from './pages/student/KCMagazines';
+import { ProgressiveMagazines } from './pages/student/ProgressiveMagazines';
+import { WriteReview } from './pages/student/WriteReview';
+import { ReferEarn } from './pages/student/ReferEarn';
+import { TestAnalysisResults } from './pages/student/TestAnalysisResults';
+import { PlanPricing } from './pages/student/PlanPricing';
 
 export function App() {
   return (
@@ -39,6 +46,9 @@ export function App() {
       <Routes>
         {/* Student */}
         <Route path="/" element={<Home />} />
+        <Route path="/my-account" element={<MyAccount />} />
+        <Route path="/write-review" element={<WriteReview />} />
+        <Route path="/refer-earn" element={<ReferEarn />} />
         <Route path="/typing-games" element={<TypingGames />} />
         <Route path="/typing-exam" element={<TypingExam />} />
         <Route path="/typing-exam/:examId" element={<ExamDetail />} />
@@ -51,7 +61,7 @@ export function App() {
         <Route path="/live-test/typing/:testId/rank" element={<TestRankList />} />
         <Route path="/result/typing" element={<TypingResult />} />
         <Route path="/result/steno" element={<StenoResult />} />
-        <Route path="/test-analysis" element={<AdminTestAnalysis />} />
+        <Route path="/test-analysis" element={<TestAnalysisResults />} />
         <Route path="/test-analysis/typing" element={<TypingResult />} />
         <Route path="/test-analysis/eng-steno" element={<StenoResult />} />
         <Route path="/test-analysis/hindi-steno" element={<StenoResult />} />
@@ -64,12 +74,11 @@ export function App() {
         <Route path="/login" element={<Signup />} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route path="/pdf/kc-magazines" element={<ComingSoon title="KC Magazines (PDF)" />} />
-        <Route
-          path="/pdf/progressive-magazines"
-          element={<ComingSoon title="Progressive Magazines (PDF)" />} />
-        
-        <Route path="/plan-pricing" element={<ComingSoon title="Plan & Pricing" />} />
+        <Route path="/pdf/kc-magazines" element={<KCMagazines />} />
+        <Route path="/pdf/progressive-magazines" element={<ProgressiveMagazines />} />
+
+        <Route path="/plan-pricing" element={<PlanPricing />} />
+        <Route path="/support" element={<ComingSoon title="Support" />} />
         <Route path="/how-to-use" element={<ComingSoon title="How to use?" />} />
 
         {/* Admin */}

@@ -10,7 +10,14 @@ import {
   BookOpenCheckIcon,
   BarChart3Icon,
   TargetIcon,
-  CheckCircle2Icon } from
+  CheckCircle2Icon,
+  TrainFrontIcon,
+  LandmarkIcon,
+  HeartPulseIcon,
+  TrendingUpIcon,
+  NewspaperIcon,
+  PenLineIcon,
+  ClipboardCheckIcon } from
 'lucide-react';
 import { StudentLayout } from '../../components/student/StudentLayout';
 import { dictationCategories } from '../../data/steno';
@@ -23,7 +30,14 @@ HeadphonesIcon,
 FileTextIcon,
 BriefcaseIcon,
 UsersIcon,
-AwardIcon];
+AwardIcon,
+TrainFrontIcon,
+LandmarkIcon,
+HeartPulseIcon,
+TrendingUpIcon,
+NewspaperIcon,
+PenLineIcon,
+ClipboardCheckIcon];
 
 
 const footerFeatures = [
@@ -87,9 +101,14 @@ export function EnglishSteno() {
           return (
             <article
               key={cat.id}
-              className={`flex flex-col rounded-xl border border-slate-200 ${cat.cardBg} p-4 shadow-card`}>
-              
-              <div className="flex items-start">
+              className={`relative flex flex-col overflow-hidden rounded-xl border border-slate-200 ${cat.cardBg} p-4 shadow-card transition-transform duration-150 hover:-translate-y-0.5`}>
+
+              <span
+                className="pointer-events-none absolute -right-6 -top-8 h-24 w-24 rounded-full opacity-25 blur-xl"
+                style={{ backgroundColor: cat.iconBg }}
+                aria-hidden="true" />
+
+              <div className="relative flex items-start">
                 <span
                   className="grid h-11 w-11 place-items-center rounded-xl text-white"
                   style={{ backgroundColor: cat.iconBg }}>

@@ -19,7 +19,9 @@ import {
   WalletIcon,
   SettingsIcon,
   GraduationCapIcon,
-  Gamepad2Icon } from
+  Gamepad2Icon,
+  UserCircle2Icon,
+  HeadphonesIcon } from
 'lucide-react';
 
 const map = {
@@ -42,15 +44,18 @@ const map = {
   wallet: WalletIcon,
   settings: SettingsIcon,
   graduationCap: GraduationCapIcon,
-  gamepad: Gamepad2Icon
+  gamepad: Gamepad2Icon,
+  userCircle: UserCircle2Icon,
+  headphones: HeadphonesIcon
 } as const;
 
 interface NavIconProps {
   name: string;
   className?: string;
+  style?: React.CSSProperties;
 }
 
-export function NavIcon({ name, className = 'h-4 w-4' }: NavIconProps) {
+export function NavIcon({ name, className = 'h-4 w-4', style }: NavIconProps) {
   const Cmp = map[name as keyof typeof map] ?? HomeIcon;
-  return <Cmp className={className} aria-hidden="true" />;
+  return <Cmp className={className} style={style} aria-hidden="true" />;
 }

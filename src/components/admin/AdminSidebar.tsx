@@ -60,6 +60,7 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
       <nav className="scroll-thin flex-1 overflow-y-auto pb-3" aria-label="Admin navigation">
         <ul>
           {adminNav.map((item) => {
+            const color = item.color ?? '#38BDF8';
             if (item.children) {
               const expanded = open.includes(item.label);
               const childActive = item.children.some((c) => c.to === pathname);
@@ -70,10 +71,16 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
                     onClick={() => toggle(item.label)}
                     aria-expanded={expanded}
                     className={`flex w-full items-center gap-2.5 px-4 py-2.5 text-[13px] transition-colors duration-150 hover:bg-white/10 ${
-                    childActive ? 'bg-primary text-white' : 'text-white/85'}`
-                    }>
-                    
-                    <NavIcon name={item.icon} />
+                    childActive ? 'font-semibold text-white' : 'text-white/85'}`
+                    }
+                    style={childActive ? { backgroundColor: color } : undefined}>
+
+                    <span
+                      className="grid h-7 w-7 shrink-0 place-items-center rounded-lg"
+                      style={{ backgroundColor: childActive ? 'rgba(255,255,255,0.25)' : `${color}26` }}>
+
+                      <NavIcon name={item.icon} className="h-4 w-4" style={{ color: childActive ? '#fff' : color }} />
+                    </span>
                     <span className="truncate">{item.label}</span>
                     {expanded ?
                     <ChevronUpIcon className="ml-auto h-3.5 w-3.5" /> :
@@ -83,38 +90,47 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
                   </button>
                   {expanded &&
                   <ul>
-                      {item.children.map((child) =>
-                    <li key={child.to}>
-                          <Link
-                        to={child.to}
-                        onClick={onClose}
-                        className={`block py-2 pl-11 pr-4 text-[12.5px] transition-colors duration-150 ${
-                        pathname === child.to ?
-                        'bg-primary-700 font-medium text-white' :
-                        'text-white/70 hover:bg-white/10'}`
-                        }>
+                      {item.children.map((child) => {
+                        const childLinkActive = pathname === child.to;
+                        return (
+                          <li key={child.to}>
+                            <Link
+                            to={child.to}
+                            onClick={onClose}
+                            className="block py-2 pl-11 pr-4 text-[12.5px] font-medium transition-colors duration-150"
+                            style={
+                            childLinkActive ?
+                            { backgroundColor: color, color: '#0B1220' } :
+                            { color: 'rgba(255,255,255,0.7)' }
+                            }>
 
-                            — {child.label}
-                          </Link>
-                        </li>
-                    )}
+                              — {child.label}
+                            </Link>
+                          </li>);
+
+                      })}
                     </ul>
                   }
                 </li>);
 
             }
+            const active = pathname === item.to;
             return (
               <li key={item.label}>
                 <Link
                   to={item.to ?? '/admin'}
                   onClick={onClose}
                   className={`flex items-center gap-2.5 px-4 py-2.5 text-[13px] transition-colors duration-150 ${
-                  pathname === item.to ?
-                  'bg-primary font-medium text-white' :
-                  'text-white/85 hover:bg-white/10'}`
-                  }>
-                  
-                  <NavIcon name={item.icon} />
+                  active ? 'font-semibold text-white' : 'text-white/85 hover:bg-white/10'}`
+                  }
+                  style={active ? { backgroundColor: color } : undefined}>
+
+                  <span
+                    className="grid h-7 w-7 shrink-0 place-items-center rounded-lg"
+                    style={{ backgroundColor: active ? 'rgba(255,255,255,0.25)' : `${color}26` }}>
+
+                    <NavIcon name={item.icon} className="h-4 w-4" style={{ color: active ? '#fff' : color }} />
+                  </span>
                   <span className="truncate">{item.label}</span>
                   {item.badge === 'new' &&
                   <span className="ml-auto rounded bg-success px-1.5 py-[1px] text-[9px] font-bold">
