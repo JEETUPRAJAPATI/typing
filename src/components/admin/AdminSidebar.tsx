@@ -70,8 +70,10 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
                     type="button"
                     onClick={() => toggle(item.label)}
                     aria-expanded={expanded}
-                    className={`flex w-full items-center gap-2.5 px-4 py-2.5 text-[13px] transition-colors duration-150 hover:bg-slate-50 ${
-                    childActive ? 'bg-primary font-semibold text-white' : 'text-slate-600'}`
+                    className={`flex w-full items-center gap-2.5 border-l-4 px-4 py-2.5 text-[13px] transition-all duration-200 ease-out hover:translate-x-1 ${
+                    childActive ?
+                    'border-amber-400 bg-primary font-semibold text-white hover:bg-primary-700' :
+                    'border-transparent text-slate-600 hover:bg-slate-50'}`
                     }>
 
                     <span
@@ -96,8 +98,10 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
                             <Link
                             to={child.to}
                             onClick={onClose}
-                            className={`block py-2 pl-11 pr-4 text-[12.5px] font-medium transition-colors duration-150 ${
-                            childLinkActive ? 'bg-primary text-white' : 'text-slate-600 hover:bg-slate-50'}`
+                            className={`block border-l-4 py-2 pl-11 pr-4 text-[12.5px] font-medium transition-all duration-200 ease-out hover:translate-x-1 ${
+                            childLinkActive ?
+                            'border-amber-400 bg-primary text-white hover:bg-primary-700' :
+                            'border-transparent text-slate-600 hover:bg-slate-50'}`
                             }>
 
                               — {child.label}
@@ -116,8 +120,10 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
                 <Link
                   to={item.to ?? '/admin'}
                   onClick={onClose}
-                  className={`flex items-center gap-2.5 px-4 py-2.5 text-[13px] transition-colors duration-150 ${
-                  active ? 'bg-primary font-semibold text-white' : 'text-slate-600 hover:bg-slate-50'}`
+                  className={`flex items-center gap-2.5 border-l-4 px-4 py-2.5 text-[13px] transition-all duration-200 ease-out hover:translate-x-1 ${
+                  active ?
+                  'border-amber-400 bg-primary font-semibold text-white hover:bg-primary-700' :
+                  'border-transparent text-slate-600 hover:bg-slate-50'}`
                   }>
 
                   <span

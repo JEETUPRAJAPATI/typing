@@ -5,7 +5,10 @@ import {
   XIcon,
   CalendarIcon,
   EyeIcon,
-  ZapIcon } from
+  ZapIcon,
+  GaugeIcon,
+  MoreVerticalIcon,
+  DownloadIcon } from
 'lucide-react';
 import { StudentLayout } from '../../components/student/StudentLayout';
 
@@ -52,10 +55,22 @@ function TestTypePill({ type }: {type: ResultRow['testType'];}) {
   return (
     <span
       className={`inline-flex items-center rounded-full px-2.5 py-[3px] text-[10.5px] font-semibold ${
-      type === 'Live' ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-600'}`
+      type === 'Live' ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-500'}`
       }>
 
       {type}
+    </span>);
+
+}
+
+function SpeedBadge({ value }: {value: number;}) {
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-lg bg-rose-50 px-2.5 py-1.5">
+      <GaugeIcon className="h-4 w-4 text-rose-500" aria-hidden="true" />
+      <span className="leading-tight">
+        <span className="block text-[12.5px] font-bold text-navy-800">{value.toFixed(2)}</span>
+        <span className="block text-[9px] font-semibold text-slate-400">WPM</span>
+      </span>
     </span>);
 
 }
@@ -163,51 +178,87 @@ export function TestAnalysisResults() {
         </div>
       </section>
 
-      <h3 className="mb-2.5 font-display text-[15px] font-bold text-navy-800">Detailed Results</h3>
+      <div className="mb-2.5 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h3 className="font-display text-[15px] font-bold text-navy-800">Detailed Results</h3>
+          <p className="text-[11.5px] text-slate-500">Showing 1 to {rows.length} of 147 results</p>
+        </div>
+        <button
+          type="button"
+          className="flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3.5 py-2 text-[12px] font-semibold text-navy-800 shadow-card transition-colors duration-150 hover:bg-slate-50">
+
+          <DownloadIcon className="h-3.5 w-3.5" aria-hidden="true" /> Download Report
+        </button>
+      </div>
 
       <section className="hidden overflow-hidden rounded-xl border border-slate-200 bg-white shadow-card md:block">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[900px] text-left text-[12px]">
-            <thead className="bg-slate-50 text-[10.5px] font-semibold uppercase tracking-wide text-slate-500">
+          <table className="w-full min-w-[980px] text-left text-[12px]">
+            <thead className="bg-gradient-to-r from-primary to-indigo-600 text-[10.5px] font-semibold uppercase tracking-wide text-white">
               <tr>
-                <th scope="col" className="px-4 py-2.5">Course</th>
-                <th scope="col" className="px-4 py-2.5">Test Type</th>
-                <th scope="col" className="px-4 py-2.5">Exam Name</th>
-                <th scope="col" className="px-4 py-2.5">Test No.</th>
-                <th scope="col" className="px-4 py-2.5">Test Date &amp; Time</th>
-                <th scope="col" className="px-4 py-2.5 text-right">Gross WPM</th>
-                <th scope="col" className="px-4 py-2.5 text-right">Net WPM</th>
-                <th scope="col" className="px-4 py-2.5 text-right">Accuracy (%)</th>
-                <th scope="col" className="px-4 py-2.5 text-right">Marks</th>
-                <th scope="col" className="px-4 py-2.5">Status</th>
-                <th scope="col" className="px-4 py-2.5" />
+                <th scope="col" className="px-4 py-3">#</th>
+                <th scope="col" className="px-4 py-3">Course</th>
+                <th scope="col" className="px-4 py-3">Test Type</th>
+                <th scope="col" className="px-4 py-3">Exam Name</th>
+                <th scope="col" className="px-4 py-3">Test No.</th>
+                <th scope="col" className="px-4 py-3">Test Date &amp; Time</th>
+                <th scope="col" className="px-4 py-3">Gross Speed (WPM)</th>
+                <th scope="col" className="px-4 py-3">Net Speed (WPM)</th>
+                <th scope="col" className="px-4 py-3">Accuracy (%)</th>
+                <th scope="col" className="px-4 py-3 text-right">Marks</th>
+                <th scope="col" className="px-4 py-3">Status</th>
+                <th scope="col" className="px-4 py-3 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {rows.map((r, i) =>
               <tr key={i} className="transition-colors duration-150 hover:bg-slate-50/70">
-                  <td className="px-4 py-2.5 font-medium text-navy-800">{r.course}</td>
-                  <td className="px-4 py-2.5">
+                  <td className="px-4 py-3 text-slate-400">{i + 1}</td>
+                  <td className="px-4 py-3 font-medium text-navy-800">{r.course}</td>
+                  <td className="px-4 py-3">
                     <TestTypePill type={r.testType} />
                   </td>
-                  <td className="px-4 py-2.5 text-slate-600">{r.examName}</td>
-                  <td className="px-4 py-2.5 text-slate-600">{r.testNo}</td>
-                  <td className="px-4 py-2.5 text-slate-500">{r.dateTime}</td>
-                  <td className="px-4 py-2.5 text-right text-slate-700">{r.grossWpm.toFixed(2)}</td>
-                  <td className="px-4 py-2.5 text-right font-semibold text-primary">{r.netWpm.toFixed(2)}</td>
-                  <td className="px-4 py-2.5 text-right text-slate-700">{r.accuracy.toFixed(2)}%</td>
-                  <td className="px-4 py-2.5 text-right font-semibold text-navy-800">{r.marks.toFixed(2)}</td>
-                  <td className="px-4 py-2.5">
+                  <td className="px-4 py-3 text-slate-600">{r.examName}</td>
+                  <td className="px-4 py-3 text-slate-600">{r.testNo}</td>
+                  <td className="px-4 py-3 text-slate-500">{r.dateTime}</td>
+                  <td className="px-4 py-3">
+                    <SpeedBadge value={r.grossWpm} />
+                  </td>
+                  <td className="px-4 py-3">
+                    <SpeedBadge value={r.netWpm} />
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className="mb-1 block text-[11.5px] font-semibold text-slate-600">
+                      {r.accuracy.toFixed(2)}%
+                    </span>
+                    <span className="block h-1.5 w-24 overflow-hidden rounded-full bg-slate-100">
+                      <span
+                      className={`block h-full rounded-full ${r.status === 'Qualified' ? 'bg-emerald-500' : 'bg-danger'}`}
+                      style={{ width: `${Math.min(100, r.accuracy)}%` }} />
+
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-right font-semibold text-navy-800">{r.marks.toFixed(2)}</td>
+                  <td className="px-4 py-3">
                     <StatusPill status={r.status} />
                   </td>
-                  <td className="px-4 py-2.5">
-                    <button
-                    type="button"
-                    aria-label="View details"
-                    className="text-slate-400 transition-colors duration-150 hover:text-primary">
+                  <td className="px-4 py-3">
+                    <div className="flex items-center justify-end gap-2">
+                      <button
+                      type="button"
+                      aria-label="View details"
+                      className="text-primary transition-colors duration-150 hover:text-primary-700">
 
-                      <EyeIcon className="h-4 w-4" aria-hidden="true" />
-                    </button>
+                        <EyeIcon className="h-4 w-4" aria-hidden="true" />
+                      </button>
+                      <button
+                      type="button"
+                      aria-label="More actions"
+                      className="text-slate-400 transition-colors duration-150 hover:text-navy-800">
+
+                        <MoreVerticalIcon className="h-4 w-4" aria-hidden="true" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               )}
@@ -252,13 +303,13 @@ export function TestAnalysisResults() {
         )}
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-        <p className="text-[11.5px] text-slate-500">Showing 1 to {rows.length} of 147 results</p>
+      <div className="mt-4 flex flex-wrap items-center justify-end gap-3">
         <div className="flex items-center gap-2">
+          <span className="text-[11.5px] text-slate-500">Rows per page</span>
           <select className="rounded-md border border-slate-300 px-2 py-1.5 text-[11.5px] text-slate-600 outline-none">
-            <option>10 per page</option>
-            <option>25 per page</option>
-            <option>50 per page</option>
+            <option>10</option>
+            <option>25</option>
+            <option>50</option>
           </select>
           <div className="flex gap-1">
             {[1, 2, 3].map((p) =>

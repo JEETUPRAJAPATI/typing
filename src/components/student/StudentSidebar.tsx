@@ -86,7 +86,7 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
                     type="button"
                     onClick={() => toggle(item.label)}
                     aria-expanded={expanded}
-                    className={`flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] transition-colors duration-150 ${
+                    className={`flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] transition-all duration-200 ease-out hover:translate-x-1 ${
                     expanded ? 'bg-slate-100 text-navy-800' : 'text-slate-600 hover:bg-slate-50'}`
                     }>
 
@@ -112,8 +112,10 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
                             <Link
                             to={child.to}
                             onClick={onClose}
-                            className={`flex items-center gap-2 rounded-md px-2.5 py-1.5 text-[12.5px] font-medium transition-colors duration-150 ${
-                            childActive ? 'bg-primary text-white' : 'text-slate-600 hover:bg-slate-50'}`
+                            className={`flex items-center gap-2 rounded-md border px-2.5 py-1.5 text-[12.5px] font-medium transition-all duration-200 ease-out hover:translate-x-1 ${
+                            childActive ?
+                            'border-amber-400 bg-primary text-white hover:bg-primary-700' :
+                            'border-transparent text-slate-600 hover:bg-slate-50'}`
                             }>
 
                               <NavIcon name="barChart" className="h-3.5 w-3.5" style={{ color: childActive ? '#fff' : color }} />
@@ -132,8 +134,10 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
                 <Link
                   to={item.to ?? '/'}
                   onClick={onClose}
-                  className={`flex items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] transition-colors duration-150 ${
-                  active ? 'bg-primary font-semibold text-white shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`
+                  className={`flex items-center gap-2.5 rounded-md border px-2.5 py-2 text-[13px] transition-all duration-200 ease-out hover:translate-x-1 ${
+                  active ?
+                  'border-amber-400 bg-primary font-semibold text-white shadow-sm hover:bg-primary-700' :
+                  'border-transparent text-slate-600 hover:bg-slate-50'}`
                   }>
 
                   <span
