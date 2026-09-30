@@ -49,25 +49,25 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
         className="fixed inset-0 z-40 bg-black/50 lg:hidden" />
       }
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex h-full w-[276px] shrink-0 flex-col bg-navy-800 text-white transition-transform duration-200 lg:static lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex h-full w-[276px] shrink-0 flex-col border-r border-slate-200 bg-white text-navy-800 transition-transform duration-200 lg:static lg:translate-x-0 ${
         mobileOpen ? 'translate-x-0' : '-translate-x-full'}`
         }>
 
-      <div className="flex items-center gap-3 border-b border-white/10 px-4 py-4">
+      <div className="flex items-center gap-3 border-b border-slate-100 px-4 py-4">
         <img
           src={LOGO_URL}
           alt="Balaji Typing College"
-          className="h-11 w-11 rounded-full bg-white object-contain p-[2px]" />
+          className="h-11 w-11 rounded-full bg-white object-contain p-[2px] shadow-card" />
 
         <div className="min-w-0 flex-1 leading-tight">
-          <p className="font-display text-[13px] font-semibold">Balaji Typing &amp;</p>
-          <p className="font-display text-[13px] font-semibold">Steno College</p>
+          <p className="font-display text-[13px] font-semibold text-navy-800">Balaji Typing &amp;</p>
+          <p className="font-display text-[13px] font-semibold text-navy-800">Steno College</p>
         </div>
         <button
           type="button"
           aria-label="Close navigation"
           onClick={onClose}
-          className="rounded p-1 text-white/70 hover:bg-white/10 lg:hidden">
+          className="rounded p-1 text-slate-400 hover:bg-slate-100 lg:hidden">
 
           <XIcon className="h-5 w-5" />
         </button>
@@ -87,12 +87,12 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
                     onClick={() => toggle(item.label)}
                     aria-expanded={expanded}
                     className={`flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] transition-colors duration-150 ${
-                    expanded ? 'bg-white/10 text-white' : 'text-white/85 hover:bg-white/10'}`
+                    expanded ? 'bg-slate-100 text-navy-800' : 'text-slate-600 hover:bg-slate-50'}`
                     }>
 
                     <span
                       className="grid h-7 w-7 shrink-0 place-items-center rounded-lg"
-                      style={{ backgroundColor: `${color}26` }}>
+                      style={{ backgroundColor: `${color}1F` }}>
 
                       <NavIcon name={item.icon} className="h-4 w-4" style={{ color }} />
                     </span>
@@ -113,7 +113,7 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
                             to={child.to}
                             onClick={onClose}
                             className={`flex items-center gap-2 rounded-md px-2.5 py-1.5 text-[12.5px] font-medium transition-colors duration-150 ${
-                            childActive ? 'bg-primary text-white' : 'text-white/75 hover:bg-white/10'}`
+                            childActive ? 'bg-primary text-white' : 'text-slate-600 hover:bg-slate-50'}`
                             }>
 
                               <NavIcon name="barChart" className="h-3.5 w-3.5" style={{ color: childActive ? '#fff' : color }} />
@@ -133,12 +133,12 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
                   to={item.to ?? '/'}
                   onClick={onClose}
                   className={`flex items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] transition-colors duration-150 ${
-                  active ? 'bg-primary font-semibold text-white shadow-sm' : 'text-white/85 hover:bg-white/10'}`
+                  active ? 'bg-primary font-semibold text-white shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`
                   }>
 
                   <span
                     className="grid h-7 w-7 shrink-0 place-items-center rounded-lg"
-                    style={{ backgroundColor: active ? 'rgba(255,255,255,0.25)' : `${color}26` }}>
+                    style={{ backgroundColor: active ? 'rgba(255,255,255,0.25)' : `${color}1F` }}>
 
                     <NavIcon name={item.icon} className="h-4 w-4" style={{ color: active ? '#fff' : color }} />
                   </span>

@@ -29,31 +29,31 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
         className="fixed inset-0 z-40 bg-black/50 lg:hidden" />
       }
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex h-full w-[286px] shrink-0 flex-col bg-navy-900 text-white transition-transform duration-200 lg:static lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex h-full w-[286px] shrink-0 flex-col border-r border-slate-200 bg-white text-navy-800 transition-transform duration-200 lg:static lg:translate-x-0 ${
         mobileOpen ? 'translate-x-0' : '-translate-x-full'}`
         }>
 
-      <div className="flex items-center gap-2.5 px-4 py-4">
+      <div className="flex items-center gap-2.5 border-b border-slate-100 px-4 py-4">
         <img
           src={LOGO_URL}
           alt=""
-          className="h-9 w-9 rounded-full bg-white object-contain p-[2px]" />
+          className="h-9 w-9 rounded-full bg-white object-contain p-[2px] shadow-card" />
 
         <div className="min-w-0 flex-1 leading-tight">
-          <p className="text-[12.5px] font-semibold">Balaji Typing &amp; Steno College</p>
-          <p className="text-[10.5px] text-white/60">Admin Panel</p>
+          <p className="text-[12.5px] font-semibold text-navy-800">Balaji Typing &amp; Steno College</p>
+          <p className="text-[10.5px] text-slate-500">Admin Panel</p>
         </div>
         <button
           type="button"
           aria-label="Close navigation"
           onClick={onClose}
-          className="rounded p-1 text-white/70 hover:bg-white/10 lg:hidden">
+          className="rounded p-1 text-slate-400 hover:bg-slate-100 lg:hidden">
 
           <XIcon className="h-5 w-5" />
         </button>
       </div>
 
-      <p className="px-4 pb-1.5 text-[10px] font-semibold tracking-wide text-white/40">
+      <p className="px-4 pb-1.5 pt-3 text-[10px] font-semibold tracking-wide text-slate-400">
         MAIN NAVIGATION
       </p>
 
@@ -70,13 +70,13 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
                     type="button"
                     onClick={() => toggle(item.label)}
                     aria-expanded={expanded}
-                    className={`flex w-full items-center gap-2.5 px-4 py-2.5 text-[13px] transition-colors duration-150 hover:bg-white/10 ${
-                    childActive ? 'bg-primary font-semibold text-white' : 'text-white/85'}`
+                    className={`flex w-full items-center gap-2.5 px-4 py-2.5 text-[13px] transition-colors duration-150 hover:bg-slate-50 ${
+                    childActive ? 'bg-primary font-semibold text-white' : 'text-slate-600'}`
                     }>
 
                     <span
                       className="grid h-7 w-7 shrink-0 place-items-center rounded-lg"
-                      style={{ backgroundColor: childActive ? 'rgba(255,255,255,0.25)' : `${color}26` }}>
+                      style={{ backgroundColor: childActive ? 'rgba(255,255,255,0.25)' : `${color}1F` }}>
 
                       <NavIcon name={item.icon} className="h-4 w-4" style={{ color: childActive ? '#fff' : color }} />
                     </span>
@@ -97,7 +97,7 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
                             to={child.to}
                             onClick={onClose}
                             className={`block py-2 pl-11 pr-4 text-[12.5px] font-medium transition-colors duration-150 ${
-                            childLinkActive ? 'bg-primary text-white' : 'text-white/70 hover:bg-white/10'}`
+                            childLinkActive ? 'bg-primary text-white' : 'text-slate-600 hover:bg-slate-50'}`
                             }>
 
                               — {child.label}
@@ -117,18 +117,18 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
                   to={item.to ?? '/admin'}
                   onClick={onClose}
                   className={`flex items-center gap-2.5 px-4 py-2.5 text-[13px] transition-colors duration-150 ${
-                  active ? 'bg-primary font-semibold text-white' : 'text-white/85 hover:bg-white/10'}`
+                  active ? 'bg-primary font-semibold text-white' : 'text-slate-600 hover:bg-slate-50'}`
                   }>
 
                   <span
                     className="grid h-7 w-7 shrink-0 place-items-center rounded-lg"
-                    style={{ backgroundColor: active ? 'rgba(255,255,255,0.25)' : `${color}26` }}>
+                    style={{ backgroundColor: active ? 'rgba(255,255,255,0.25)' : `${color}1F` }}>
 
                     <NavIcon name={item.icon} className="h-4 w-4" style={{ color: active ? '#fff' : color }} />
                   </span>
                   <span className="truncate">{item.label}</span>
                   {item.badge === 'new' &&
-                  <span className="ml-auto rounded bg-success px-1.5 py-[1px] text-[9px] font-bold">
+                  <span className="ml-auto rounded bg-success px-1.5 py-[1px] text-[9px] font-bold text-white">
                       NEW
                     </span>
                   }
@@ -140,13 +140,13 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
       </nav>
 
       {summary && summary.length > 0 &&
-      <div className="mx-3 mb-3 rounded-lg bg-white/5 p-3">
-          <p className="mb-2 text-[11.5px] font-semibold">System Summary</p>
+      <div className="mx-3 mb-3 rounded-lg border border-slate-100 bg-slate-50 p-3">
+          <p className="mb-2 text-[11.5px] font-semibold text-navy-800">System Summary</p>
           <ul className="space-y-1.5">
             {summary.map((row) =>
           <li key={row.label} className="flex items-center justify-between text-[11.5px]">
-                <span className="text-white/70">{row.label}</span>
-                <span className="font-semibold">{row.value}</span>
+                <span className="text-slate-500">{row.label}</span>
+                <span className="font-semibold text-navy-800">{row.value}</span>
               </li>
           )}
           </ul>
@@ -157,24 +157,24 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
       <div className="px-3 pb-4">
           <Link
           to="/"
-          className="flex items-center justify-center gap-2 rounded-md bg-primary py-2.5 text-[12.5px] font-semibold transition-colors duration-150 hover:bg-primary-700">
-          
+          className="flex items-center justify-center gap-2 rounded-md bg-primary py-2.5 text-[12.5px] font-semibold text-white transition-colors duration-150 hover:bg-primary-700">
+
             <ExternalLinkIcon className="h-4 w-4" /> Visit Website
           </Link>
-          <p className="mt-3 text-[10.5px] text-white/50">© 2026 Balaji Typing &amp; Steno College</p>
-          <p className="text-[10.5px] text-white/50">All rights reserved.</p>
+          <p className="mt-3 text-[10.5px] text-slate-400">© 2026 Balaji Typing &amp; Steno College</p>
+          <p className="text-[10.5px] text-slate-400">All rights reserved.</p>
         </div> :
 
       <div className="px-3 pb-4">
-          <div className="flex items-center gap-2.5 rounded-lg bg-white/5 px-3 py-3">
-            <HeadphonesIcon className="h-5 w-5 text-white/70" />
+          <div className="flex items-center gap-2.5 rounded-lg border border-slate-100 bg-slate-50 px-3 py-3">
+            <HeadphonesIcon className="h-5 w-5 text-slate-400" />
             <span className="leading-tight">
-              <span className="block text-[12px] font-semibold">Need Help?</span>
-              <span className="block text-[10.5px] text-white/60">Contact Support Team</span>
+              <span className="block text-[12px] font-semibold text-navy-800">Need Help?</span>
+              <span className="block text-[10.5px] text-slate-500">Contact Support Team</span>
             </span>
           </div>
-          <p className="mt-3 text-[10.5px] text-white/50">© 2026 Balaji Typing &amp; Steno College</p>
-          <p className="text-[10.5px] text-white/50">All rights reserved.</p>
+          <p className="mt-3 text-[10.5px] text-slate-400">© 2026 Balaji Typing &amp; Steno College</p>
+          <p className="text-[10.5px] text-slate-400">All rights reserved.</p>
         </div>
       }
       </aside>
