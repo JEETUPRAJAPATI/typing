@@ -14,10 +14,10 @@ interface AdminSidebarProps {
 
 export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = false, onClose }: AdminSidebarProps) {
   const { pathname } = useLocation();
-  const [open, setOpen] = useState<string[]>(['Test Management']);
+  const [open, setOpen] = useState<string | null>('Test Management');
 
   const toggle = (label: string) =>
-  setOpen((prev) => prev.includes(label) ? prev.filter((l) => l !== label) : [...prev, label]);
+  setOpen((prev) => prev === label ? null : label);
 
   return (
     <>
@@ -29,7 +29,7 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
         className="fixed inset-0 z-40 bg-black/50 lg:hidden" />
       }
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex h-full w-[262px] shrink-0 flex-col bg-navy-900 text-white transition-transform duration-200 lg:static lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex h-full w-[286px] shrink-0 flex-col bg-navy-900 text-white transition-transform duration-200 lg:static lg:translate-x-0 ${
         mobileOpen ? 'translate-x-0' : '-translate-x-full'}`
         }>
 
@@ -62,7 +62,7 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
           {adminNav.map((item) => {
             const color = item.color ?? '#38BDF8';
             if (item.children) {
-              const expanded = open.includes(item.label);
+              const expanded = open === item.label;
               const childActive = item.children.some((c) => c.to === pathname);
               return (
                 <li key={item.label}>
@@ -71,9 +71,8 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
                     onClick={() => toggle(item.label)}
                     aria-expanded={expanded}
                     className={`flex w-full items-center gap-2.5 px-4 py-2.5 text-[13px] transition-colors duration-150 hover:bg-white/10 ${
-                    childActive ? 'font-semibold text-white' : 'text-white/85'}`
-                    }
-                    style={childActive ? { backgroundColor: color } : undefined}>
+                    childActive ? 'bg-primary font-semibold text-white' : 'text-white/85'}`
+                    }>
 
                     <span
                       className="grid h-7 w-7 shrink-0 place-items-center rounded-lg"
@@ -97,11 +96,8 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
                             <Link
                             to={child.to}
                             onClick={onClose}
-                            className="block py-2 pl-11 pr-4 text-[12.5px] font-medium transition-colors duration-150"
-                            style={
-                            childLinkActive ?
-                            { backgroundColor: color, color: '#0B1220' } :
-                            { color: 'rgba(255,255,255,0.7)' }
+                            className={`block py-2 pl-11 pr-4 text-[12.5px] font-medium transition-colors duration-150 ${
+                            childLinkActive ? 'bg-primary text-white' : 'text-white/70 hover:bg-white/10'}`
                             }>
 
                               — {child.label}
@@ -121,9 +117,8 @@ export function AdminSidebar({ summary, showVisitWebsite = false, mobileOpen = f
                   to={item.to ?? '/admin'}
                   onClick={onClose}
                   className={`flex items-center gap-2.5 px-4 py-2.5 text-[13px] transition-colors duration-150 ${
-                  active ? 'font-semibold text-white' : 'text-white/85 hover:bg-white/10'}`
-                  }
-                  style={active ? { backgroundColor: color } : undefined}>
+                  active ? 'bg-primary font-semibold text-white' : 'text-white/85 hover:bg-white/10'}`
+                  }>
 
                   <span
                     className="grid h-7 w-7 shrink-0 place-items-center rounded-lg"

@@ -34,10 +34,10 @@ function Badge({ kind }: {kind: NonNullable<NavItem['badge']>;}) {
 
 export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarProps) {
   const { pathname } = useLocation();
-  const [open, setOpen] = useState<string[]>(['Test Analysis']);
+  const [open, setOpen] = useState<string | null>('Test Analysis');
 
   const toggle = (label: string) =>
-  setOpen((prev) => prev.includes(label) ? prev.filter((l) => l !== label) : [...prev, label]);
+  setOpen((prev) => prev === label ? null : label);
 
   return (
     <>
@@ -49,7 +49,7 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
         className="fixed inset-0 z-40 bg-black/50 lg:hidden" />
       }
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex h-full w-[248px] shrink-0 flex-col bg-navy-800 text-white transition-transform duration-200 lg:static lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex h-full w-[276px] shrink-0 flex-col bg-navy-800 text-white transition-transform duration-200 lg:static lg:translate-x-0 ${
         mobileOpen ? 'translate-x-0' : '-translate-x-full'}`
         }>
 
@@ -79,7 +79,7 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
             const active = item.to === pathname;
             const color = item.color ?? '#38BDF8';
             if (item.children) {
-              const expanded = open.includes(item.label);
+              const expanded = open === item.label;
               return (
                 <li key={item.label}>
                   <button
@@ -112,14 +112,11 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
                             <Link
                             to={child.to}
                             onClick={onClose}
-                            className="flex items-center gap-2 rounded-md px-2.5 py-1.5 text-[12.5px] font-medium transition-colors duration-150"
-                            style={
-                            childActive ?
-                            { backgroundColor: color, color: '#0B1220' } :
-                            { color: 'rgba(255,255,255,0.75)' }
+                            className={`flex items-center gap-2 rounded-md px-2.5 py-1.5 text-[12.5px] font-medium transition-colors duration-150 ${
+                            childActive ? 'bg-primary text-white' : 'text-white/75 hover:bg-white/10'}`
                             }>
 
-                              <NavIcon name="barChart" className="h-3.5 w-3.5" style={{ color: childActive ? '#0B1220' : color }} />
+                              <NavIcon name="barChart" className="h-3.5 w-3.5" style={{ color: childActive ? '#fff' : color }} />
                               {child.label}
                             </Link>
                           </li>);
@@ -136,9 +133,8 @@ export function StudentSidebar({ mobileOpen = false, onClose }: StudentSidebarPr
                   to={item.to ?? '/'}
                   onClick={onClose}
                   className={`flex items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] transition-colors duration-150 ${
-                  active ? 'font-semibold text-white shadow-sm' : 'text-white/85 hover:bg-white/10'}`
-                  }
-                  style={active ? { backgroundColor: color } : undefined}>
+                  active ? 'bg-primary font-semibold text-white shadow-sm' : 'text-white/85 hover:bg-white/10'}`
+                  }>
 
                   <span
                     className="grid h-7 w-7 shrink-0 place-items-center rounded-lg"
