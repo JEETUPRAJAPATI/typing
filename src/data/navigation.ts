@@ -91,6 +91,7 @@ export const adminNav: NavItem[] = [
 
 },
 { label: 'Screen Layout', icon: 'monitor', to: '/admin/screen-layout', badge: 'new', color: '#F472B6' },
+{ label: 'Flash Banner', icon: 'zap', to: '/admin/flash-banner', color: '#F59E0B' },
 {
   label: 'Font Group',
   icon: 'type',

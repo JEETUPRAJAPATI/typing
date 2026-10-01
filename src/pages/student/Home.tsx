@@ -20,7 +20,8 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   QuoteIcon,
-  StarIcon } from
+  StarIcon,
+  CalendarCheckIcon } from
 'lucide-react';
 import { StudentLayout } from '../../components/student/StudentLayout';
 
@@ -32,7 +33,7 @@ const heroSlides = [
     subtitle: "India's Most Trusted Platform",
     description: "Practice with real exam patterns and compete with thousands of aspirants",
     bgImage: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=1920&q=80",
-    bgOverlay: "from-blue-900/95 via-blue-800/90 to-indigo-900/95"
+    bgOverlay: "from-blue-900/85 via-blue-800/70 to-indigo-900/85"
   },
   {
     id: 2,
@@ -40,7 +41,7 @@ const heroSlides = [
     subtitle: "Compete at All India Level",
     description: "Take live tests and see your real-time ranking among all participants",
     bgImage: "https://images.unsplash.com/photo-1560439514-e960a3ef5019?w=1920&q=80",
-    bgOverlay: "from-purple-900/95 via-purple-800/90 to-pink-900/95"
+    bgOverlay: "from-purple-900/85 via-purple-800/70 to-pink-900/85"
   },
   {
     id: 3,
@@ -48,7 +49,7 @@ const heroSlides = [
     subtitle: "Exam-Oriented Practice",
     description: "Prepare for SSC Steno, Court Steno, Delhi Police and State exams",
     bgImage: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1920&q=80",
-    bgOverlay: "from-green-900/95 via-teal-800/90 to-cyan-900/95"
+    bgOverlay: "from-green-900/85 via-teal-800/70 to-cyan-900/85"
   }
 ];
 
@@ -136,10 +137,12 @@ const analysisRows = [
 
 
 const stats = [
-{ icon: UsersRoundIcon, value: '1,50,000+', label: 'Registered Users', color: '#0D6EFD' },
-{ icon: FileTextIcon, value: '5,00,000+', label: 'Tests Attempted', color: '#198754' },
-{ icon: TrophyIcon, value: 'Top Ranks', label: 'All India Level', color: '#FFC107', to: '/leaderboard', blink: true },
-{ icon: ShieldCheckIcon, value: '100% Secure', label: 'Safe & Reliable', color: '#6F42C1' }];
+{ icon: UsersRoundIcon, title: 'Registered Users', sub: '1,50,000+ Happy Users', color: '#0D6EFD', bg: '#DBEAFE' },
+{ icon: FileTextIcon, title: 'Test Attempted', sub: '5,00,000+ Tests', color: '#198754', bg: '#D1FAE5' },
+{ icon: TrophyIcon, title: 'Top Ranks', sub: 'All India Level', color: '#D97706', bg: '#FEF3C7', to: '/leaderboard' },
+{ icon: ShieldCheckIcon, title: '100% Secure & Accurate', sub: 'Safe & Reliable', color: '#7C3AED', bg: '#EDE9FE' },
+{ icon: BarChart3Icon, title: 'Progress Reports (with AI analysis)', sub: 'Track Your Performance', color: '#0EA5E9', bg: '#CFFAFE' },
+{ icon: CalendarCheckIcon, title: 'Exam Patterns', sub: '(Feel like Real exam, Reduce Exam anxiety)', color: '#DB2777', bg: '#FCE7F3' }];
 
 
 const quickLinks = [
@@ -259,6 +262,7 @@ const testimonials = [
 
 export function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [brokenSlides, setBrokenSlides] = useState<Record<number, boolean>>({});
   const testimonialTrackRef = React.useRef<HTMLDivElement>(null);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
   const testimonialCardWidth = 356;
@@ -329,14 +333,28 @@ export function Home() {
               }`}
             >
               {/* Background Image */}
-              <div className="absolute inset-0">
-                <img 
-                  src={slide.bgImage} 
+              <div className={`absolute inset-0 bg-gradient-to-br ${slide.bgOverlay}`}>
+                {/* Fallback pattern shown if the photo fails to load (e.g. blocked by an extension or offline) */}
+                {brokenSlides[slide.id] &&
+                <div
+                  className="absolute inset-0 opacity-20"
+                  style={{
+                    backgroundImage:
+                    'linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)',
+                    backgroundSize: '28px 28px'
+                  }}
+                  aria-hidden="true" />
+
+                }
+                {!brokenSlides[slide.id] &&
+                <img
+                  src={slide.bgImage}
                   alt={slide.title}
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-cover"
                   loading="lazy"
-                />
-                {/* Gradient Overlay */}
+                  onError={() => setBrokenSlides((prev) => ({ ...prev, [slide.id]: true }))} />
+
+                }
                 <div className={`absolute inset-0 bg-gradient-to-br ${slide.bgOverlay}`}></div>
               </div>
 
@@ -522,40 +540,44 @@ export function Home() {
         </article>
       </div>
 
-      {/* Stats strip */}
-      <div className="mb-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {stats.map((s) => {
-          const content = (
-            <>
-              <s.icon
-                className={`h-7 w-7 shrink-0 ${s.blink ? 'animate-blink' : ''}`}
-                style={{ color: s.color }}
-                aria-hidden="true" />
+      {/* Why Choose Us */}
+      <section className="mb-4 rounded-xl border border-primary-100 bg-gradient-to-b from-primary-50/70 to-white p-6 shadow-card">
+        <h2 className="text-center font-display text-[20px] font-bold text-navy-800">
+          Why Choose Balaji Typing &amp; Steno College
+        </h2>
+        <p className="mx-auto mt-1 max-w-2xl text-center text-[12.5px] text-slate-500">
+          We provide the best and 100% Accurate software to help you improve your typing &amp;
+          Stenography Skills for Competitive Exams.
+        </p>
 
-              <div>
-                <p className="font-display text-[17px] font-bold text-navy-800">{s.value}</p>
-                <p className="text-[12px] text-slate-500">{s.label}</p>
-              </div>
-            </>);
+        <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-6">
+          {stats.map((s, i) => {
+            const content = (
+              <div
+                className={`flex h-full flex-col items-center gap-2 rounded-xl bg-white p-4 text-center shadow-card transition-colors duration-150 xl:rounded-none xl:bg-transparent xl:p-0 xl:shadow-none ${
+                i > 0 ? 'xl:border-l xl:border-slate-200 xl:pl-4' : ''}`
+                }>
 
-          return s.to ?
-          <Link
-            key={s.label}
-            to={s.to}
-            className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-card transition-colors duration-150 hover:border-primary">
+                <span
+                  className="grid h-12 w-12 shrink-0 place-items-center rounded-full"
+                  style={{ backgroundColor: s.bg, color: s.color }}>
 
-              {content}
-            </Link> :
+                  <s.icon className="h-6 w-6" aria-hidden="true" />
+                </span>
+                <p className="font-display text-[13px] font-bold leading-snug text-navy-800">{s.title}</p>
+                <p className="text-[11.5px] leading-snug text-primary-600">{s.sub}</p>
+              </div>);
 
-          <div
-            key={s.label}
-            className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-card">
+            return s.to ?
+            <Link key={s.title} to={s.to} className="block hover:-translate-y-0.5 transition-transform duration-150">
+                {content}
+              </Link> :
 
-              {content}
-            </div>;
+            <div key={s.title}>{content}</div>;
 
-        })}
-      </div>
+          })}
+        </div>
+      </section>
 
       {/* Testimonials */}
       <section className="relative mb-4 overflow-hidden rounded-xl border border-slate-200 bg-gradient-to-b from-primary-50/50 to-white p-6 shadow-card">

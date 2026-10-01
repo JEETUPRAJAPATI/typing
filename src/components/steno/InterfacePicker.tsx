@@ -3,7 +3,7 @@ import { CheckCircle2Icon, LayersIcon, MousePointerClickIcon, KeyboardIcon } fro
 import { transcriptionInterfaces } from '../../data/steno';
 
 interface InterfacePickerProps {
-  selected: string;
+  selected: string | null;
   onSelect: (id: string) => void;
 }
 

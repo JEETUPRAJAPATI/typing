@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   TrophyIcon,
   DownloadIcon,
@@ -22,7 +22,7 @@ import {
 'lucide-react';
 import { AdminLayout } from '../../components/admin/AdminLayout';
 import { Breadcrumbs } from '../../components/common/PageHeading';
-import { Panel } from '../../components/common/Pill';
+import { Panel, Pill } from '../../components/common/Pill';
 
 const candidate = [
 { label: 'User ID', value: 'STU1001' },
@@ -75,17 +75,135 @@ const legend = [
 
 
 const actions = [
-{ label: 'Back to Result List', icon: ArrowLeftIcon, tone: 'border-emerald-300 text-emerald-700' },
-{ label: 'Click to Check Mistake', icon: SearchCheckIcon, tone: 'border-rose-300 text-rose-600' },
-{ label: 'Click to Compare Passage', icon: GitCompareIcon, tone: 'border-primary text-primary' },
-{ label: 'View Leaderboard', icon: TrophyIcon, tone: 'border-violet-300 text-violet-700' },
-{ label: 'Re-Attempt Test', icon: RotateCcwIcon, tone: 'border-amber-300 text-amber-700' },
-{ label: 'Download Result (PDF)', icon: DownloadIcon, tone: 'border-primary text-primary' },
-{ label: 'Print Result', icon: PrinterIcon, tone: 'border-slate-300 text-slate-600' },
-{ label: 'Share Result', icon: Share2Icon, tone: 'border-slate-300 text-slate-600' }];
+{ key: 'back', label: 'Back to Result List', icon: ArrowLeftIcon, tone: 'border-emerald-300 text-emerald-700' },
+{ key: 'mistake', label: 'Click to Check Mistake', icon: SearchCheckIcon, tone: 'border-rose-300 text-rose-600' },
+{ key: 'compare', label: 'Click to Compare Passage', icon: GitCompareIcon, tone: 'border-primary text-primary' },
+{ key: 'leaderboard', label: 'View Leaderboard', icon: TrophyIcon, tone: 'border-violet-300 text-violet-700' },
+{ key: 'reattempt', label: 'Re-Attempt Test', icon: RotateCcwIcon, tone: 'border-amber-300 text-amber-700' },
+{ key: 'download', label: 'Download Result (PDF)', icon: DownloadIcon, tone: 'border-primary text-primary' },
+{ key: 'print', label: 'Print Result', icon: PrinterIcon, tone: 'border-slate-300 text-slate-600' },
+{ key: 'share', label: 'Share Result', icon: Share2Icon, tone: 'border-slate-300 text-slate-600' }];
+
+const compareLegend = [
+{ label: 'Additions', tone: 'blue' as const },
+{ label: 'Omissions', tone: 'green' as const },
+{ label: 'Spelling Mistakes', tone: 'amber' as const },
+{ label: 'Capitalization Mistakes', tone: 'purple' as const },
+{ label: 'Punctuation Mistakes', tone: 'red' as const }];
+
+
+const typedText = `The National education Policy 2020, often referred to as NEP 2020,
+is a landmark reform in the Indian education system, approved by
+the Union Cabinet on 29th July 2020. This policy replaces the
+previous National Policy on Education from 1986, bringing in a
+comprehensive and transformative approach to education in India.
+The NEP 2020 aims to address the evolving needs of the 21st
+century, focusing on holistic development, flexibility, and
+inclusivity while aligning with global standards. It envisions an
+education system that not only imparts knowledge but also fosters
+critical thinking, creativity, and ethical values among students. The
+policy covers all levels of education, from early childhood to
+higher education, and emphasises the importance of
+multilingualism, vocational training, and technology integration.`;
+
+const referenceText = `The National Education Policy 2020, often referred to as NEP 2020,
+is a landmark reform in the Indian education system, approved by
+the Union Cabinet on 29th July 2020. This policy replaces the
+previous National Policy on Education from 1986, bringing in a
+comprehensive and transformative approach to education in India.
+The NEP 2020 aims to address the evolving needs of the 21st
+century, focusing on holistic development, flexibility, and
+inclusivity while aligning with global standards. It envisions an
+education system that not only imparts knowledge but also fosters
+critical thinking, creativity, and ethical values among students. The
+policy covers all levels of education, from early childhood to
+higher education, and emphasises the importance of
+multilingualism, vocational training, and technology integration.`;
 
 
 export function StenoResult() {
+  const [view, setView] = useState<'result' | 'compare'>('result');
+
+  if (view === 'compare') {
+    return (
+      <AdminLayout searchPlaceholder="Search by dictation name, test no..." showActionButtons={false}>
+        <div className="mb-4 flex items-center justify-end">
+          <button
+            type="button"
+            onClick={() => setView('result')}
+            className="flex items-center gap-1.5 text-[13px] font-semibold text-primary hover:underline">
+
+            <ArrowLeftIcon className="h-4 w-4" aria-hidden="true" /> Back
+          </button>
+        </div>
+
+        <Panel title="Result (Mistakes Highlighted)" className="mb-4">
+          <div className="mb-4 flex flex-wrap items-center gap-2">
+            {compareLegend.map((l) =>
+            <Pill key={l.label} tone={l.tone}>{l.label}</Pill>
+            )}
+          </div>
+          <p className="rounded-lg border border-slate-100 bg-slate-50/40 p-4 text-[14.5px] leading-[2.1] text-slate-700">
+            The National{' '}
+            <mark className="rounded px-0.5 bg-purple-200 line-through decoration-2">education</mark>{' '}
+            <mark className="rounded px-0.5 bg-purple-200">Education</mark> Policy 2020, often referred to
+            as NEP 2020, is a landmark reform in the Indian education system, approved by the Union
+            Cabinet on 29th July 2020. This policy replaces the previous National Policy on Education
+            from 1986, bringing in a comprehensive and transformative approach to education in India.
+            The NEP 2020 aims to address the evolving needs of the 21st century, focusing on holistic
+            development, flexibility, and inclusivity while aligning with global standards. It envisions
+            an education system that not only imparts knowledge but also fosters critical thinking,
+            creativity, and ethical values among students. The policy covers all levels of education,
+            from early childhood to higher education, and emphasises the importance of multilingualism,
+            vocational training,{' '}
+            <mark className="rounded px-0.5 bg-blue-200">and &amp;</mark>{' '}
+            technology integration.{' '}
+            <mark className="rounded px-0.5 bg-amber-200">One of the most significant changes
+            introduced</mark>{' '}
+            in NEP 2020 is the emphasis on early childhood education.
+          </p>
+        </Panel>
+
+        <div className="grid gap-4 lg:grid-cols-2">
+          <Panel
+            title="Your Typed Text"
+            right={<Pill tone="slate">STUDENT</Pill>}>
+
+            <p className="max-h-80 overflow-y-auto whitespace-pre-line text-[13.5px] leading-[1.9] text-slate-700">
+              {typedText}
+            </p>
+          </Panel>
+          <Panel
+            title="Original Transcription"
+            right={<Pill tone="green">REFERENCE</Pill>}>
+
+            <p className="max-h-80 overflow-y-auto whitespace-pre-line text-[13.5px] leading-[1.9] text-slate-700">
+              {referenceText}
+            </p>
+          </Panel>
+        </div>
+
+        <Panel title="Action Panel" className="mt-4">
+          <div className="flex flex-wrap gap-2.5">
+            {actions.map((a) =>
+            <button
+              key={a.label}
+              type="button"
+              onClick={a.key === 'back' ? () => setView('result') : undefined}
+              className={`flex items-center gap-1.5 rounded-md border bg-white px-3 py-2 text-[12px] font-medium transition-colors duration-150 hover:bg-slate-50 ${a.tone}`}>
+
+                <a.icon className="h-3.5 w-3.5" aria-hidden="true" /> {a.label}
+              </button>
+            )}
+          </div>
+          <p className="mt-3 rounded bg-slate-50 px-3 py-2 text-[11.5px] text-slate-500">
+            Note: Mistakes are highlighted based on the selected result pattern and penalty settings.
+          </p>
+        </Panel>
+      </AdminLayout>);
+
+  }
+
   return (
     <AdminLayout searchPlaceholder="Search by dictation name, test no..." showActionButtons={false}>
       <div className="mb-4 flex items-start gap-3">
@@ -295,8 +413,9 @@ export function StenoResult() {
           <button
             key={a.label}
             type="button"
+            onClick={a.key === 'compare' ? () => setView('compare') : undefined}
             className={`flex items-center gap-1.5 rounded-md border bg-white px-3 py-2 text-[12px] font-medium transition-colors duration-150 hover:bg-slate-50 ${a.tone}`}>
-            
+
               <a.icon className="h-3.5 w-3.5" aria-hidden="true" /> {a.label}
             </button>
           )}

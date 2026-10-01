@@ -21,7 +21,8 @@ import {
   GraduationCapIcon,
   Gamepad2Icon,
   UserCircle2Icon,
-  HeadphonesIcon } from
+  HeadphonesIcon,
+  ZapIcon } from
 'lucide-react';
 
 const map = {
@@ -46,7 +47,8 @@ const map = {
   graduationCap: GraduationCapIcon,
   gamepad: Gamepad2Icon,
   userCircle: UserCircle2Icon,
-  headphones: HeadphonesIcon
+  headphones: HeadphonesIcon,
+  zap: ZapIcon
 } as const;
 
 interface NavIconProps {

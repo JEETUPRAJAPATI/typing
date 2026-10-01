@@ -52,12 +52,21 @@ export function StenoPractice() {
   const [volume, setVolume] = useState(60);
   const [seen, setSeen] = useState<'unseen' | 'seen'>('unseen');
   const [wordLength, setWordLength] = useState('Full Length');
-  const [selectedInterface, setSelectedInterface] = useState('ssc-d');
+  const [selectedInterface, setSelectedInterface] = useState<string | null>(null);
+  const [showInterfaces, setShowInterfaces] = useState(false);
   const [examStage, setExamStage] = useState<'none' | 'config' | 'instructions' | 'test'>('none');
   const [selectedDuration, setSelectedDuration] = useState<number | null>(null);
 
   const activeInterface =
   transcriptionInterfaces.find((i) => i.id === selectedInterface) ?? transcriptionInterfaces[0];
+
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.().catch(() => {});
+    } else {
+      document.exitFullscreen?.().catch(() => {});
+    }
+  };
 
   const startFlow = (id: string) => {
     setSelectedInterface(id);
@@ -349,9 +358,11 @@ export function StenoPractice() {
         </div>
 
         {/* Interface picker */}
+        {showInterfaces &&
         <div className="mt-4">
-          <InterfacePicker selected={selectedInterface} onSelect={startFlow} />
-        </div>
+            <InterfacePicker selected={selectedInterface} onSelect={startFlow} />
+          </div>
+        }
 
         {/* Action row */}
         <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -363,13 +374,14 @@ export function StenoPractice() {
           </button>
           <button
             type="button"
-            onClick={() => startFlow(selectedInterface)}
+            onClick={() => setShowInterfaces(true)}
             className="flex min-w-[200px] items-center justify-center gap-2 rounded-md bg-danger py-3 text-[14px] font-semibold text-white transition-colors duration-150 hover:bg-[#bb2d3b]">
 
             <KeyboardIcon className="h-4 w-4" aria-hidden="true" /> Transcribe Now
           </button>
           <button
             type="button"
+            onClick={toggleFullScreen}
             className="ml-auto flex items-center justify-center gap-2 rounded-md border border-slate-300 px-6 py-3 text-[14px] font-semibold text-navy-800 transition-colors duration-150 hover:bg-slate-50">
 
             <MaximizeIcon className="h-4 w-4" aria-hidden="true" /> Full Screen

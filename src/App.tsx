@@ -5,6 +5,7 @@ import { MyAccount } from './pages/student/MyAccount';
 import { TypingGames } from './pages/student/TypingGames';
 import { TypingExam } from './pages/student/TypingExam';
 import { ExamDetail } from './pages/student/ExamDetail';
+import { AhcFormatTypingTest } from './pages/student/AhcFormatTypingTest';
 import { EnglishSteno } from './pages/student/EnglishSteno';
 import { DictationList } from './pages/student/DictationList';
 import { StenoPractice } from './pages/student/StenoPractice';
@@ -21,6 +22,7 @@ import { AddStudent } from './pages/admin/AddStudent';
 import { ExamManagement } from './pages/admin/ExamManagement';
 import { AddNewExam } from './pages/admin/AddNewExam';
 import { ScreenLayout } from './pages/admin/ScreenLayout';
+import { FlashBanner } from './pages/admin/FlashBanner';
 import { AdminTestAnalysis } from './pages/admin/TestAnalysis';
 import { AdminLeaderboard } from './pages/admin/Leaderboard';
 import { Subscription } from './pages/admin/Subscription';
@@ -52,6 +54,7 @@ export function App() {
         <Route path="/typing-games" element={<TypingGames />} />
         <Route path="/typing-exam" element={<TypingExam />} />
         <Route path="/typing-exam/:examId" element={<ExamDetail />} />
+        <Route path="/typing-exam/ahc-ro-aro/format/:testNo" element={<AhcFormatTypingTest />} />
         <Route path="/english-steno" element={<EnglishSteno />} />
         <Route path="/hindi-steno" element={<EnglishSteno />} />
         <Route path="/steno/:dictationId" element={<DictationList />} />
@@ -92,6 +95,7 @@ export function App() {
         <Route path="/admin/exams/new" element={<AddNewExam />} />
         <Route path="/admin/result-pattern" element={<ResultPattern />} />
         <Route path="/admin/screen-layout" element={<ScreenLayout />} />
+        <Route path="/admin/flash-banner" element={<FlashBanner />} />
         <Route path="/admin/results" element={<AdminTestAnalysis />} />
         <Route path="/admin/test-analysis" element={<AdminTestAnalysis />} />
         <Route path="/admin/leaderboard" element={<AdminLeaderboard />} />

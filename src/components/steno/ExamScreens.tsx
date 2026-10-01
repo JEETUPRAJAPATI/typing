@@ -59,6 +59,17 @@ function useCountdown(totalSeconds: number, onExpire: () => void) {
   };
 }
 
+function useAutoFullscreen() {
+  useEffect(() => {
+    document.documentElement.requestFullscreen?.().catch(() => {});
+    return () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen?.().catch(() => {});
+      }
+    };
+  }, []);
+}
+
 function ExamSidebarCard({
   mm,
   ss,
@@ -173,6 +184,7 @@ export function GenericInstructionsScreen({
 
 
 }: {iface: TranscriptionInterface;icon: React.ComponentType<{className?: string;}>;badgeBg: string;btnBg: string;onExit: () => void;onStart: () => void;}) {
+  useAutoFullscreen();
   return (
     <div className="fixed inset-0 z-[100] overflow-y-auto bg-slate-50">
       <div className="flex items-center justify-end px-5 py-4">
@@ -186,22 +198,22 @@ export function GenericInstructionsScreen({
       </div>
       <div className="mx-auto max-w-5xl px-5 pb-10">
         <div className="grid overflow-hidden rounded-xl border border-slate-200 bg-white shadow-card lg:grid-cols-[320px_1fr]">
-          <div className="flex flex-col items-center justify-center gap-3 border-b border-slate-100 p-8 text-center lg:border-b-0 lg:border-r">
-            <span className={`grid h-20 w-20 place-items-center rounded-full ${badgeBg}`}>
-              <Icon className="h-10 w-10" aria-hidden="true" />
+          <div className="flex flex-col items-center justify-center gap-4 border-b border-slate-100 p-10 text-center lg:border-b-0 lg:border-r">
+            <span className={`grid h-24 w-24 place-items-center rounded-full ${badgeBg}`}>
+              <Icon className="h-12 w-12" aria-hidden="true" />
             </span>
-            <h3 className="font-display text-[17px] font-bold text-navy-800">{iface.skillTestTitle}</h3>
-            <p className="text-[12px] text-slate-500">Skill Test Language - English</p>
-            <p className="flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-[11.5px] font-medium text-slate-600">
-              <ClockIcon className="h-3.5 w-3.5" aria-hidden="true" /> Test Duration: {iface.durationMinutes}{' '}
+            <h3 className="font-display text-[22px] font-extrabold leading-snug text-navy-800">{iface.skillTestTitle}</h3>
+            <p className="text-[13.5px] font-medium text-slate-500">Skill Test Language - English</p>
+            <p className="flex items-center gap-1.5 rounded-full bg-slate-100 px-4 py-1.5 text-[13px] font-semibold text-slate-600">
+              <ClockIcon className="h-4 w-4" aria-hidden="true" /> Test Duration: {iface.durationMinutes}{' '}
               Minutes
             </p>
             <button
               type="button"
               onClick={onStart}
-              className={`mt-2 flex items-center gap-2 rounded-md px-6 py-2.5 text-[13px] font-semibold text-white transition-colors duration-150 ${btnBg}`}>
+              className={`mt-3 flex items-center gap-2.5 rounded-lg px-10 py-4 text-[16px] font-bold text-white shadow-lg transition-colors duration-150 ${btnBg}`}>
 
-              <PlayIcon className="h-4 w-4 fill-current" aria-hidden="true" /> Start Test
+              <PlayIcon className="h-5 w-5 fill-current" aria-hidden="true" /> Start Test
             </button>
           </div>
           <div className="p-6">
@@ -232,6 +244,7 @@ export function GenericTypingScreen({
 
 
 }: {iface: TranscriptionInterface;icon: React.ComponentType<{className?: string;}>;iconBg: string;metaRows: {label: string;value: string;}[];inputLabel?: string;selectedDuration?: number;onSubmit: () => void;}) {
+  useAutoFullscreen();
   const [typed, setTyped] = useState('');
   const [soundOn, setSoundOn] = useState(true);
   const { mm, ss } = useCountdown((selectedDuration ?? iface.durationMinutes) * 60, onSubmit);
@@ -298,6 +311,7 @@ export function HsscInstructionsScreen({
 
 
 }: {iface: TranscriptionInterface;onExit: () => void;onStart: () => void;}) {
+  useAutoFullscreen();
   return (
     <div className="fixed inset-0 z-[100] overflow-y-auto bg-navy-900">
       <div className="bg-amber-400 py-1 text-center text-[10px] font-semibold uppercase tracking-wide text-navy-900">
@@ -393,9 +407,9 @@ export function HsscInstructionsScreen({
               <button
                 type="button"
                 onClick={onStart}
-                className="mt-4 flex items-center gap-2 rounded-md bg-danger px-6 py-2.5 text-[13px] font-semibold text-white transition-colors duration-150 hover:bg-[#bb2d3b]">
+                className="mt-4 flex items-center gap-2.5 rounded-lg bg-danger px-8 py-3.5 text-[15px] font-bold text-white shadow-lg transition-colors duration-150 hover:bg-[#bb2d3b]">
 
-                <PlayIcon className="h-4 w-4 fill-current" aria-hidden="true" /> Start Test
+                <PlayIcon className="h-5 w-5 fill-current" aria-hidden="true" /> Start Test
               </button>
             </div>
           </div>
@@ -406,6 +420,7 @@ export function HsscInstructionsScreen({
 }
 
 export function HsscTypingScreen({ iface, onSubmit }: {iface: TranscriptionInterface;onSubmit: () => void;}) {
+  useAutoFullscreen();
   const [typed, setTyped] = useState('');
   const [soundOn, setSoundOn] = useState(false);
   const { mm, ss } = useCountdown(iface.durationMinutes * 60, onSubmit);
@@ -570,6 +585,7 @@ export function DsssbInstructionsScreen({
 
 
 }: {iface: TranscriptionInterface;onExit: () => void;onStart: (duration: number) => void;}) {
+  useAutoFullscreen();
   const [duration, setDuration] = useState<number | null>(null);
 
   return (
@@ -622,9 +638,9 @@ export function DsssbInstructionsScreen({
               type="button"
               disabled={duration === null}
               onClick={() => duration !== null && onStart(duration)}
-              className="mt-2 flex items-center gap-2 rounded-md bg-danger px-6 py-2.5 text-[13px] font-semibold text-white transition-colors duration-150 hover:bg-[#bb2d3b] disabled:cursor-not-allowed disabled:bg-slate-300">
+              className="mt-2 flex items-center gap-2.5 rounded-lg bg-danger px-8 py-3.5 text-[15px] font-bold text-white shadow-lg transition-colors duration-150 hover:bg-[#bb2d3b] disabled:cursor-not-allowed disabled:bg-slate-300">
 
-              <PlayIcon className="h-4 w-4 fill-current" aria-hidden="true" /> Start Test
+              <PlayIcon className="h-5 w-5 fill-current" aria-hidden="true" /> Start Test
             </button>
           </div>
           <div className="p-6">
@@ -649,6 +665,7 @@ export function CapfInstructionsScreen({
 
 
 }: {iface: TranscriptionInterface;onExit: () => void;onStart: () => void;}) {
+  useAutoFullscreen();
   return (
     <div className="fixed inset-0 z-[100] overflow-y-auto bg-emerald-50/60">
       <div className="flex items-center justify-end px-5 py-4">
@@ -677,9 +694,9 @@ export function CapfInstructionsScreen({
           <button
             type="button"
             onClick={onStart}
-            className="mt-2 flex items-center gap-2 rounded-md bg-emerald-700 px-6 py-2.5 text-[13px] font-semibold text-white transition-colors duration-150 hover:bg-emerald-800">
+            className="mt-2 flex items-center gap-2.5 rounded-lg bg-emerald-700 px-8 py-3.5 text-[15px] font-bold text-white shadow-lg transition-colors duration-150 hover:bg-emerald-800">
 
-            <PlayIcon className="h-4 w-4 fill-current" aria-hidden="true" /> Start Test
+            <PlayIcon className="h-5 w-5 fill-current" aria-hidden="true" /> Start Test
           </button>
         </div>
         <div>
@@ -710,6 +727,7 @@ export function CapfInstructionsScreen({
 }
 
 export function CapfTypingScreen({ iface, onSubmit }: {iface: TranscriptionInterface;onSubmit: () => void;}) {
+  useAutoFullscreen();
   const [typed, setTyped] = useState('');
   const [soundOn, setSoundOn] = useState(true);
   const { mm, ss } = useCountdown(iface.durationMinutes * 60, onSubmit);
@@ -788,6 +806,7 @@ export function CommonConfigModal({
   const [punctuation, setPunctuation] = useState('None');
   const [minutes, setMinutes] = useState(50);
   const [highlightSlow, setHighlightSlow] = useState(true);
+  const [examPattern, setExamPattern] = useState('None');
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-navy-900/50 p-4 backdrop-blur-sm">
@@ -912,10 +931,69 @@ export function CommonConfigModal({
             </button>
           </div> :
 
-        <p className="mt-4 rounded-lg bg-primary-50 p-3 text-[11.5px] text-primary-700">
-            Exam-based scoring will automatically apply the official mistake rules of a selected exam
-            pattern.
-          </p>
+        <div className="mt-4 space-y-3.5">
+            <div className="grid grid-cols-2 gap-3">
+              <label className="block">
+                <span className="mb-1 block text-[11.5px] font-semibold text-navy-800">Select Exam</span>
+                <select
+                value={examPattern}
+                onChange={(e) => setExamPattern(e.target.value)}
+                className="w-full rounded-md border border-slate-300 px-2.5 py-2 text-[12px] text-slate-700 outline-none focus:border-primary">
+
+                  <option>None</option>
+                  <option>Ssc Stenographer Grade C &amp; D Skill Test</option>
+                  <option>Bihar Civil Court stenography Skill Test</option>
+                  <option>CSIR Stenographer Exam</option>
+                  <option>Delhi Development Authority Stenography Skill Test</option>
+                  <option>HSSC Stenographer</option>
+                  <option>DSSSB Steno Skill Test</option>
+                  <option>CAPF ASI Stenographer Exam</option>
+                </select>
+              </label>
+              <label className="block">
+                <span className="mb-1 block text-[11.5px] font-semibold text-navy-800">Transcription Time</span>
+                <select
+                value={minutes}
+                onChange={(e) => setMinutes(Number(e.target.value))}
+                className="w-full rounded-md border border-slate-300 px-2.5 py-2 text-[12px] text-slate-700 outline-none focus:border-primary">
+
+                  {[20, 30, 40, 50, 60].map((m) =>
+                <option key={m} value={m}>
+                      {m} Minutes
+                    </option>
+                )}
+                </select>
+              </label>
+            </div>
+            {examPattern === 'None' ?
+          <p className="rounded-lg bg-primary-50 p-3 text-[11.5px] text-primary-700">
+                Exam-based scoring will automatically apply the official mistake rules of a selected exam
+                pattern.
+              </p> :
+
+          <p className="rounded-lg bg-primary-50 p-3 text-[11.5px] text-primary-700">
+                Mistakes will be calculated as per the <strong>{examPattern}</strong> rules.
+              </p>
+          }
+            <button
+            type="button"
+            onClick={() => setHighlightSlow((s) => !s)}
+            className="flex w-full items-center justify-between rounded-md border border-slate-200 px-3 py-2.5 text-left">
+
+              <span className="text-[12px] text-slate-600">Highlight words I read or spelled slowly</span>
+              <span
+              className={`relative h-4 w-8 shrink-0 rounded-full transition-colors duration-150 ${
+              highlightSlow ? 'bg-success' : 'bg-slate-300'}`
+              }>
+
+                <span
+                className={`absolute top-[2px] h-3 w-3 rounded-full bg-white transition-transform duration-150 ${
+                highlightSlow ? 'translate-x-[18px]' : 'translate-x-[2px]'}`
+                } />
+
+              </span>
+            </button>
+          </div>
         }
 
         <button
@@ -944,6 +1022,7 @@ export function CommonTypingScreen({
 
 
 }: {minutes: number;onSubmit: () => void;}) {
+  useAutoFullscreen();
   const [typed, setTyped] = useState('');
   const [soundOn, setSoundOn] = useState(true);
   const [paused, setPaused] = useState(false);

@@ -197,6 +197,7 @@ function StenoAttemptCard({ a, onRankClick }: {a: StenoAttempt;onRankClick: () =
         <div className="flex shrink-0 flex-wrap items-center gap-1.5">
           <button
             type="button"
+            onClick={() => navigate('/result/typing/ai-analysis')}
             className="flex items-center gap-1 rounded-full bg-teal-500 px-2.5 py-1 text-[10.5px] font-semibold text-white transition-colors duration-150 hover:bg-teal-600">
 
             <SparklesIcon className="h-3 w-3" aria-hidden="true" /> Deep Analysis

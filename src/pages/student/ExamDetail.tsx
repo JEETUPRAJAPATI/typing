@@ -15,7 +15,8 @@ import {
   RotateCcwIcon,
   CheckCircle2Icon,
   CircleDotIcon,
-  CircleAlertIcon } from
+  CircleAlertIcon,
+  PenSquareIcon } from
 'lucide-react';
 import { StudentLayout } from '../../components/student/StudentLayout';
 import { Breadcrumbs } from '../../components/common/PageHeading';
@@ -281,8 +282,14 @@ export function ExamDetail() {
                         <Link
                       to="/login"
                       className="inline-flex items-center gap-1 rounded border border-primary px-2.5 py-1 text-[11.5px] font-medium text-primary transition-colors duration-150 hover:bg-primary-50">
-                      
+
                           <RotateCcwIcon className="h-3 w-3" aria-hidden="true" /> Retake
+                        </Link>
+                        <Link
+                      to={`/typing-exam/ahc-ro-aro/format/${row.no}`}
+                      className="inline-flex items-center gap-1 rounded bg-navy-800 px-2.5 py-1 text-[11.5px] font-medium text-white transition-colors duration-150 hover:bg-navy-900">
+
+                          <PenSquareIcon className="h-3 w-3" aria-hidden="true" /> Format Test
                         </Link>
                       </> :
 
