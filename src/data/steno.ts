@@ -250,16 +250,162 @@ export const volumeOneDictations: Dictation[] = [
 { no: 8, difficulty: 5.8, topic: 'Displaced Persons Rehabilitation', words: '1002 Words', paid: true }];
 
 
-export const transcriptionInterfaces = [
-{ id: 'common', name: 'Common Interface', meta: 'Universal practice mode', bg: '#0D6EFD' },
-{ id: 'ssc-c', name: 'SSC Stenographer (Grade C)', meta: '40 minutes · official rules', bg: '#0EA5E9' },
-{ id: 'ssc-d', name: 'SSC Stenographer (Grade D)', meta: '50 minutes · official rules', bg: '#0EA5E9' },
-{ id: 'patna-hc', name: 'Patna High Court', meta: '50 minutes · court interface', bg: '#6F42C1' },
-{ id: 'supreme', name: 'Supreme Court', meta: '50 minutes · court interface', bg: '#8B5CF6' },
-{ id: 'hssc', name: 'HSSC Stenographer', meta: '20 minutes · Haryana SSC rules', bg: '#10B981' },
-{ id: 'ahc', name: 'Allahabad High Court', meta: '30 minutes · court interface', bg: '#0D6EFD' },
-{ id: 'dsssb', name: 'D.S.S.S.B.', meta: '40 minutes · D.S.S.S.B. interface', bg: '#0EA5E9' },
-{ id: 'capf', name: 'CAPF ASI Stenographer', meta: '50 min English · 65 min Hindi · CAPF rules', bg: '#166534' }];
+function buildInstructions(examTitle: string): string[] {
+  return [
+  `Your mistakes will be calculated as per the ${examTitle}.`,
+  'The scrollbar within the typing area will be disabled to simulate a real exam environment. Please use the sidebar to navigate up and down.',
+  'Do not refresh the page during the test.',
+  'Click "Submit" once you have finished typing.',
+  'Timer will start automatically when page loads.',
+  'Test will be automatically submitted once the timer ends.',
+  'For any queries, WhatsApp - 8447949206.'];
+
+}
+
+export type TranscriptionVariant = 'common' | 'ssc' | 'court' | 'hssc' | 'dsssb' | 'capf';
+
+export interface TranscriptionInterface {
+  id: string;
+  name: string;
+  meta: string;
+  bg: string;
+  variant: TranscriptionVariant;
+  orgName: string;
+  skillTestTitle: string;
+  examTitle: string;
+  examCentre: string;
+  durationMinutes: number;
+  durationOptions?: number[];
+  instructions: string[];
+}
+
+export const transcriptionInterfaces: TranscriptionInterface[] = [
+{
+  id: 'common',
+  name: 'Common Interface',
+  meta: 'Universal practice mode',
+  bg: '#0D6EFD',
+  variant: 'common',
+  orgName: 'Balaji Typing & Steno College',
+  skillTestTitle: 'Common Practice Session',
+  examTitle: 'Common Practice Interface',
+  examCentre: '',
+  durationMinutes: 50,
+  instructions: buildInstructions('Common Practice Interface')
+},
+{
+  id: 'ssc-c',
+  name: 'SSC Stenographer (Grade C)',
+  meta: '40 minutes · official rules',
+  bg: '#0EA5E9',
+  variant: 'ssc',
+  orgName: 'Staff Selection Commission',
+  skillTestTitle: 'SSC Steno Skill Test - 2025',
+  examTitle: 'SSC Stenographer Grade C Examination - 2025',
+  examCentre: 'Ion Digital Zone Idz 2, Sarita Vihar, New Delhi 110076',
+  durationMinutes: 40,
+  instructions: buildInstructions('SSC Stenographer Grade C Exam')
+},
+{
+  id: 'ssc-d',
+  name: 'SSC Stenographer (Grade D)',
+  meta: '50 minutes · official rules',
+  bg: '#0EA5E9',
+  variant: 'ssc',
+  orgName: 'Staff Selection Commission',
+  skillTestTitle: 'SSC Steno Skill Test - 2025',
+  examTitle: 'SSC Stenographer Grade D & D Examination - 2025',
+  examCentre: 'Ion Digital Zone Idz 2, Sarita Vihar, New Delhi 110076',
+  durationMinutes: 50,
+  instructions: buildInstructions('SSC Stenographer Grade D & D Exam')
+},
+{
+  id: 'patna-hc',
+  name: 'Patna High Court',
+  meta: '50 minutes · court interface',
+  bg: '#6F42C1',
+  variant: 'court',
+  orgName: 'Patna High Court',
+  skillTestTitle: 'Patna HC Steno Skill Test - 2025',
+  examTitle: 'Patna High Court Stenographer Recruitment - 2025',
+  examCentre: 'Patna High Court Campus, Patna, Bihar 800001',
+  durationMinutes: 50,
+  instructions: buildInstructions('Patna High Court Stenographer Exam')
+},
+{
+  id: 'supreme',
+  name: 'Supreme Court',
+  meta: '50 minutes · court interface',
+  bg: '#8B5CF6',
+  variant: 'court',
+  orgName: 'Supreme Court of India',
+  skillTestTitle: 'Supreme Court Steno Skill Test - 2025',
+  examTitle: 'Supreme Court Stenographer Examination - 2025',
+  examCentre: 'Supreme Court Annexe, Tilak Marg, New Delhi 110001',
+  durationMinutes: 50,
+  instructions: buildInstructions('Supreme Court Stenographer Exam')
+},
+{
+  id: 'hssc',
+  name: 'HSSC Stenographer',
+  meta: '20 minutes · Haryana SSC rules',
+  bg: '#10B981',
+  variant: 'hssc',
+  orgName: 'Haryana Staff Selection Commission',
+  skillTestTitle: 'Stenographer Skill Test – 2026',
+  examTitle: 'HSSC Stenographer Examination - 2026',
+  examCentre: 'Indira Gandhi University, Rewari',
+  durationMinutes: 20,
+  instructions: buildInstructions('SSC Stenographer Grade C & D examination marking rules, including half mistakes, full mistakes, and ignored errors')
+},
+{
+  id: 'ahc',
+  name: 'Allahabad High Court',
+  meta: '30 minutes · court interface',
+  bg: '#0D6EFD',
+  variant: 'court',
+  orgName: 'Allahabad High Court',
+  skillTestTitle: 'Allahabad HC Steno Skill Test - 2025',
+  examTitle: 'Allahabad High Court Stenographer Examination - 2025',
+  examCentre: 'Allahabad High Court, Prayagraj, Uttar Pradesh 211001',
+  durationMinutes: 30,
+  instructions: buildInstructions('Allahabad High Court Stenographer Exam')
+},
+{
+  id: 'dsssb',
+  name: 'D.S.S.S.B.',
+  meta: '40 minutes · D.S.S.S.B. interface',
+  bg: '#0EA5E9',
+  variant: 'dsssb',
+  orgName: 'Delhi Subordinate Services Selection Board',
+  skillTestTitle: 'DSSSB Shorthand Skill Test - 2025',
+  examTitle: 'DSSSB Stenographer Shorthand Skill Test - 2025',
+  examCentre: 'DSSSB Examination Centre, New Delhi',
+  durationMinutes: 40,
+  durationOptions: [30, 35, 40, 45, 50],
+  instructions: buildInstructions('DSSSB Stenographer Skill Test pattern')
+},
+{
+  id: 'capf',
+  name: 'CAPF ASI Stenographer',
+  meta: '50 min English · 65 min Hindi · CAPF rules',
+  bg: '#166534',
+  variant: 'capf',
+  orgName: 'Central Armed Police Forces',
+  skillTestTitle: 'CAPF ASI Stenographer Skill Test',
+  examTitle: 'CAPF Assistant Sub-Inspector (Stenographer) Examination',
+  examCentre: '',
+  durationMinutes: 50,
+  instructions: [
+  'Your mistakes will be calculated as per the CAPF ASI Stenographer Skill Test rules: omissions, additions and spelling mistakes are counted as full mistakes; punctuation is counted only when an original mark is missed; capitalisation is not counted.',
+  'The scrollbar within the typing area will be disabled to simulate a real exam environment. Please use the sidebar to navigate up and down.',
+  'Do not refresh the page during the test.',
+  'Click "Submit" once you have finished typing.',
+  'Timer will start automatically when you begin typing.',
+  'Test will be automatically submitted once the timer ends.',
+  'For any queries, WhatsApp - 8447949206.']
+
+}];
 
 
 export const wordLengthOptions = [

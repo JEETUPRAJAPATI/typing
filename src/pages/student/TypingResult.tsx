@@ -11,10 +11,19 @@ import {
   SearchCheckIcon,
   GitCompareIcon,
   Share2Icon,
-  CheckCircle2Icon } from
+  CheckCircle2Icon,
+  FileTextIcon,
+  KeyboardIcon,
+  XCircleIcon,
+  MinusCircleIcon,
+  PlusCircleIcon,
+  QuoteIcon,
+  SeparatorHorizontalIcon,
+  TargetIcon,
+  GaugeIcon } from
 'lucide-react';
 import { AdminLayout } from '../../components/admin/AdminLayout';
-import { Panel } from '../../components/common/Pill';
+import { Panel, Pill } from '../../components/common/Pill';
 
 const candidate = [
 { label: 'User ID', value: 'STU1001' },
@@ -42,22 +51,22 @@ const testSettings = [
 
 
 const overview = [
-{ label: 'Original Words', value: '410', color: '#0D6EFD' },
-{ label: 'Typed Words', value: '406', color: '#6F42C1' },
-{ label: 'Full Mistakes', value: '4', color: '#DC3545' },
-{ label: 'Half Mistakes', value: '3', color: '#F59E0B' },
-{ label: 'Punctuation Mistakes', value: '2', color: '#0EA5E9' },
-{ label: 'Accuracy', value: '96.58%', color: '#198754' },
-{ label: 'Gross Speed (Typed Words)', value: '58 WPM', color: '#6F42C1' }];
+{ label: 'Original Words', value: '410', color: '#0D6EFD', icon: FileTextIcon },
+{ label: 'Typed Words', value: '406', color: '#6F42C1', icon: KeyboardIcon },
+{ label: 'Full Mistakes', value: '4', color: '#DC3545', icon: XCircleIcon },
+{ label: 'Half Mistakes', value: '3', color: '#F59E0B', icon: MinusCircleIcon },
+{ label: 'Punctuation Mistakes', value: '2', color: '#0EA5E9', icon: QuoteIcon },
+{ label: 'Accuracy', value: '96.58%', color: '#198754', icon: TargetIcon },
+{ label: 'Gross Speed (Typed Words)', value: '58 WPM', color: '#6F42C1', icon: GaugeIcon }];
 
 
 const summary = [
-{ label: 'Correct Words', value: '384 (94.15%)', color: '#198754' },
-{ label: 'Incorrect Words', value: '7 (1.71%)', color: '#DC3545' },
-{ label: 'Extra Words', value: '2 (0.49%)', color: '#0D6EFD' },
-{ label: 'Missing Words', value: '4 (0.98%)', color: '#F59E0B' },
-{ label: 'Extra Spaces', value: '2 (0.49%)', color: '#0EA5E9' },
-{ label: 'Punctuation Mistakes', value: '2 (0.49%)', color: '#6F42C1' }];
+{ label: 'Correct Words', value: '384 (94.15%)', color: '#198754', icon: CheckCircle2Icon },
+{ label: 'Incorrect Words', value: '7 (1.71%)', color: '#DC3545', icon: XCircleIcon },
+{ label: 'Extra Words', value: '2 (0.49%)', color: '#0D6EFD', icon: PlusCircleIcon },
+{ label: 'Missing Words', value: '4 (0.98%)', color: '#F59E0B', icon: MinusCircleIcon },
+{ label: 'Extra Spaces', value: '2 (0.49%)', color: '#0EA5E9', icon: SeparatorHorizontalIcon },
+{ label: 'Punctuation Mistakes', value: '2 (0.49%)', color: '#6F42C1', icon: QuoteIcon }];
 
 
 const legend = [
@@ -71,6 +80,42 @@ const legend = [
 { label: 'Repetition', color: '#EC4899' },
 { label: 'Half Error', color: '#EAB308' }];
 
+
+const compareLegend = [
+{ label: 'Additions', tone: 'blue' as const },
+{ label: 'Omissions', tone: 'green' as const },
+{ label: 'Spelling Mistakes', tone: 'amber' as const },
+{ label: 'Capitalization Mistakes', tone: 'purple' as const },
+{ label: 'Punctuation Mistakes', tone: 'red' as const }];
+
+
+const typedText = `The National education Policy 2020, often referred to as NEP 2020,
+is a landmark reform in the Indian education system, approved by
+the Union Cabinet on 29th July 2020. This policy replaces the
+previous National Policy on Education from 1986, bringing in a
+comprehensive and transformative approach to education in India.
+The NEP 2020 aims to address the evolving needs of the 21st
+century, focusing on holistic development, flexibility, and
+inclusivity while aligning with global standards. It envisions an
+education system that not only imparts knowledge but also fosters
+critical thinking, creativity, and ethical values among students. The
+policy covers all levels of education, from early childhood to
+higher education, and emphasises the importance of
+multilingualism, vocational training, and technology integration.`;
+
+const referenceText = `The National Education Policy 2020, often referred to as NEP 2020,
+is a landmark reform in the Indian education system, approved by
+the Union Cabinet on 29th July 2020. This policy replaces the
+previous National Policy on Education from 1986, bringing in a
+comprehensive and transformative approach to education in India.
+The NEP 2020 aims to address the evolving needs of the 21st
+century, focusing on holistic development, flexibility, and
+inclusivity while aligning with global standards. It envisions an
+education system that not only imparts knowledge but also fosters
+critical thinking, creativity, and ethical values among students. The
+policy covers all levels of education, from early childhood to
+higher education, and emphasises the importance of
+multilingualism, vocational training, and technology integration.`;
 
 const coachRows = [
 { key: 'a.', label: 'Spelling Mistake', count: 1, penalty: '0.50' },
@@ -92,17 +137,80 @@ const aiBullets = [
 
 
 const actions = [
-{ label: 'Back to Result List', icon: ArrowLeftIcon, tone: 'border-emerald-300 text-emerald-700' },
-{ label: 'Click to Check Mistake', icon: SearchCheckIcon, tone: 'border-rose-300 text-rose-600' },
-{ label: 'Click to Compare Passage', icon: GitCompareIcon, tone: 'border-primary text-primary' },
-{ label: 'View Leaderboard', icon: TrophyIcon, tone: 'border-violet-300 text-violet-700' },
-{ label: 'Re-Attempt Test', icon: RotateCcwIcon, tone: 'border-amber-300 text-amber-700' },
-{ label: 'Download Result (PDF)', icon: DownloadIcon, tone: 'border-primary text-primary' },
-{ label: 'Share Result', icon: Share2Icon, tone: 'border-slate-300 text-slate-600' }];
+{ key: 'back', label: 'Back to Result List', icon: ArrowLeftIcon, tone: 'border-emerald-300 text-emerald-700' },
+{ key: 'mistake', label: 'Click to Check Mistake', icon: SearchCheckIcon, tone: 'border-rose-300 text-rose-600' },
+{ key: 'compare', label: 'Click to Compare Passage', icon: GitCompareIcon, tone: 'border-primary text-primary' },
+{ key: 'leaderboard', label: 'View Leaderboard', icon: TrophyIcon, tone: 'border-violet-300 text-violet-700' },
+{ key: 'reattempt', label: 'Re-Attempt Test', icon: RotateCcwIcon, tone: 'border-amber-300 text-amber-700' },
+{ key: 'download', label: 'Download Result (PDF)', icon: DownloadIcon, tone: 'border-primary text-primary' },
+{ key: 'share', label: 'Share Result', icon: Share2Icon, tone: 'border-slate-300 text-slate-600' }];
 
 
 export function TypingResult() {
   const [highlighted, setHighlighted] = useState(true);
+  const [view, setView] = useState<'result' | 'compare'>('result');
+
+  if (view === 'compare') {
+    return (
+      <AdminLayout searchPlaceholder="Search test name, exam name..." showActionButtons={false}>
+        <div className="mb-4 flex items-center justify-end">
+          <button
+            type="button"
+            onClick={() => setView('result')}
+            className="flex items-center gap-1.5 text-[13px] font-semibold text-primary hover:underline">
+
+            <ArrowLeftIcon className="h-4 w-4" aria-hidden="true" /> Back
+          </button>
+        </div>
+
+        <Panel title="Result (Mistakes Highlighted)" className="mb-4">
+          <div className="mb-4 flex flex-wrap items-center gap-2">
+            {compareLegend.map((l) =>
+            <Pill key={l.label} tone={l.tone}>{l.label}</Pill>
+            )}
+          </div>
+          <p className="rounded-lg border border-slate-100 bg-slate-50/40 p-4 text-[14.5px] leading-[2.1] text-slate-700">
+            The National{' '}
+            <mark className="rounded px-0.5 bg-purple-200 line-through decoration-2">education</mark>{' '}
+            <mark className="rounded px-0.5 bg-purple-200">Education</mark> Policy 2020, often referred to
+            as NEP 2020, is a landmark reform in the Indian education system, approved by the Union
+            Cabinet on 29th July 2020. This policy replaces the previous National Policy on Education
+            from 1986, bringing in a comprehensive and transformative approach to education in India.
+            The NEP 2020 aims to address the evolving needs of the 21st century, focusing on holistic
+            development, flexibility, and inclusivity while aligning with global standards. It envisions
+            an education system that not only imparts knowledge but also fosters critical thinking,
+            creativity, and ethical values among students. The policy covers all levels of education,
+            from early childhood to higher education, and emphasises the importance of multilingualism,
+            vocational training,{' '}
+            <mark className="rounded px-0.5 bg-blue-200">and &amp;</mark>{' '}
+            technology integration.{' '}
+            <mark className="rounded px-0.5 bg-amber-200">One of the most significant changes
+            introduced</mark>{' '}
+            in NEP 2020 is the emphasis on early childhood education.
+          </p>
+        </Panel>
+
+        <div className="grid gap-4 lg:grid-cols-2">
+          <Panel
+            title="Your Typed Text"
+            right={<Pill tone="slate">STUDENT</Pill>}>
+
+            <p className="max-h-80 overflow-y-auto whitespace-pre-line text-[13.5px] leading-[1.9] text-slate-700">
+              {typedText}
+            </p>
+          </Panel>
+          <Panel
+            title="Original Transcription"
+            right={<Pill tone="green">REFERENCE</Pill>}>
+
+            <p className="max-h-80 overflow-y-auto whitespace-pre-line text-[13.5px] leading-[1.9] text-slate-700">
+              {referenceText}
+            </p>
+          </Panel>
+        </div>
+      </AdminLayout>);
+
+  }
 
   return (
     <AdminLayout searchPlaceholder="Search test name, exam name..." showActionButtons={false}>
@@ -206,9 +314,10 @@ export function TypingResult() {
               {overview.map((o) =>
               <li
                 key={o.label}
-                className="rounded-lg border p-2"
+                className="rounded-lg border p-2 text-center"
                 style={{ backgroundColor: `${o.color}14`, borderColor: `${o.color}33` }}>
 
+                  <o.icon className="mx-auto mb-1 h-3.5 w-3.5" style={{ color: o.color }} aria-hidden="true" />
                   <p className="text-[10px] leading-snug" style={{ color: o.color }}>{o.label}</p>
                   <p className="font-display text-[15px] font-bold leading-tight text-navy-800">{o.value}</p>
                 </li>
@@ -221,9 +330,10 @@ export function TypingResult() {
               {summary.map((s) =>
               <li
                 key={s.label}
-                className="rounded-lg border p-2"
+                className="rounded-lg border p-2 text-center"
                 style={{ backgroundColor: `${s.color}14`, borderColor: `${s.color}33` }}>
 
+                  <s.icon className="mx-auto mb-1 h-3.5 w-3.5" style={{ color: s.color }} aria-hidden="true" />
                   <p className="text-[10px] leading-snug" style={{ color: s.color }}>{s.label}</p>
                   <p className="font-display text-[12.5px] font-bold leading-tight text-navy-800">{s.value}</p>
                 </li>
@@ -291,8 +401,9 @@ export function TypingResult() {
               <button
                 key={a.label}
                 type="button"
+                onClick={a.key === 'compare' ? () => setView('compare') : undefined}
                 className={`flex items-center gap-1.5 rounded-md border bg-white px-3 py-2 text-[12px] font-medium transition-colors duration-150 hover:bg-slate-50 ${a.tone}`}>
-                
+
                   <a.icon className="h-3.5 w-3.5" aria-hidden="true" /> {a.label}
                 </button>
               )}

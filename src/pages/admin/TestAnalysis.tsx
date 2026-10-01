@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FilterIcon,
   CalendarIcon,
@@ -11,7 +12,17 @@ import {
   DownloadIcon,
   EyeIcon,
   SlidersHorizontalIcon,
-  InfoIcon } from
+  InfoIcon,
+  MicIcon,
+  SparklesIcon,
+  TrophyIcon,
+  Trash2Icon,
+  HashIcon,
+  KeyboardIcon,
+  TypeIcon,
+  EyeOffIcon,
+  AlertTriangleIcon,
+  XIcon } from
 'lucide-react';
 import { AdminLayout } from '../../components/admin/AdminLayout';
 import { Breadcrumbs } from '../../components/common/PageHeading';
@@ -70,6 +81,187 @@ const reports = [
 'Summary Report',
 'Performance Report',
 'Detailed Analytics (Excel)'];
+
+
+interface StenoAttempt {
+  title: string;
+  user: string;
+  attempt: number;
+  date: string;
+  dictSpeed: number;
+  typingSpeed: string;
+  words: string;
+  accuracy: number;
+  unseen: boolean;
+  rank: number;
+  participants: number;
+}
+
+const stenoAttempts: StenoAttempt[] = [
+{
+  title: '(SSC Gr.-C) Eduquity 100 — Education — Dictation No. 1 — Topic: Implementation of the National Education Policy',
+  user: 'neha.gupta',
+  attempt: 1,
+  date: '30 Sept 2026',
+  dictSpeed: 90,
+  typingSpeed: '289.59 WPM',
+  words: '200',
+  accuracy: 98.73,
+  unseen: true,
+  rank: 21,
+  participants: 18699
+},
+{
+  title: 'KC 1000 — Volume 1 — Dictation No. 1 — Topic: Companies Bill Review',
+  user: 'pooja.kumari',
+  attempt: 1,
+  date: '10 Aug 2026',
+  dictSpeed: 100,
+  typingSpeed: '4.4 WPM',
+  words: 'Full',
+  accuracy: 34.89,
+  unseen: true,
+  rank: 8420,
+  participants: 12304
+},
+{
+  title: '(SSC Gr.-D) KC 1000 — Volume 1 — Dictation No. 1 — Topic: Companies Bill Review',
+  user: 'rakesh.meena',
+  attempt: 2,
+  date: '06 Aug 2026',
+  dictSpeed: 80,
+  typingSpeed: '123.99 WPM',
+  words: 'Full',
+  accuracy: 18.07,
+  unseen: true,
+  rank: 9876,
+  participants: 10520
+},
+{
+  title: '(HSSC Steno) Kailash Chandra Dictation No. 1',
+  user: 'anjali.sharma',
+  attempt: 1,
+  date: '25 Jun 2026',
+  dictSpeed: 120,
+  typingSpeed: '— WPM',
+  words: '200',
+  accuracy: 0.0,
+  unseen: true,
+  rank: 4521,
+  participants: 4521
+}];
+
+
+function RankModal({ attempt, onClose }: {attempt: StenoAttempt;onClose: () => void;}) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/50 p-4">
+      <div className="w-full max-w-xs rounded-xl bg-white p-6 text-center shadow-2xl">
+        <div className="mb-1 flex items-center justify-between">
+          <p className="flex items-center gap-1.5 text-[14px] font-bold text-navy-800">
+            <TrophyIcon className="h-4 w-4 text-amber-500" aria-hidden="true" /> Your Rank
+          </p>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="grid h-7 w-7 place-items-center rounded-full text-slate-400 transition-colors duration-150 hover:bg-slate-100 hover:text-slate-600">
+
+            <XIcon className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+        </div>
+        <p className="mt-4 font-display text-[36px] font-extrabold text-violet-600">#{attempt.rank}</p>
+        <p className="mt-1 text-[12.5px] text-slate-500">
+          out of {attempt.participants.toLocaleString()} participants
+        </p>
+      </div>
+    </div>);
+
+}
+
+function StenoAttemptCard({ a, onRankClick }: {a: StenoAttempt;onRankClick: () => void;}) {
+  const navigate = useNavigate();
+  const canDelete = a.accuracy < 30;
+  const accuracyGood = a.accuracy >= 50;
+
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white p-3.5">
+      <div className="flex flex-wrap items-start justify-between gap-2.5">
+        <p className="flex min-w-0 flex-1 items-start gap-2 text-[13px] font-semibold text-navy-800">
+          <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary-50 text-primary">
+            <MicIcon className="h-3.5 w-3.5" aria-hidden="true" />
+          </span>
+          <span className="min-w-0 truncate" title={a.title}>
+            {a.title}
+          </span>
+        </p>
+        <div className="flex shrink-0 flex-wrap items-center gap-1.5">
+          <button
+            type="button"
+            className="flex items-center gap-1 rounded-full bg-teal-500 px-2.5 py-1 text-[10.5px] font-semibold text-white transition-colors duration-150 hover:bg-teal-600">
+
+            <SparklesIcon className="h-3 w-3" aria-hidden="true" /> Deep Analysis
+          </button>
+          <button
+            type="button"
+            onClick={onRankClick}
+            className="flex items-center gap-1 rounded-full bg-amber-500 px-2.5 py-1 text-[10.5px] font-semibold text-white transition-colors duration-150 hover:bg-amber-600">
+
+            <TrophyIcon className="h-3 w-3" aria-hidden="true" /> Rank
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate('/result/steno')}
+            className="flex items-center gap-1 rounded-full bg-violet-600 px-2.5 py-1 text-[10.5px] font-semibold text-white transition-colors duration-150 hover:bg-violet-700">
+
+            <EyeIcon className="h-3 w-3" aria-hidden="true" /> View Result
+          </button>
+          {canDelete &&
+          <button
+            type="button"
+            aria-label="Delete attempt"
+            className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-rose-50 text-rose-600 transition-colors duration-150 hover:bg-rose-100">
+
+              <Trash2Icon className="h-3.5 w-3.5" aria-hidden="true" />
+            </button>
+          }
+        </div>
+      </div>
+
+      <div className="mt-2.5 flex flex-wrap gap-x-5 gap-y-1.5 border-t border-slate-100 pt-2.5 text-[11.5px] text-slate-500">
+        <span className="flex items-center gap-1">
+          <HashIcon className="h-3 w-3 text-slate-400" aria-hidden="true" /> Attempt {a.attempt}
+        </span>
+        <span className="flex items-center gap-1">
+          <CalendarIcon className="h-3 w-3 text-slate-400" aria-hidden="true" /> Date {a.date}
+        </span>
+        <span className="flex items-center gap-1">
+          <GaugeIcon className="h-3 w-3 text-amber-500" aria-hidden="true" /> Dict Speed {a.dictSpeed}
+        </span>
+        <span className="flex items-center gap-1">
+          <KeyboardIcon className="h-3 w-3 text-primary" aria-hidden="true" /> Typing {a.typingSpeed}
+        </span>
+        <span className="flex items-center gap-1">
+          <TypeIcon className="h-3 w-3 text-slate-400" aria-hidden="true" /> Words {a.words}
+        </span>
+      </div>
+
+      <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2">
+        <span
+          className={`inline-flex items-center gap-1 rounded-full px-2.5 py-[3px] text-[10.5px] font-bold ${
+          accuracyGood ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-600'}`
+          }>
+
+          <GaugeIcon className="h-3 w-3" aria-hidden="true" /> {a.accuracy.toFixed(2)}%
+        </span>
+        {a.unseen &&
+        <span className="flex items-center gap-1 rounded-full bg-rose-50 px-2.5 py-[3px] text-[10.5px] font-semibold text-rose-600">
+            <EyeOffIcon className="h-3 w-3" aria-hidden="true" /> Unseen
+          </span>
+        }
+      </div>
+    </div>);
+
+}
 
 
 function PerformanceChart() {
@@ -148,6 +340,7 @@ function Donut({ data }: {data: {color: string;pct: number;}[];}) {
 
 export function AdminTestAnalysis() {
   const [tab, setTab] = useState<'Typing' | 'Steno'>('Typing');
+  const [rankModalFor, setRankModalFor] = useState<StenoAttempt | null>(null);
 
   return (
     <AdminLayout
@@ -161,13 +354,36 @@ export function AdminTestAnalysis() {
       { label: 'Steno Tests', value: '634' }]
       }>
       
-      <div className="mb-4">
-        <h2 className="font-display text-[26px] font-bold leading-tight text-navy-800">
-          Test Analysis (Results)
-        </h2>
-        <p className="text-[12.5px] text-slate-500">
-          View detailed performance and analysis of typing and steno tests.
-        </p>
+      <div className="mb-4 flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h2 className="font-display text-[26px] font-bold leading-tight text-navy-800">
+            Test Analysis (Results)
+          </h2>
+          <p className="text-[12.5px] text-slate-500">
+            View detailed performance and analysis of typing and steno tests.
+          </p>
+        </div>
+
+        {tab === 'Steno' &&
+        <div className="flex shrink-0 flex-wrap gap-2.5">
+          <div className="rounded-lg border border-primary-100 bg-primary-50 px-4 py-2 text-center">
+            <p className="font-display text-[18px] font-bold text-primary">{stenoAttempts.length}</p>
+            <p className="text-[10px] font-medium text-primary-700">Total Tests</p>
+          </div>
+          <div className="rounded-lg border border-primary-100 bg-primary-50 px-4 py-2 text-center">
+            <p className="font-display text-[18px] font-bold text-primary">
+              {stenoAttempts.filter((a) => a.accuracy >= 50).length}
+            </p>
+            <p className="text-[10px] font-medium text-primary-700">Qualified</p>
+          </div>
+          <div className="rounded-lg border border-primary-100 bg-primary-50 px-4 py-2 text-center">
+            <p className="font-display text-[18px] font-bold text-primary">
+              {Math.round(stenoAttempts.reduce((sum, a) => sum + a.dictSpeed, 0) / stenoAttempts.length)}
+            </p>
+            <p className="text-[10px] font-medium text-primary-700">Avg WPM</p>
+          </div>
+        </div>
+        }
       </div>
 
       <div className="mb-4 flex flex-wrap items-center gap-4 border-b border-slate-200">
@@ -249,86 +465,112 @@ export function AdminTestAnalysis() {
         </div>
       </section>
 
-      <ul className="mb-4 grid gap-4 sm:grid-cols-3 xl:grid-cols-6">
-        {stats.map((s) =>
-        <li key={s.label} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3.5 shadow-card">
-            <span
-            className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-white"
-            style={{ backgroundColor: s.color }}>
+      {tab === 'Typing' &&
+      <>
+        <ul className="mb-4 grid gap-4 sm:grid-cols-3 xl:grid-cols-6">
+          {stats.map((s) =>
+          <li key={s.label} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3.5 shadow-card">
+              <span
+              className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-white"
+              style={{ backgroundColor: s.color }}>
 
-              <s.icon className="h-4 w-4" aria-hidden="true" />
-            </span>
-            <div className="min-w-0">
-              <p className="text-[11px] text-slate-500">{s.label}</p>
-              <p className="font-display text-[20px] font-bold leading-tight text-navy-800">{s.value}</p>
-              <p className={`text-[11px] font-medium ${s.subColor}`}>{s.sub}</p>
+                <s.icon className="h-4 w-4" aria-hidden="true" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[11px] text-slate-500">{s.label}</p>
+                <p className="font-display text-[20px] font-bold leading-tight text-navy-800">{s.value}</p>
+                <p className={`text-[11px] font-medium ${s.subColor}`}>{s.sub}</p>
+              </div>
+            </li>
+          )}
+        </ul>
+
+        <div className="mb-4 grid gap-4 xl:grid-cols-[1fr_330px_330px]">
+          <Panel
+            title="Performance Overview"
+            right={
+            <select className="rounded-md border border-slate-300 px-2.5 py-1 text-[11.5px] outline-none focus:border-primary">
+                <option>Daily</option>
+                <option>Weekly</option>
+              </select>
+            }>
+
+            <PerformanceChart />
+          </Panel>
+
+          <Panel title="Score Distribution (Net WPM)">
+            <div className="flex items-center gap-4">
+              <Donut data={scoreDistribution} />
+              <ul className="space-y-1.5 text-[11.5px]">
+                {scoreDistribution.map((s) =>
+                <li key={s.label} className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: s.color }} aria-hidden="true" />
+                    <span className="text-slate-600">{s.label}</span>
+                    <span className="ml-auto font-medium text-navy-800">{s.value}</span>
+                  </li>
+                )}
+              </ul>
             </div>
-          </li>
-        )}
-      </ul>
+          </Panel>
 
-      <div className="mb-4 grid gap-4 xl:grid-cols-[1fr_330px_330px]">
-        <Panel
-          title="Performance Overview"
-          right={
-          <select className="rounded-md border border-slate-300 px-2.5 py-1 text-[11.5px] outline-none focus:border-primary">
-              <option>Daily</option>
-              <option>Weekly</option>
-            </select>
-          }>
-          
-          <PerformanceChart />
-        </Panel>
+          <Panel title="Summary by Difficulty">
+            <div className="flex items-center gap-4">
+              <Donut data={difficultySummary} />
+              <ul className="space-y-1.5 text-[11.5px]">
+                {difficultySummary.map((s) =>
+                <li key={s.label} className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: s.color }} aria-hidden="true" />
+                    <span className="text-slate-600">{s.label}</span>
+                    <span className="ml-auto font-medium text-navy-800">{s.value}</span>
+                  </li>
+                )}
+              </ul>
+            </div>
+          </Panel>
+        </div>
+      </>
+      }
 
-        <Panel title="Score Distribution (Net WPM)">
-          <div className="flex items-center gap-4">
-            <Donut data={scoreDistribution} />
-            <ul className="space-y-1.5 text-[11.5px]">
-              {scoreDistribution.map((s) =>
-              <li key={s.label} className="flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: s.color }} aria-hidden="true" />
-                  <span className="text-slate-600">{s.label}</span>
-                  <span className="ml-auto font-medium text-navy-800">{s.value}</span>
-                </li>
-              )}
-            </ul>
-          </div>
-        </Panel>
-
-        <Panel title="Summary by Difficulty">
-          <div className="flex items-center gap-4">
-            <Donut data={difficultySummary} />
-            <ul className="space-y-1.5 text-[11.5px]">
-              {difficultySummary.map((s) =>
-              <li key={s.label} className="flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: s.color }} aria-hidden="true" />
-                  <span className="text-slate-600">{s.label}</span>
-                  <span className="ml-auto font-medium text-navy-800">{s.value}</span>
-                </li>
-              )}
-            </ul>
-          </div>
-        </Panel>
-      </div>
-
-      <div className="grid gap-4 xl:grid-cols-[1fr_290px]">
+      <div className={tab === 'Typing' ? 'grid gap-4 xl:grid-cols-[1fr_290px]' : ''}>
         <section className="rounded-xl border border-slate-200 bg-white shadow-card">
           <div className="flex flex-wrap items-center gap-2.5 p-3.5">
             <h3 className="font-display text-[14px] font-semibold text-navy-800">Detailed Results</h3>
-            <button
-              type="button"
-              className="ml-auto flex items-center gap-1.5 rounded-md border border-slate-300 px-3 py-1.5 text-[11.5px] font-medium text-slate-600 transition-colors duration-150 hover:bg-slate-50">
-              
-              <SlidersHorizontalIcon className="h-3.5 w-3.5" aria-hidden="true" /> Show / Hide Columns
-            </button>
-            <button
-              type="button"
-              className="flex items-center gap-1.5 rounded-md border border-slate-300 px-3 py-1.5 text-[11.5px] font-medium text-slate-600 transition-colors duration-150 hover:bg-slate-50">
-              
-              <DownloadIcon className="h-3.5 w-3.5" aria-hidden="true" /> Export
-            </button>
+            {tab === 'Typing' &&
+            <>
+              <button
+                type="button"
+                className="ml-auto flex items-center gap-1.5 rounded-md border border-slate-300 px-3 py-1.5 text-[11.5px] font-medium text-slate-600 transition-colors duration-150 hover:bg-slate-50">
+
+                <SlidersHorizontalIcon className="h-3.5 w-3.5" aria-hidden="true" /> Show / Hide Columns
+              </button>
+              <button
+                type="button"
+                className="flex items-center gap-1.5 rounded-md border border-slate-300 px-3 py-1.5 text-[11.5px] font-medium text-slate-600 transition-colors duration-150 hover:bg-slate-50">
+
+                <DownloadIcon className="h-3.5 w-3.5" aria-hidden="true" /> Export
+              </button>
+            </>
+            }
           </div>
 
+          {tab === 'Steno' &&
+          <div className="space-y-3 px-3.5 pb-3.5">
+            <p className="flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3.5 py-2.5 text-[11.5px] text-amber-800">
+              <AlertTriangleIcon className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+              <span>
+                <span className="font-bold">
+                  Delete option is available only for attempted tests with accuracy below 30%.
+                </span>{' '}
+                Tests with 30% accuracy or above cannot be deleted.
+              </span>
+            </p>
+            {stenoAttempts.map((a, i) =>
+            <StenoAttemptCard key={i} a={a} onRankClick={() => setRankModalFor(a)} />
+            )}
+          </div>
+          }
+
+          {tab === 'Typing' &&
           <div className="overflow-x-auto">
             <table className="w-full min-w-[1020px] text-left">
               <thead className="bg-slate-50 text-[11px] font-semibold text-slate-600">
@@ -398,6 +640,7 @@ export function AdminTestAnalysis() {
               </tbody>
             </table>
           </div>
+          }
 
           <div className="flex flex-wrap items-center gap-3 border-t border-slate-100 p-3.5 text-[12px] text-slate-600">
             <span>Showing 1 to 10 of 147 results</span>
@@ -428,6 +671,7 @@ export function AdminTestAnalysis() {
           </div>
         </section>
 
+        {tab === 'Typing' &&
         <div className="space-y-4">
           <Panel title="Download Reports">
             <ul className="space-y-2">
@@ -436,7 +680,7 @@ export function AdminTestAnalysis() {
                   <button
                   type="button"
                   className="flex w-full items-center gap-2 rounded-md border border-slate-200 px-3 py-2 text-left text-[12px] font-medium text-primary transition-colors duration-150 hover:bg-primary-50">
-                  
+
                     {r}
                     <DownloadIcon className="ml-auto h-3.5 w-3.5 text-slate-400" aria-hidden="true" />
                   </button>
@@ -453,7 +697,9 @@ export function AdminTestAnalysis() {
             </p>
           </Panel>
         </div>
+        }
       </div>
+      {rankModalFor && <RankModal attempt={rankModalFor} onClose={() => setRankModalFor(null)} />}
     </AdminLayout>);
 
 }

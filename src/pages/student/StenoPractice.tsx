@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   HeartIcon,
   BookmarkIcon,
@@ -19,18 +20,136 @@ import { StudentLayout } from '../../components/student/StudentLayout';
 import { Breadcrumbs } from '../../components/common/PageHeading';
 import { WordLengthSelect } from '../../components/steno/WordLengthSelect';
 import { InterfacePicker } from '../../components/steno/InterfacePicker';
+import { transcriptionInterfaces } from '../../data/steno';
+import {
+  GenericInstructionsScreen,
+  GenericTypingScreen,
+  HsscInstructionsScreen,
+  HsscTypingScreen,
+  DsssbInstructionsScreen,
+  CapfInstructionsScreen,
+  CapfTypingScreen,
+  CommonConfigModal,
+  CommonTypingScreen,
+  ScaleIcon,
+  LandmarkIcon,
+  GavelIcon } from
+'../../components/steno/ExamScreens';
 
 const speeds = Array.from({ length: 20 }, (_, i) => `${60 + i * 5} WPM`);
 const fluctuations = ['Off', 'Low (±5%)', 'Medium (±10%)', 'High (±15%)'];
 
+const examMetaRows = (examCentre: string) => [
+{ label: 'Exam Date', value: '30-09-2026' },
+{ label: 'Shift', value: '3rd Shift (Evening)' },
+{ label: 'Exam Centre', value: examCentre }];
+
+
 export function StenoPractice() {
+  const navigate = useNavigate();
   const [speed, setSpeed] = useState('100 WPM');
   const [fluctuation, setFluctuation] = useState('Off');
   const [volume, setVolume] = useState(60);
   const [seen, setSeen] = useState<'unseen' | 'seen'>('unseen');
   const [wordLength, setWordLength] = useState('Full Length');
-  const [showInterfaces, setShowInterfaces] = useState(false);
   const [selectedInterface, setSelectedInterface] = useState('ssc-d');
+  const [examStage, setExamStage] = useState<'none' | 'config' | 'instructions' | 'test'>('none');
+  const [selectedDuration, setSelectedDuration] = useState<number | null>(null);
+
+  const activeInterface =
+  transcriptionInterfaces.find((i) => i.id === selectedInterface) ?? transcriptionInterfaces[0];
+
+  const startFlow = (id: string) => {
+    setSelectedInterface(id);
+    const iface = transcriptionInterfaces.find((i) => i.id === id) ?? transcriptionInterfaces[0];
+    if (iface.variant === 'common') {
+      setExamStage('config');
+    } else {
+      setSelectedDuration(iface.durationMinutes);
+      setExamStage('instructions');
+    }
+  };
+
+  const onSubmit = () => navigate('/result/steno');
+
+  if (examStage === 'instructions') {
+    if (activeInterface.variant === 'hssc') {
+      return (
+        <HsscInstructionsScreen
+          iface={activeInterface}
+          onExit={() => setExamStage('none')}
+          onStart={() => setExamStage('test')} />);
+
+
+    }
+    if (activeInterface.variant === 'dsssb') {
+      return (
+        <DsssbInstructionsScreen
+          iface={activeInterface}
+          onExit={() => setExamStage('none')}
+          onStart={(duration) => {
+            setSelectedDuration(duration);
+            setExamStage('test');
+          }} />);
+
+
+    }
+    if (activeInterface.variant === 'capf') {
+      return (
+        <CapfInstructionsScreen
+          iface={activeInterface}
+          onExit={() => setExamStage('none')}
+          onStart={() => setExamStage('test')} />);
+
+
+    }
+    const isCourt = activeInterface.variant === 'court';
+    return (
+      <GenericInstructionsScreen
+        iface={activeInterface}
+        icon={isCourt ? ScaleIcon : LandmarkIcon}
+        badgeBg={isCourt ? 'bg-violet-50 text-violet-600' : 'bg-amber-50 text-amber-600'}
+        btnBg={isCourt ? 'bg-violet-600 hover:bg-violet-700' : 'bg-danger hover:bg-[#bb2d3b]'}
+        onExit={() => setExamStage('none')}
+        onStart={() => setExamStage('test')} />);
+
+
+  }
+
+  if (examStage === 'test') {
+    if (activeInterface.variant === 'hssc') {
+      return <HsscTypingScreen iface={activeInterface} onSubmit={onSubmit} />;
+    }
+    if (activeInterface.variant === 'capf') {
+      return <CapfTypingScreen iface={activeInterface} onSubmit={onSubmit} />;
+    }
+    if (activeInterface.variant === 'common') {
+      return <CommonTypingScreen minutes={selectedDuration ?? activeInterface.durationMinutes} onSubmit={onSubmit} />;
+    }
+    if (activeInterface.variant === 'dsssb') {
+      return (
+        <GenericTypingScreen
+          iface={activeInterface}
+          icon={GavelIcon}
+          iconBg="bg-rose-50 text-rose-600"
+          inputLabel="Type your transcription below"
+          selectedDuration={selectedDuration ?? activeInterface.durationMinutes}
+          metaRows={examMetaRows(activeInterface.examCentre)}
+          onSubmit={onSubmit} />);
+
+
+    }
+    const isCourt = activeInterface.variant === 'court';
+    return (
+      <GenericTypingScreen
+        iface={activeInterface}
+        icon={isCourt ? ScaleIcon : LandmarkIcon}
+        iconBg={isCourt ? 'bg-violet-50 text-violet-600' : 'bg-amber-50 text-amber-600'}
+        metaRows={examMetaRows(activeInterface.examCentre)}
+        onSubmit={onSubmit} />);
+
+
+  }
 
   return (
     <StudentLayout>
@@ -41,7 +160,7 @@ export function StenoPractice() {
           { label: 'English Steno Exam', to: '/english-steno' },
           { label: 'Practice' }]
           } />
-        
+
       </div>
 
       <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-card">
@@ -63,14 +182,14 @@ export function StenoPractice() {
               type="button"
               aria-label="Add to favourites"
               className="grid h-9 w-9 place-items-center rounded-md border border-slate-300 text-slate-500 transition-colors duration-150 hover:bg-slate-50">
-              
+
               <HeartIcon className="h-4 w-4" aria-hidden="true" />
             </button>
             <button
               type="button"
               aria-label="Bookmark dictation"
               className="grid h-9 w-9 place-items-center rounded-md border border-slate-300 text-slate-500 transition-colors duration-150 hover:bg-slate-50">
-              
+
               <BookmarkIcon className="h-4 w-4" aria-hidden="true" />
             </button>
             <span className="flex items-center gap-1.5 rounded-md border border-slate-300 px-3 py-2 text-[12.5px] font-medium text-slate-600">
@@ -90,7 +209,7 @@ export function StenoPractice() {
               <span
                 className="grid h-4 w-4 place-items-center rounded-full bg-danger text-white"
                 aria-hidden="true">
-                
+
                 <InfoIcon className="h-2.5 w-2.5" />
               </span>
             </span>
@@ -98,12 +217,12 @@ export function StenoPractice() {
               <GaugeIcon
                 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
                 aria-hidden="true" />
-              
+
               <select
                 value={speed}
                 onChange={(e) => setSpeed(e.target.value)}
                 className="w-full appearance-none rounded-md border border-slate-300 py-2.5 pl-9 pr-8 text-[13px] font-medium text-navy-800 outline-none focus:border-primary">
-                
+
                 {speeds.map((s) =>
                 <option key={s} value={s}>
                     {s}
@@ -119,7 +238,7 @@ export function StenoPractice() {
               <span
                 className="grid h-4 w-4 place-items-center rounded-full bg-danger text-white"
                 aria-hidden="true">
-                
+
                 <InfoIcon className="h-2.5 w-2.5" />
               </span>
             </span>
@@ -127,7 +246,7 @@ export function StenoPractice() {
               value={fluctuation}
               onChange={(e) => setFluctuation(e.target.value)}
               className="w-full rounded-md border border-slate-300 px-3 py-2.5 text-[13px] text-navy-800 outline-none focus:border-primary">
-              
+
               {fluctuations.map((f) =>
               <option key={f} value={f}>
                   {f}
@@ -144,7 +263,7 @@ export function StenoPractice() {
                 aria-label="Decrease volume"
                 className="grid h-8 w-8 place-items-center rounded-md border border-slate-300 text-slate-600 transition-colors duration-150 hover:bg-slate-50"
                 onClick={() => setVolume((v) => Math.max(0, v - 10))}>
-                
+
                 <MinusIcon className="h-4 w-4" aria-hidden="true" />
               </button>
               <input
@@ -158,13 +277,13 @@ export function StenoPractice() {
                 style={{
                   background: `linear-gradient(to right, #0A2E6B ${volume}%, #E2E8F0 ${volume}%)`
                 }} />
-              
+
               <button
                 type="button"
                 aria-label="Increase volume"
                 className="grid h-8 w-8 place-items-center rounded-md border border-slate-300 text-slate-600 transition-colors duration-150 hover:bg-slate-50"
                 onClick={() => setVolume((v) => Math.min(100, v + 10))}>
-                
+
                 <PlusIcon className="h-4 w-4" aria-hidden="true" />
               </button>
             </div>
@@ -184,7 +303,7 @@ export function StenoPractice() {
               'bg-navy-900 text-white' :
               'border border-slate-300 bg-white text-slate-600 hover:bg-slate-50'}`
               }>
-              
+
               <EyeOffIcon className="h-4 w-4" aria-hidden="true" /> Unseen
             </button>
             <button
@@ -196,13 +315,13 @@ export function StenoPractice() {
               'bg-navy-900 text-white' :
               'border border-slate-300 bg-white text-slate-600 hover:bg-slate-50'}`
               }>
-              
+
               <EyeIcon className="h-4 w-4" aria-hidden="true" /> Seen
             </button>
             <button
               type="button"
               className="flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-4 py-2 text-[12.5px] font-medium text-slate-600 transition-colors duration-150 hover:bg-slate-50">
-              
+
               <FileTextIcon className="h-4 w-4" aria-hidden="true" /> Show Transcription
             </button>
           </div>
@@ -230,35 +349,43 @@ export function StenoPractice() {
         </div>
 
         {/* Interface picker */}
-        {showInterfaces &&
         <div className="mt-4">
-            <InterfacePicker selected={selectedInterface} onSelect={setSelectedInterface} />
-          </div>
-        }
+          <InterfacePicker selected={selectedInterface} onSelect={startFlow} />
+        </div>
 
         {/* Action row */}
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <button
             type="button"
             className="flex min-w-[200px] items-center justify-center gap-2 rounded-md bg-primary py-3 text-[14px] font-semibold text-white transition-colors duration-150 hover:bg-primary-700">
-            
+
             <PlayIcon className="h-4 w-4 fill-current" aria-hidden="true" /> Play
           </button>
           <button
             type="button"
-            onClick={() => setShowInterfaces(true)}
+            onClick={() => startFlow(selectedInterface)}
             className="flex min-w-[200px] items-center justify-center gap-2 rounded-md bg-danger py-3 text-[14px] font-semibold text-white transition-colors duration-150 hover:bg-[#bb2d3b]">
-            
+
             <KeyboardIcon className="h-4 w-4" aria-hidden="true" /> Transcribe Now
           </button>
           <button
             type="button"
             className="ml-auto flex items-center justify-center gap-2 rounded-md border border-slate-300 px-6 py-3 text-[14px] font-semibold text-navy-800 transition-colors duration-150 hover:bg-slate-50">
-            
+
             <MaximizeIcon className="h-4 w-4" aria-hidden="true" /> Full Screen
           </button>
         </div>
       </section>
+
+      {examStage === 'config' &&
+      <CommonConfigModal
+        onClose={() => setExamStage('none')}
+        onContinue={(minutes) => {
+          setSelectedDuration(minutes);
+          setExamStage('test');
+        }} />
+
+      }
     </StudentLayout>);
 
 }

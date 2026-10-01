@@ -12,7 +12,7 @@ export function InterfacePicker({ selected, onSelect }: InterfacePickerProps) {
     <div className="rounded-lg border border-slate-200 bg-slate-50/70 p-3">
       <p className="mb-3 flex items-center gap-2 rounded border border-primary-100 bg-primary-50 px-3 py-2 text-[11.5px] font-medium text-primary-700">
         <MousePointerClickIcon className="h-3.5 w-3.5" aria-hidden="true" />
-        Pick the interface you want to practice in, then tap Transcribe Now again to start.
+        Click any interface below to open its exam immediately.
       </p>
 
       <p className="mb-2 flex items-center gap-1.5 text-[10.5px] font-semibold uppercase tracking-wide text-slate-500">
