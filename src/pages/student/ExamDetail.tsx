@@ -16,7 +16,11 @@ import {
   CheckCircle2Icon,
   CircleDotIcon,
   CircleAlertIcon,
-  PenSquareIcon } from
+  PenSquareIcon,
+  PercentIcon,
+  KeyboardIcon,
+  AlertTriangleIcon,
+  MonitorIcon } from
 'lucide-react';
 import { StudentLayout } from '../../components/student/StudentLayout';
 import { Breadcrumbs } from '../../components/common/PageHeading';
@@ -25,19 +29,17 @@ import { ahcTestRows } from '../../data/typingExams';
 const examMeta = [
 { label: 'Conducted By', value: 'Allahabad High Court' },
 { label: 'Exam Level', value: 'District Judge (Group C & D)' },
-{ label: 'Time Duration', value: '10 Minutes' },
-{ label: 'Language', value: 'English / Hindi' },
-{ label: 'Negative Marking', value: 'No' },
-{ label: 'Result Mode', value: 'Speed + Accuracy' }];
+{ label: 'Language', value: 'English / Hindi' }];
 
 
 const examDetails = [
-{ icon: FileTextIcon, label: 'Total Words : 250' },
 { icon: ClockIcon, label: 'Time Duration : 10 Minutes' },
-{ icon: GlobeIcon, label: 'Language : English / Hindi' },
-{ icon: CircleDotIcon, label: 'Negative Marking : No' },
-{ icon: CircleAlertIcon, label: 'Minimum Qualifying Speed : 35 WPM' },
-{ icon: CheckCircle2Icon, label: 'Result Mode : Speed + Accuracy' }];
+{ icon: CircleAlertIcon, label: 'Qualifying Speed : 35 WPM' },
+{ icon: PercentIcon, label: 'Error Margin : 2% Free' },
+{ icon: CheckCircle2Icon, label: 'Result Mode : Net Speed + Accuracy' },
+{ icon: KeyboardIcon, label: 'Backspace : Allowed' },
+{ icon: AlertTriangleIcon, label: 'Mistake Policy : 10 Words applied per mistake' },
+{ icon: MonitorIcon, label: 'Exam Mode : Paper / On Screen' }];
 
 
 const difficultyTabs = [
@@ -103,7 +105,7 @@ export function ExamDetail() {
               </div>
             </div>
 
-            <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 border-t border-white/10 pt-4 sm:grid-cols-3 lg:grid-cols-6">
+            <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 border-t border-white/10 pt-4 sm:grid-cols-3">
               {examMeta.map((m) =>
               <div key={m.label}>
                   <dt className="text-[11px] font-semibold text-[#38BDF8]">{m.label}</dt>
@@ -235,6 +237,7 @@ export function ExamDetail() {
               <th scope="col" className="px-5 py-3 text-center">Time</th>
               <th scope="col" className="px-5 py-3 text-center">Difficulty</th>
               <th scope="col" className="px-5 py-3 text-center">Access</th>
+              <th scope="col" className="px-5 py-3 text-center">Download PDF</th>
               <th scope="col" className="px-5 py-3 text-right">Action</th>
             </tr>
           </thead>
@@ -267,6 +270,23 @@ export function ExamDetail() {
                 <span className="inline-flex items-center gap-1 font-display text-[13px] font-bold text-[#B45309]">
                       <LockIcon className="h-3.5 w-3.5" aria-hidden="true" /> Premium
                     </span>
+                }
+                </td>
+                <td className="px-5 py-3 text-center">
+                  {row.free ?
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-1.5 rounded bg-danger px-2.5 py-1 text-[11.5px] font-semibold text-white transition-colors duration-150 hover:bg-[#bb2d3b]">
+
+                      <DownloadIcon className="h-3 w-3" aria-hidden="true" /> Download PDF
+                    </button> :
+
+                <Link
+                  to="/plan-pricing"
+                  className="inline-flex items-center gap-1.5 rounded bg-slate-200 px-2.5 py-1 text-[11.5px] font-medium text-slate-500 transition-colors duration-150 hover:bg-slate-300">
+
+                      <LockIcon className="h-3 w-3" aria-hidden="true" /> Download PDF
+                    </Link>
                 }
                 </td>
                 <td className="px-5 py-3">

@@ -10,6 +10,8 @@ import { EnglishSteno } from './pages/student/EnglishSteno';
 import { DictationList } from './pages/student/DictationList';
 import { StenoPractice } from './pages/student/StenoPractice';
 import { LiveTestTyping } from './pages/student/LiveTestTyping';
+import { LiveTestSlots } from './pages/student/LiveTestSlots';
+import { LiveTestResultPdf } from './pages/student/LiveTestResultPdf';
 import { Signup } from './pages/student/Signup';
 import { TypingResult } from './pages/student/TypingResult';
 import { StenoResult } from './pages/student/StenoResult';
@@ -62,6 +64,8 @@ export function App() {
         <Route path="/live-test/typing" element={<LiveTestTyping />} />
         <Route path="/live-test/steno" element={<LiveTestTyping />} />
         <Route path="/live-test/typing/:testId/rank" element={<TestRankList />} />
+        <Route path="/live-test/typing/:testId/slots" element={<LiveTestSlots />} />
+        <Route path="/live-test/typing/:testId/:testNo/result-pdf" element={<LiveTestResultPdf />} />
         <Route path="/result/typing" element={<TypingResult />} />
         <Route path="/result/steno" element={<StenoResult />} />
         <Route path="/test-analysis" element={<TestAnalysisResults />} />

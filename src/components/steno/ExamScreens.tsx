@@ -1046,7 +1046,7 @@ export function CommonTypingScreen({
       <div className="fixed right-6 top-6 rounded-lg border border-slate-200 bg-white px-4 py-2 text-[13px] font-bold text-navy-800 shadow-card">
         Time Left: <span className="text-primary">{mm}:{ss}</span>
       </div>
-      <div className="mx-auto max-w-2xl pt-4">
+      <div className="mx-auto max-w-4xl pt-4">
         <div className="mb-4 rounded-lg bg-sky-100 py-2.5 text-center font-display text-[13px] italic font-semibold text-navy-800">
           Balaji Typing &amp; Steno College
         </div>
@@ -1061,7 +1061,7 @@ export function CommonTypingScreen({
           onChange={(e) => setTyped(e.target.value)}
           placeholder="Start typing..."
           autoFocus
-          className="h-[300px] w-full resize-none rounded-xl border border-slate-200 bg-white p-4 text-[14px] leading-relaxed text-navy-800 shadow-card outline-none focus:border-primary" />
+          className="h-[520px] w-full resize rounded-xl border border-slate-200 bg-white p-5 text-[16px] leading-relaxed text-navy-800 shadow-card outline-none focus:border-primary" />
 
 
         <div className="mt-4 flex justify-center gap-3">

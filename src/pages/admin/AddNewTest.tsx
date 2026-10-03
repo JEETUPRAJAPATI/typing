@@ -267,44 +267,6 @@ export function AddNewTest() {
 
         <div className="grid gap-4 xl:grid-cols-[1fr_2fr]">
         <div className="space-y-4">
-        {/* 3. Difficulty */}
-        <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-card">
-            {sectionTitle(3, 'Difficulty Level')}
-            <p className="mb-2.5 text-[12px] text-slate-500">Select the difficulty level of this test.</p>
-            <div className="grid gap-3">
-              {difficulties.map((d) => {
-                const active = d.id === difficulty;
-                return (
-                  <button
-                    key={d.id}
-                    type="button"
-                    onClick={() => setDifficulty(d.id)}
-                    aria-pressed={active}
-                    className={`relative flex items-center gap-3 rounded-lg border px-4 py-3 text-left transition-colors duration-150 ${
-                    active ? d.tone : 'border-slate-200 text-slate-500 hover:border-primary'}`
-                    }>
-
-                    <StarIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
-                    <span>
-                      <span className="block font-display text-[14px] font-bold">{d.label}</span>
-                      <span className="block text-[11px]">{d.desc}</span>
-                    </span>
-                    {active &&
-                    <CheckCircle2Icon
-                      className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 fill-amber-500 text-white"
-                      aria-hidden="true" />
-
-                    }
-                  </button>);
-
-              })}
-            </div>
-            <p className="mt-3.5 flex items-start gap-2 rounded-md border border-primary-100 bg-primary-50 px-3 py-2 text-[11.5px] text-primary-700">
-              <InfoIcon className="mt-[1px] h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              Note: Difficulty level will help in filtering and recommending tests to students.
-            </p>
-        </section>
-
         {/* 5. Advanced */}
         <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-card">
           {sectionTitle(5, 'Advanced Options')}
@@ -401,6 +363,43 @@ export function AddNewTest() {
               </div>
             </div>
           </div>
+        </section>
+        {/* 3. Difficulty */}
+        <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-card">
+            {sectionTitle(3, 'Difficulty Level')}
+            <p className="mb-2.5 text-[12px] text-slate-500">Select the difficulty level of this test.</p>
+            <div className="grid gap-3">
+              {difficulties.map((d) => {
+                const active = d.id === difficulty;
+                return (
+                  <button
+                    key={d.id}
+                    type="button"
+                    onClick={() => setDifficulty(d.id)}
+                    aria-pressed={active}
+                    className={`relative flex items-center gap-3 rounded-lg border px-4 py-3 text-left transition-colors duration-150 ${
+                    active ? d.tone : 'border-slate-200 text-slate-500 hover:border-primary'}`
+                    }>
+
+                    <StarIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
+                    <span>
+                      <span className="block font-display text-[14px] font-bold">{d.label}</span>
+                      <span className="block text-[11px]">{d.desc}</span>
+                    </span>
+                    {active &&
+                    <CheckCircle2Icon
+                      className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 fill-amber-500 text-white"
+                      aria-hidden="true" />
+
+                    }
+                  </button>);
+
+              })}
+            </div>
+            <p className="mt-3.5 flex items-start gap-2 rounded-md border border-primary-100 bg-primary-50 px-3 py-2 text-[11.5px] text-primary-700">
+              <InfoIcon className="mt-[1px] h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+              Note: Difficulty level will help in filtering and recommending tests to students.
+            </p>
         </section>
         </div>
 

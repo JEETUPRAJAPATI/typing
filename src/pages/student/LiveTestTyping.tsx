@@ -143,9 +143,9 @@ function TestCard({ test, upcoming }: {test: LiveTest;upcoming?: boolean;}) {
           </> :
 
         <Link
-          to="/login"
+          to={`/live-test/typing/${test.id}/slots`}
           className="flex w-full items-center justify-center gap-2 rounded-md bg-primary py-2.5 text-[12.5px] font-semibold text-white transition-colors duration-150 hover:bg-primary-700">
-          
+
             <PlayIcon className="h-4 w-4 fill-current" aria-hidden="true" /> Start Test
           </Link>
         }

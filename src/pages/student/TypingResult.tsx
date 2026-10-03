@@ -20,7 +20,11 @@ import {
   QuoteIcon,
   SeparatorHorizontalIcon,
   TargetIcon,
-  GaugeIcon } from
+  GaugeIcon,
+  TrendingUpIcon,
+  PercentIcon,
+  AwardIcon,
+  AlertTriangleIcon } from
 'lucide-react';
 import { AdminLayout } from '../../components/admin/AdminLayout';
 import { Panel, Pill } from '../../components/common/Pill';
@@ -37,13 +41,15 @@ const testInfo = [
 { label: 'Test No.', value: 'Test 07' },
 { label: 'Test Type', value: 'Live Test', pill: true },
 { label: 'Test Date', value: '25 May 2026, 10:00 AM' },
-{ label: 'Result Date', value: '25 May 2026, 10:15 AM' },
 { label: 'Keyboard Layout', value: 'Inscript' },
 { label: 'Language', value: 'English' }];
 
 
 const testSettings = [
-{ label: 'Font Group', value: 'English - Medium' },
+{ label: 'Font Group', value: 'English - Medium' }];
+
+const rankExtraInfo = [
+{ label: 'Result Date', value: '25 May 2026, 10:15 AM' },
 { label: 'Backspace Mode', value: 'Current Word Backspace' },
 { label: 'Speed Source', value: 'Typed Words (WPM)' },
 { label: 'Time Duration', value: '10 Minutes' },
@@ -53,20 +59,23 @@ const testSettings = [
 const overview = [
 { label: 'Original Words', value: '410', color: '#0D6EFD', icon: FileTextIcon },
 { label: 'Typed Words', value: '406', color: '#6F42C1', icon: KeyboardIcon },
-{ label: 'Full Mistakes', value: '4', color: '#DC3545', icon: XCircleIcon },
-{ label: 'Half Mistakes', value: '3', color: '#F59E0B', icon: MinusCircleIcon },
-{ label: 'Punctuation Mistakes', value: '2', color: '#0EA5E9', icon: QuoteIcon },
+{ label: 'Gross Speed', value: '58 WPM', color: '#6F42C1', icon: GaugeIcon },
+{ label: 'Net Speed', value: '54 WPM', color: '#0EA5E9', icon: TrendingUpIcon },
 { label: 'Accuracy', value: '96.58%', color: '#198754', icon: TargetIcon },
-{ label: 'Gross Speed (Typed Words)', value: '58 WPM', color: '#6F42C1', icon: GaugeIcon }];
+{ label: 'Backspace Pressed', value: '18', color: '#64748B', icon: RotateCcwIcon },
+{ label: 'Error % Allowed', value: '2%', color: '#F59E0B', icon: PercentIcon },
+{ label: 'Marks Obtained', value: '92.50 / 100', color: '#7C3AED', icon: AwardIcon }];
 
 
 const summary = [
 { label: 'Correct Words', value: '384 (94.15%)', color: '#198754', icon: CheckCircle2Icon },
-{ label: 'Incorrect Words', value: '7 (1.71%)', color: '#DC3545', icon: XCircleIcon },
+{ label: 'Total Mistakes', value: '9', color: '#DC3545', icon: AlertTriangleIcon },
+{ label: 'Full Mistakes', value: '4', color: '#DC3545', icon: XCircleIcon },
+{ label: 'Half Mistakes', value: '3', color: '#F59E0B', icon: MinusCircleIcon },
 { label: 'Extra Words', value: '2 (0.49%)', color: '#0D6EFD', icon: PlusCircleIcon },
-{ label: 'Missing Words', value: '4 (0.98%)', color: '#F59E0B', icon: MinusCircleIcon },
-{ label: 'Extra Spaces', value: '2 (0.49%)', color: '#0EA5E9', icon: SeparatorHorizontalIcon },
-{ label: 'Punctuation Mistakes', value: '2 (0.49%)', color: '#6F42C1', icon: QuoteIcon }];
+{ label: 'Missing / Remaining Words', value: '4 (0.98%)', color: '#F59E0B', icon: MinusCircleIcon },
+{ label: 'Extra Space', value: '2 (0.49%)', color: '#0EA5E9', icon: SeparatorHorizontalIcon },
+{ label: 'Punctuation Error', value: '2 (0.49%)', color: '#6F42C1', icon: QuoteIcon }];
 
 
 const legend = [
@@ -310,7 +319,7 @@ export function TypingResult() {
           </div>
 
           <Panel title="Result Overview">
-            <ul className="grid grid-cols-2 gap-2 sm:grid-cols-4 xl:grid-cols-7">
+            <ul className="grid grid-cols-2 gap-2 sm:grid-cols-4 xl:grid-cols-8">
               {overview.map((o) =>
               <li
                 key={o.label}
@@ -326,7 +335,7 @@ export function TypingResult() {
           </Panel>
 
           <Panel title="Detailed Result Summary">
-            <ul className="grid grid-cols-3 gap-2 sm:grid-cols-6">
+            <ul className="grid grid-cols-2 gap-2 sm:grid-cols-4 xl:grid-cols-8">
               {summary.map((s) =>
               <li
                 key={s.label}
@@ -424,6 +433,14 @@ export function TypingResult() {
             <p className="mt-3 text-[12.5px] font-semibold text-navy-800">Your Rank</p>
             <p className="font-display text-[30px] font-extrabold text-primary">12 / 856</p>
             <p className="text-[11.5px] text-slate-500">Minimum Qualifying Speed : 35 WPM</p>
+            <dl className="mt-3 space-y-1 border-t border-slate-100 pt-3 text-left text-[11px]">
+              {rankExtraInfo.map((r) =>
+              <div key={r.label} className="flex justify-between gap-2">
+                  <dt className="text-slate-500">{r.label}</dt>
+                  <dd className="font-medium text-navy-800">{r.value}</dd>
+                </div>
+              )}
+            </dl>
           </div>
 
           <Panel>
