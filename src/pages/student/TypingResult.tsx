@@ -41,19 +41,11 @@ const testInfo = [
 { label: 'Test No.', value: 'Test 07' },
 { label: 'Test Type', value: 'Live Test', pill: true },
 { label: 'Test Date', value: '25 May 2026, 10:00 AM' },
+{ label: 'Time Duration', value: '10 Minutes' },
 { label: 'Keyboard Layout', value: 'Inscript' },
 { label: 'Language', value: 'English' }];
 
 
-const testSettings = [
-{ label: 'Font Group', value: 'English - Medium' }];
-
-const rankExtraInfo = [
-{ label: 'Result Date', value: '25 May 2026, 10:15 AM' },
-{ label: 'Backspace Mode', value: 'Current Word Backspace' },
-{ label: 'Speed Source', value: 'Typed Words (WPM)' },
-{ label: 'Time Duration', value: '10 Minutes' },
-{ label: 'Total Words', value: '410' }];
 
 
 const overview = [
@@ -306,16 +298,15 @@ export function TypingResult() {
               </dl>
             </Panel>
 
-            <Panel title="Test Settings">
-              <dl className="space-y-1 text-[11.5px]">
-                {testSettings.map((t) =>
-                <div key={t.label} className="flex gap-1.5">
-                    <dt className="w-[108px] shrink-0 text-slate-500">{t.label}</dt>
-                    <dd className="font-medium text-navy-800">: {t.value}</dd>
-                  </div>
-                )}
-              </dl>
-            </Panel>
+            <div className="rounded-xl border border-slate-200 bg-white p-4 text-center shadow-card">
+              <TrophyIcon className="mx-auto h-16 w-16 text-warn" aria-hidden="true" />
+              <p className="mx-auto mt-2 w-fit rounded bg-success px-4 py-1.5 font-display text-[13px] font-bold text-white">
+                QUALIFIED
+              </p>
+              <p className="mt-3 text-[12.5px] font-semibold text-navy-800">Your Rank</p>
+              <p className="font-display text-[30px] font-extrabold text-primary">12 / 856</p>
+              <p className="text-[11.5px] text-slate-500">Minimum Qualifying Speed : 35 WPM</p>
+            </div>
           </div>
 
           <Panel title="Result Overview">
@@ -425,24 +416,6 @@ export function TypingResult() {
 
         {/* Right rail */}
         <div className="space-y-4">
-          <div className="rounded-xl border border-slate-200 bg-white p-4 text-center shadow-card">
-            <TrophyIcon className="mx-auto h-16 w-16 text-warn" aria-hidden="true" />
-            <p className="mx-auto mt-2 w-fit rounded bg-success px-4 py-1.5 font-display text-[13px] font-bold text-white">
-              QUALIFIED
-            </p>
-            <p className="mt-3 text-[12.5px] font-semibold text-navy-800">Your Rank</p>
-            <p className="font-display text-[30px] font-extrabold text-primary">12 / 856</p>
-            <p className="text-[11.5px] text-slate-500">Minimum Qualifying Speed : 35 WPM</p>
-            <dl className="mt-3 space-y-1 border-t border-slate-100 pt-3 text-left text-[11px]">
-              {rankExtraInfo.map((r) =>
-              <div key={r.label} className="flex justify-between gap-2">
-                  <dt className="text-slate-500">{r.label}</dt>
-                  <dd className="font-medium text-navy-800">{r.value}</dd>
-                </div>
-              )}
-            </dl>
-          </div>
-
           <Panel>
             <p className="flex items-center gap-1.5 font-display text-[12px] font-semibold text-navy-800">
               <SparklesIcon className="h-3.5 w-3.5 text-violet-600" aria-hidden="true" /> AI Coach - Deep
