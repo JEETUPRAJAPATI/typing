@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon, InfoIcon, StarIcon, CheckIcon } from 'lucide-react';
-import { wordLengthOptions } from '../../data/steno';
+import { wordLengthOptions, dictationWords } from '../../data/steno';
+import { PickWordRangeModal } from './PickWordRangeModal';
 
 interface WordLengthSelectProps {
   value: string;
@@ -10,6 +11,7 @@ interface WordLengthSelectProps {
 
 export function WordLengthSelect({ value, onChange, totalWords }: WordLengthSelectProps) {
   const [open, setOpen] = useState(false);
+  const [pickOpen, setPickOpen] = useState(false);
 
   return (
     <div>
@@ -53,8 +55,8 @@ export function WordLengthSelect({ value, onChange, totalWords }: WordLengthSele
                     <button
                     type="button"
                     onClick={() => {
-                      onChange(opt.label);
                       setOpen(false);
+                      setPickOpen(true);
                     }}
                     className="flex w-full items-start gap-2 text-left">
                     
@@ -142,6 +144,18 @@ export function WordLengthSelect({ value, onChange, totalWords }: WordLengthSele
           </div>
         }
       </div>
+
+      {pickOpen &&
+      <PickWordRangeModal
+        words={dictationWords}
+        wpm={100}
+        onClose={() => setPickOpen(false)}
+        onApply={(start, end) => {
+          onChange(`Words ${start + 1}–${end + 1} (${end - start + 1} words)`);
+          setPickOpen(false);
+        }} />
+
+      }
 
       <p className="mt-1.5 text-[11.5px] text-slate-500">
         Total words available: <span className="font-semibold">{totalWords}</span>

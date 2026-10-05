@@ -230,16 +230,16 @@ export function AIDeepAnalysis() {
               to punctuation and spacing errors. With consistent practice, you'll get there very soon!
             </p>
             <Link
-              to="/result/typing/practice"
-              className="mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary py-2.5 text-[12.5px] font-semibold text-white transition-colors duration-150 hover:bg-primary-700">
-
-              <PlayCircleIcon className="h-4 w-4" aria-hidden="true" /> Practice Now
-            </Link>
-            <Link
               to="/result/typing/detailed-report"
-              className="mt-2 flex w-full items-center justify-center gap-2 rounded-md border border-slate-300 py-2.5 text-[12.5px] font-semibold text-navy-800 transition-colors duration-150 hover:bg-slate-50">
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-danger py-2.5 text-[12.5px] font-semibold text-white transition-colors duration-150 hover:bg-[#bb2d3b]">
 
               <FileTextIcon className="h-4 w-4" aria-hidden="true" /> View Detailed Report
+            </Link>
+            <Link
+              to="/result/typing/practice"
+              className="mt-2 flex w-full items-center justify-center gap-2 rounded-md bg-primary py-2.5 text-[12.5px] font-semibold text-white transition-colors duration-150 hover:bg-primary-700">
+
+              <PlayCircleIcon className="h-4 w-4" aria-hidden="true" /> Practice Now
             </Link>
           </Panel>
 

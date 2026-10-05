@@ -166,11 +166,8 @@ export function AddNewExam() {
             {cardTitle(<ClipboardListIcon className="h-4 w-4 text-primary" aria-hidden="true" />, '10. Exam Details (Info for Students)')}
             <div className="space-y-3.5">
               <label className="block">
-                <span className={labelCls}>Duration <span className="text-danger">*</span></span>
-                <span className="relative block">
-                  <input type="text" placeholder="hh:mm:ss" className={`${inputCls} pr-8`} />
-                  <ClockIcon className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" aria-hidden="true" />
-                </span>
+                <span className={labelCls}>Mistake Policy</span>
+                <input type="text" defaultValue="10 Words applied per mistake" className={inputCls} />
               </label>
               <p className="flex items-start gap-1.5 rounded-md bg-primary-50 px-2.5 py-2 text-[10.5px] text-primary-700">
                 <InfoIcon className="mt-[1px] h-3.5 w-3.5 shrink-0" aria-hidden="true" />

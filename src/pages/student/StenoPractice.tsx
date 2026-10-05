@@ -14,7 +14,8 @@ import {
   KeyboardIcon,
   MaximizeIcon,
   RotateCcwIcon,
-  FileTextIcon } from
+  FileTextIcon,
+  CheckCircle2Icon } from
 'lucide-react';
 import { StudentLayout } from '../../components/student/StudentLayout';
 import { Breadcrumbs } from '../../components/common/PageHeading';
@@ -45,7 +46,13 @@ const examMetaRows = (examCentre: string) => [
 { label: 'Exam Centre', value: examCentre }];
 
 
+const hindiFonts = [
+  { id: 'mangal-inscript', name: 'Mangal — Inscript', meta: 'Unicode Devanagari · INSCRIPT keyboard', tone: 'bg-orange-600' },
+  { id: 'mangal-remington', name: 'Mangal — Remington Gail', meta: 'Unicode Devanagari · Typewriter layout', tone: 'bg-emerald-700' },
+  { id: 'krutidev', name: 'KrutiDev', meta: 'Legacy non-Unicode font · Remington layout', tone: 'bg-violet-600' }];
+
 export function StenoPractice() {
+  const [hindiFont, setHindiFont] = useState('krutidev');
   const navigate = useNavigate();
   const [speed, setSpeed] = useState('100 WPM');
   const [fluctuation, setFluctuation] = useState('Off');
@@ -356,6 +363,38 @@ export function StenoPractice() {
             </span>
           </div>
         </div>
+
+        {
+        <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50/60 p-3">
+            <p className="mb-2.5 flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-wide text-amber-800">
+              <FileTextIcon className="h-3.5 w-3.5" aria-hidden="true" /> Choose Hindi typing font
+              <InfoIcon className="h-3 w-3 text-slate-400" aria-hidden="true" />
+            </p>
+            <div className="grid gap-2.5 sm:grid-cols-3">
+              {hindiFonts.map((f) => {
+                const active = f.id === hindiFont;
+                return (
+                  <button
+                    key={f.id}
+                    type="button"
+                    onClick={() => setHindiFont(f.id)}
+                    aria-pressed={active}
+                    className={`relative flex items-start gap-2.5 rounded-lg border bg-white p-2.5 text-left transition-colors duration-150 ${
+                    active ? 'border-amber-500 ring-2 ring-amber-200' : 'border-slate-200 hover:border-primary'}`
+                    }>
+
+                    <span className={`grid h-8 w-8 shrink-0 place-items-center rounded text-[13px] font-bold text-white ${f.tone}`}>A</span>
+                    <span className="min-w-0">
+                      <span className="block text-[12px] font-semibold text-navy-800">{f.name}</span>
+                      <span className="block text-[10.5px] leading-snug text-slate-500">{f.meta}</span>
+                    </span>
+                    {active && <CheckCircle2Icon className="absolute right-1.5 top-1.5 h-4 w-4 fill-amber-500 text-white" aria-hidden="true" />}
+                  </button>);
+
+              })}
+            </div>
+          </div>
+        }
 
         {/* Interface picker */}
         {showInterfaces &&

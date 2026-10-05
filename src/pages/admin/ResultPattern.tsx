@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   FileTextIcon,
   HourglassIcon,
@@ -19,8 +19,6 @@ const card = 'rounded-xl border border-slate-200 bg-white p-4 shadow-card';
 const labelCls = 'mb-1.5 block text-[11.5px] font-semibold text-navy-800';
 const inputCls =
 'w-full rounded-md border border-slate-300 px-3 py-2 text-[12px] outline-none focus:border-primary';
-
-const tabs = ['Test Information', 'Test Content', 'Result Pattern', 'Preview Test', 'Publish Test'];
 
 const savedPatterns = [
 { no: 1, name: 'SSC Typing Result Pattern 2026', applicable: 'Typing', def: 'Yes', created: '12 May 2026, 10:30 AM', status: 'Active' },
@@ -47,8 +45,6 @@ const penaltyFields = [
 
 
 export function ResultPattern() {
-  const [tab, setTab] = useState('Result Pattern');
-
   return (
     <AdminLayout searchPlaceholder="Search typing tests..." showActionButtons={false}>
       <div className="mb-4 flex flex-wrap items-start gap-4">
@@ -69,26 +65,6 @@ export function ResultPattern() {
             { label: 'Add / Upload Test' }]
             } />
           
-        </div>
-      </div>
-
-      <div className="mb-4 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-card">
-        <div className="flex flex-wrap">
-          {tabs.map((t) =>
-          <button
-            key={t}
-            type="button"
-            onClick={() => setTab(t)}
-            aria-pressed={tab === t}
-            className={`flex-1 border-b-2 px-4 py-3 text-[12.5px] font-semibold transition-colors duration-150 ${
-            tab === t ?
-            'border-primary bg-primary-50 text-primary' :
-            'border-transparent text-slate-500 hover:bg-slate-50'}`
-            }>
-            
-              {t}
-            </button>
-          )}
         </div>
       </div>
 

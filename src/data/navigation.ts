@@ -76,8 +76,7 @@ export const adminNav: NavItem[] = [
   color: '#A78BFA',
   children: [
   { label: 'All Students', to: '/admin/students' },
-  { label: 'Add Student', to: '/admin/students/new' },
-  { label: 'Active Students', to: '/admin/students/active' }]
+  { label: 'Add Student', to: '/admin/students/new' }]
 
 },
 {
@@ -92,6 +91,7 @@ export const adminNav: NavItem[] = [
 },
 { label: 'Screen Layout', icon: 'monitor', to: '/admin/screen-layout', badge: 'new', color: '#F472B6' },
 { label: 'Flash Banner', icon: 'zap', to: '/admin/flash-banner', color: '#F59E0B' },
+{ label: 'Support Tickets', icon: 'headphones', to: '/admin/support', color: '#34D399' },
 {
   label: 'Font Group',
   icon: 'type',

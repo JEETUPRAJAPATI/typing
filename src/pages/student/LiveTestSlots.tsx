@@ -170,7 +170,7 @@ export function LiveTestSlots() {
                           <PlayIcon className="h-3 w-3 fill-current" aria-hidden="true" /> Start
                         </button>
                     }
-                      <button type="button" aria-label="View details" className="text-slate-400 transition-colors duration-150 hover:text-primary">
+                      <button type="button" aria-label="View details" onClick={() => navigate('/test-analysis/typing')} className="text-slate-400 transition-colors duration-150 hover:text-primary">
                         <EyeIcon className="h-4 w-4" aria-hidden="true" />
                       </button>
                       <button type="button" aria-label="More options" className="text-slate-400 transition-colors duration-150 hover:text-navy-800">

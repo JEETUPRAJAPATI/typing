@@ -25,6 +25,9 @@ import { ExamManagement } from './pages/admin/ExamManagement';
 import { AddNewExam } from './pages/admin/AddNewExam';
 import { ScreenLayout } from './pages/admin/ScreenLayout';
 import { FlashBanner } from './pages/admin/FlashBanner';
+import { Support } from './pages/student/Support';
+import { HowToUse } from './pages/student/HowToUse';
+import { AdminSupportTickets } from './pages/admin/SupportTickets';
 import { AdminTestAnalysis } from './pages/admin/TestAnalysis';
 import { AdminLeaderboard } from './pages/admin/Leaderboard';
 import { Subscription } from './pages/admin/Subscription';
@@ -85,8 +88,8 @@ export function App() {
         <Route path="/pdf/progressive-magazines" element={<ProgressiveMagazines />} />
 
         <Route path="/plan-pricing" element={<PlanPricing />} />
-        <Route path="/support" element={<ComingSoon title="Support" />} />
-        <Route path="/how-to-use" element={<ComingSoon title="How to use?" />} />
+        <Route path="/support" element={<Support />} />
+        <Route path="/how-to-use" element={<HowToUse />} />
 
         {/* Admin */}
         <Route path="/admin" element={<AdminDashboard />} />
@@ -100,6 +103,7 @@ export function App() {
         <Route path="/admin/result-pattern" element={<ResultPattern />} />
         <Route path="/admin/screen-layout" element={<ScreenLayout />} />
         <Route path="/admin/flash-banner" element={<FlashBanner />} />
+        <Route path="/admin/support" element={<AdminSupportTickets />} />
         <Route path="/admin/results" element={<AdminTestAnalysis />} />
         <Route path="/admin/test-analysis" element={<AdminTestAnalysis />} />
         <Route path="/admin/leaderboard" element={<AdminLeaderboard />} />

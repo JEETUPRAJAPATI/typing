@@ -49,6 +49,22 @@ const activeTests: LiveTest[] = [
   duration: '5 minutes',
   start: '10 Aug, 2026 09:30 AM',
   end: '10 Aug, 2026 11:50 PM'
+},
+{
+  id: 'up-police',
+  title: 'UP Police Constable Typing',
+  subtitle: 'UP Police Live Typing Test 22',
+  duration: '10 minutes',
+  start: '10 Aug, 2026 09:30 AM',
+  end: '10 Aug, 2026 11:50 PM'
+},
+{
+  id: 'bihar-ssc',
+  title: 'Bihar SSC Typing',
+  subtitle: 'Bihar SSC Live Typing Test 14',
+  duration: '10 minutes',
+  start: '10 Aug, 2026 09:30 AM',
+  end: '10 Aug, 2026 11:50 PM'
 }];
 
 
@@ -76,6 +92,22 @@ const upcomingTests: LiveTest[] = [
   duration: '10 minutes',
   start: '11 Aug, 2026 09:30 AM',
   end: '11 Aug, 2026 11:50 PM'
+},
+{
+  id: 'rajasthan-cet',
+  title: 'Rajasthan CET Typing',
+  subtitle: 'Rajasthan CET Live Typing Test 31',
+  duration: '10 minutes',
+  start: '12 Aug, 2026 09:30 AM',
+  end: '12 Aug, 2026 11:50 PM'
+},
+{
+  id: 'mp-vyapam',
+  title: 'MP Vyapam Typing',
+  subtitle: 'MP Vyapam Live Typing Test 18',
+  duration: '10 minutes',
+  start: '12 Aug, 2026 09:30 AM',
+  end: '12 Aug, 2026 11:50 PM'
 }];
 
 
@@ -187,7 +219,7 @@ export function LiveTestTyping() {
       <h3 className="mb-3 flex items-center gap-2 border-b border-slate-200 pb-2 font-display text-[17px] font-bold text-navy-800">
         <RadioIcon className="h-5 w-5 text-success" aria-hidden="true" /> Active Live Tests
       </h3>
-      <div className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {activeTests.map((t) =>
         <TestCard key={t.id} test={t} />
         )}
@@ -196,7 +228,7 @@ export function LiveTestTyping() {
       <h3 className="mb-3 flex items-center gap-2 border-b border-slate-200 pb-2 font-display text-[17px] font-bold text-navy-800">
         <ClockIcon className="h-5 w-5 text-[#F59E0B]" aria-hidden="true" /> Upcoming Tests
       </h3>
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {upcomingTests.map((t) =>
         <TestCard key={t.id} test={t} upcoming />
         )}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   FilePlus2Icon,
   ClipboardListIcon,
@@ -23,6 +24,7 @@ const topCards = [
   title: 'Add New Exam',
   text: 'Create a new typing/steno exam, set details, assign tests and configure basic settings.',
   cta: 'Add New Exam',
+  to: '/admin/exams/new',
   icon: FilePlus2Icon,
   color: '#0D6EFD',
   btn: 'bg-primary hover:bg-primary-700',
@@ -33,6 +35,7 @@ const topCards = [
   title: 'Manage Exam',
   text: 'View, edit, activate/deactivate exams, assign tests and manage exam schedule.',
   cta: 'Manage Exams',
+  to: '/admin/exams',
   icon: ClipboardListIcon,
   color: '#198754',
   btn: 'bg-success hover:bg-[#146c43]',
@@ -43,6 +46,7 @@ const topCards = [
   title: 'Result Pattern (Rules)',
   text: 'Create and manage result patterns, penalty rules and calculation settings.',
   cta: 'Create New Rule',
+  to: '/admin/result-pattern',
   icon: ScaleIcon,
   color: '#6F42C1',
   btn: 'bg-[#6F42C1] hover:bg-[#5c36a4]',
@@ -132,12 +136,12 @@ export function ExamManagement() {
                   {c.n}. {c.title}
                 </h3>
                 <p className="mt-1 text-[12px] leading-snug text-slate-500">{c.text}</p>
-                <button
-                type="button"
-                className={`mt-3 flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[12px] font-semibold text-white transition-colors duration-150 ${c.btn}`}>
-                
+                <Link
+                to={c.to}
+                className={`mt-3 inline-flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[12px] font-semibold text-white transition-colors duration-150 ${c.btn}`}>
+
                   <c.ctaIcon className="h-3.5 w-3.5" aria-hidden="true" /> {c.cta}
-                </button>
+                </Link>
               </div>
             </div>
           </article>

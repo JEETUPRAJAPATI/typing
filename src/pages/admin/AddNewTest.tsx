@@ -61,6 +61,28 @@ const contentSummary = [
 'Display Preview'];
 
 
+function CheckboxGroup({ options }: {options: string[];}) {
+  const [selected, setSelected] = useState<string[]>([]);
+  const toggle = (o: string) =>
+  setSelected((prev) => prev.includes(o) ? prev.filter((x) => x !== o) : [...prev, o]);
+
+  return (
+    <div className="grid gap-2 rounded-md border border-slate-300 p-2.5">
+      {options.map((o) =>
+      <label key={o} className="flex items-center gap-2 text-[12.5px] text-slate-700">
+          <input
+            type="checkbox"
+            checked={selected.includes(o)}
+            onChange={() => toggle(o)}
+            className="h-3.5 w-3.5 accent-primary" />
+
+          {o}
+        </label>
+      )}
+    </div>);
+
+}
+
 export function AddNewTest() {
   const [type, setType] = useState('eng-typing');
   const [difficulty, setDifficulty] = useState('moderate');
@@ -220,11 +242,7 @@ export function AddNewTest() {
                 <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">
                   Category / Exam <span className="text-danger">*</span>
                 </span>
-                <select className="w-full rounded-md border border-slate-300 px-3 py-2 text-[12.5px] text-slate-600 outline-none focus:border-primary">
-                  <option>-- Select Category / Exam --</option>
-                  <option>SSC CGL</option>
-                  <option>Delhi Police</option>
-                </select>
+                <CheckboxGroup options={['SSC CGL', 'Delhi Police']} />
               </label>
               <label className="block">
                 <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">
@@ -239,11 +257,7 @@ export function AddNewTest() {
                 <span className="mb-1.5 block text-[12px] font-semibold text-navy-800">
                   Font Group <span className="text-danger">*</span>
                 </span>
-                <select className="w-full rounded-md border border-slate-300 px-3 py-2 text-[12.5px] text-slate-600 outline-none focus:border-primary">
-                  <option>-- Select Font Group --</option>
-                  <option>Arial Group</option>
-                  <option>Mangal Group</option>
-                </select>
+                <CheckboxGroup options={['Arial Group', 'Mangal Group']} />
                 <span className="mt-1 block text-[11px] text-slate-500">
                   Font group used in the test content
                 </span>
