@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   SendIcon,
@@ -9,7 +9,8 @@ import {
   CheckIcon,
   TrophyIcon,
   EyeIcon,
-  LandmarkIcon } from
+  LandmarkIcon,
+  ArrowRightIcon } from
 'lucide-react';
 import { StudentLayout } from '../../components/student/StudentLayout';
 import { Breadcrumbs } from '../../components/common/PageHeading';
@@ -22,51 +23,56 @@ interface LiveTest {
   start: string;
   end: string;
   attempted?: boolean;
+  logo?: string;
+  theme?: 'blue' | 'green' | 'purple' | 'orange';
+  liveCount?: number;
 }
 
 const activeTests: LiveTest[] = [
 {
-  id: 'dp-hcm',
-  title: 'Delhi Police HCM Typing',
-  subtitle: 'Delhi Police HCM Live Typing Test 137',
-  duration: '10 minutes',
-  start: '10 Aug, 2026 09:30 AM',
-  end: '10 Aug, 2026 11:50 PM'
-},
-{
-  id: 'rrb-ntpc',
-  title: 'RRB NTPC TYPING',
-  subtitle: 'RRB NTPC LIVE TYPING TEST 2',
+  id: 'ssc-chsl',
+  title: 'SSC CHSL (Tier-1)',
+  subtitle: 'SSC CHSL Live Typing Test 1',
   duration: '10 minutes',
   start: '10 Aug, 2026 09:30 AM',
   end: '10 Aug, 2026 11:50 PM',
-  attempted: true
+  logo: 'https://en.wikipedia.org/wiki/Special:FilePath/Staff_Selection_Commission.webp',
+  theme: 'blue',
+  liveCount: 1
 },
 {
-  id: 'upsssc-ja',
-  title: 'UPSSSC Junior Assistant Typing',
-  subtitle: 'UPSSSC JUNIOR ASSISTANT LIVE TYPING TEST 48',
-  duration: '5 minutes',
-  start: '10 Aug, 2026 09:30 AM',
-  end: '10 Aug, 2026 11:50 PM'
-},
-{
-  id: 'up-police',
-  title: 'UP Police Constable Typing',
-  subtitle: 'UP Police Live Typing Test 22',
+  id: 'dp-hc',
+  title: 'Delhi Police Head Constable (Ministerial)',
+  subtitle: 'Delhi Police HC Live Typing Test 1',
   duration: '10 minutes',
   start: '10 Aug, 2026 09:30 AM',
-  end: '10 Aug, 2026 11:50 PM'
+  end: '10 Aug, 2026 11:50 PM',
+  logo: 'https://en.wikipedia.org/wiki/Special:FilePath/Delhi_Police_Logo.png',
+  theme: 'green',
+  liveCount: 1
 },
 {
-  id: 'bihar-ssc',
-  title: 'Bihar SSC Typing',
-  subtitle: 'Bihar SSC Live Typing Test 14',
+  id: 'upsssc-st',
+  title: 'UPSSSC Steno / Typist',
+  subtitle: 'UPSSSC Steno/Typist Live Typing Test 1',
   duration: '10 minutes',
   start: '10 Aug, 2026 09:30 AM',
-  end: '10 Aug, 2026 11:50 PM'
+  end: '10 Aug, 2026 11:50 PM',
+  logo: 'https://en.wikipedia.org/wiki/Special:FilePath/Seal_of_Uttar_Pradesh.png',
+  theme: 'purple',
+  liveCount: 1
+},
+{
+  id: 'ibps-clerk',
+  title: 'IBPS Clerk (Typing)',
+  subtitle: 'IBPS Clerk Live Typing Test 1',
+  duration: '10 minutes',
+  start: '10 Aug, 2026 09:30 AM',
+  end: '10 Aug, 2026 11:50 PM',
+  logo: 'https://en.wikipedia.org/wiki/Special:FilePath/IBPS_LOGO.png',
+  theme: 'orange',
+  liveCount: 1
 }];
-
 
 const upcomingTests: LiveTest[] = [
 {
@@ -110,6 +116,53 @@ const upcomingTests: LiveTest[] = [
   end: '12 Aug, 2026 11:50 PM'
 }];
 
+
+const themeStyles = {
+  blue: { bg: 'border-blue-100 bg-blue-50/60', badge: 'bg-blue-50 text-blue-700', number: 'text-blue-600', btn: 'bg-blue-600 hover:bg-blue-700' },
+  green: { bg: 'border-emerald-100 bg-emerald-50/60', badge: 'bg-emerald-50 text-emerald-700', number: 'text-emerald-600', btn: 'bg-emerald-600 hover:bg-emerald-700' },
+  purple: { bg: 'border-violet-100 bg-violet-50/60', badge: 'bg-violet-50 text-violet-700', number: 'text-violet-600', btn: 'bg-violet-600 hover:bg-violet-700' },
+  orange: { bg: 'border-orange-100 bg-orange-50/60', badge: 'bg-orange-50 text-orange-700', number: 'text-orange-600', btn: 'bg-orange-500 hover:bg-orange-600' }
+} as const;
+
+function ActiveTestCard({ test }: {test: LiveTest;}) {
+  const [broken, setBroken] = useState(false);
+  const theme = themeStyles[test.theme ?? 'blue'];
+
+  return (
+    <article className={`relative flex flex-col items-center rounded-2xl border p-5 text-center shadow-card ${theme.bg}`}>
+      <span className="absolute left-3 top-3 rounded bg-danger px-2 py-[2px] text-[9.5px] font-bold text-white">
+        LIVE
+      </span>
+
+      <span className="mt-1 grid h-20 w-20 shrink-0 place-items-center overflow-hidden rounded-full bg-white shadow-card">
+        {test.logo && !broken ?
+        <img
+          src={test.logo}
+          alt=""
+          className="h-14 w-14 object-contain"
+          onError={() => setBroken(true)} /> :
+
+
+        <LandmarkIcon className="h-9 w-9 text-slate-400" aria-hidden="true" />
+        }
+      </span>
+
+      <h4 className="mt-3 font-display text-[15px] font-bold leading-snug text-navy-800">{test.title}</h4>
+
+      <p className={`mt-2.5 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold ${theme.badge}`}>
+        <RadioIcon className="h-3 w-3" aria-hidden="true" /> Live Tests Today
+      </p>
+      <p className={`mt-1.5 font-display text-[30px] font-extrabold ${theme.number}`}>{test.liveCount ?? 1}</p>
+
+      <Link
+        to={`/live-test/typing/${test.id}/slots`}
+        className={`mt-3 flex w-full items-center justify-center gap-2 rounded-md py-2.5 text-[13px] font-semibold text-white transition-colors duration-150 ${theme.btn}`}>
+
+        View Tests <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
+      </Link>
+    </article>);
+
+}
 
 function TestCard({ test, upcoming }: {test: LiveTest;upcoming?: boolean;}) {
   return (
@@ -219,9 +272,9 @@ export function LiveTestTyping() {
       <h3 className="mb-3 flex items-center gap-2 border-b border-slate-200 pb-2 font-display text-[17px] font-bold text-navy-800">
         <RadioIcon className="h-5 w-5 text-success" aria-hidden="true" /> Active Live Tests
       </h3>
-      <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+      <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {activeTests.map((t) =>
-        <TestCard key={t.id} test={t} />
+        <ActiveTestCard key={t.id} test={t} />
         )}
       </div>
 
